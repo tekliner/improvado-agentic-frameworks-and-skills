@@ -1,2 +1,168 @@
-# improvado-agentic-frameworks-and-skills
+# Improvado Agentic Frameworks and Skills
+
 Frameworks and tools for building, evaluating, and scaling agentic AI systems.
+
+## 📦 Skills Collection
+
+Production-ready Claude Code skills for common agentic workflows:
+
+### 1. 📋 Knowledge Framework
+**Location:** `skills/knowledge-framework/`
+
+Automatic documentation framework using MECE/BFO ontology principles. Creates structured documents with thesis, overview, Mermaid diagrams, and Ground Truth attribution.
+
+**Use when:**
+- Creating any .md file (README, guides, documentation)
+- Documenting complex systems or processes
+- Need structured, maintainable knowledge base
+
+**Key features:**
+- Automatic MECE section organization
+- Continuant (TD) and Occurrent (LR) Mermaid diagrams
+- Numbered sections (§1.0, §2.0) and paragraphs (¶1, ¶2)
+- Ground Truth attribution with clickable sources
+- Quick Start checklist for rapid application
+
+### 2. 🔄 Claude Code Sessions
+**Location:** `skills/claude-code-sessions/`
+
+Universal session management for Claude Code - search, resume, and analyze conversations from any directory.
+
+**Use when:**
+- Resuming previous Claude Code conversation
+- Searching sessions by content or keywords
+- Finding work from specific dates
+- Analyzing session history and patterns
+
+**Key features:**
+- Resume by session ID or text search
+- Universal session discovery across all projects
+- Automatic path resolution and project switching
+- Shell integration (`rc` command)
+- Session statistics and metadata
+
+### 3. 🎥 YouTube to Knowledge Doc
+**Location:** `skills/youtube-to-knowledge-doc/`
+
+Extract YouTube video transcripts and convert to Knowledge Framework documentation with proper folder placement and clickable timestamp citations.
+
+**Use when:**
+- User provides YouTube URL for documentation
+- Converting external learning to internal knowledge base
+- Preserving video knowledge in repository structure
+
+**Key features:**
+- Automatic transcript extraction with yt-dlp
+- Intelligent folder placement recommendation
+- Clickable YouTube timestamp links (MM:SS → ?t=SECONDS)
+- Knowledge Framework compliance
+- Ground Truth attribution with video source
+
+## 🚀 Quick Start
+
+### Installing Skills
+
+1. **Claude Code Desktop:**
+   ```bash
+   # Copy skills to global skills directory
+   cp -r skills/* ~/.claude/skills/
+   ```
+
+2. **Project-level (chrome-extension-tcs):**
+   ```bash
+   # Copy to project skills directory
+   cp -r skills/* /path/to/project/.claude/skills/
+   ```
+
+### Using Skills
+
+Skills trigger automatically when Claude Code detects relevant context:
+- Creating .md files → `knowledge-framework`
+- "Resume session abc123" → `claude-code-sessions`
+- "Document this YouTube video" → `youtube-to-knowledge-doc`
+
+Or invoke explicitly:
+```
+/skill knowledge-framework
+/skill claude-code-sessions
+/skill youtube-to-knowledge-doc
+```
+
+## 📖 Documentation
+
+Each skill includes:
+- `SKILL.md` - Complete skill documentation with Quick Start
+- `README.md` - Technical details and implementation guide
+- `examples/` - Real-world usage examples (where applicable)
+
+## 🎯 Skill Structure
+
+All skills follow consistent structure:
+```
+skill-name/
+├── SKILL.md                 # Main skill documentation
+│   ├── YAML frontmatter (name, description)
+│   ├── When to Use (automatic triggers)
+│   ├── Quick Start Checklist
+│   ├── 5-Second Decision Tree
+│   ├── Practical Workflow
+│   └── Detailed documentation
+├── README.md                # Technical implementation
+├── examples/                # Usage examples
+└── references/              # Additional documentation
+```
+
+## 🛠️ Development
+
+### Skill Creation Guidelines
+
+Follow the skill-creator framework:
+1. Define concrete usage examples
+2. Identify reusable resources (scripts, references, assets)
+3. Initialize skill structure
+4. Write SKILL.md with YAML frontmatter
+5. Add Quick Start and Decision Tree sections
+6. Validate against checklist
+
+### Quality Standards
+
+All skills must include:
+- ✅ YAML frontmatter with explicit triggers
+- ✅ Quick Start Checklist (5-10 steps)
+- ✅ 5-Second Decision Tree
+- ✅ Practical Workflow example
+- ✅ Clear "When to Use" section
+- ✅ Automatic trigger descriptions
+
+## 📊 Skills Compatibility
+
+**Tested with:**
+- Claude Code Desktop v1.0+
+- Claude Sonnet 4.5 model
+- macOS (primary), Linux (compatible)
+
+**Dependencies:**
+- `knowledge-framework`: None
+- `claude-code-sessions`: Python 3.8+
+- `youtube-to-knowledge-doc`: yt-dlp, Python 3.8+
+
+## 🤝 Contributing
+
+Skills in this repository are production-tested and follow Improvado internal standards. For improvements:
+1. Test changes thoroughly in chrome-extension-tcs project
+2. Update Quick Start/Decision Tree if workflow changes
+3. Maintain YAML frontmatter accuracy
+4. Add examples for new features
+
+## 📝 License
+
+Internal Improvado use. Not for public distribution.
+
+## 🔗 Related Repositories
+
+- [chrome-extension-tcs](https://github.com/tekliner/tcs-chrome-extension) - Main development repository with full skills suite
+- [ai-dashboards](https://github.com/tekliner/ai-dashboards) - React v2 dashboards
+
+---
+
+**Generated by:** Claude Code session by Daniel Kravtsov (2025-11-12)
