@@ -1,406 +1,265 @@
 ---
 name: knowledge-framework
-description: Use this skill AUTOMATICALLY when creating or editing ANY .md file. Applies MECE/BFO documentation framework with thesis, overview, Mermaid diagrams (TD/LR), numbered sections, and Ground Truth attribution. Triggers before writing documentation, README files, guides, or any structured markdown content.
+description: Auto-applies MECE/BFO framework (thesis, Mermaid TD/LR, numbered sections, Ground Truth) to ANY .md file creation.
 ---
+## 📋 Documentation = Code (Minto + MECE + BFO + DRY)
 
-# Knowledge Framework Documentation Skill
+**Core Principle:** Write documentation like code - fractal structure where each abstraction level is complete, MECE-organized, with zero redundancy with links to source for ground truth.
 
-## Description
-
-Expert documentation framework using MECE, BFO ontology, and fractal structure. This skill should be used AUTOMATICALLY whenever creating or editing .md files to ensure clear, maintainable documentation that follows strict structural principles: one thesis, overview paragraph, Mermaid diagrams (Continuant TD + Occurrent LR), and numbered MECE sections with DRY principles and Ground Truth attribution.
-
-## When to Use
-
-Use this skill when:
-- User asks to create/improve documentation
-- User needs to structure complex information
-- User mentions: MECE, ontology, documentation framework, knowledge base
-- User asks "how to organize documentation"
-- Creating README, architecture docs, process guides, or analysis reports
-- ANY situation requiring clear, structured explanation
-
-**PROACTIVE APPLICATION:**
-- Automatically apply when creating ANY .md file (README, guides, docs, analysis)
-- Automatically apply when user requests documentation or asks to "write" something structured
-- Automatically apply before finalizing any markdown document >20 lines
-
-**IMPORTANT:** Apply this skill BEFORE writing .md files, not after. The framework guides the writing process itself.
-
-## Quick Start Checklist
-
-When creating ANY .md file, follow this checklist:
-
-```markdown
-[ ] 1. Start with Thesis (1 sentence previewing MECE sections)
-[ ] 2. Write Overview (1 paragraph introducing each section)
-[ ] 3. Add Mermaid diagram(s): TD for structure, LR for process
-[ ] 4. Create numbered sections (1.0, 2.0, 3.0)
-[ ] 5. Add ¶1 ordering principle in first section
-[ ] 6. Use ¶ paragraph numbering throughout
-[ ] 7. Add Ground Truth attribution (sources with dates)
-[ ] 8. Verify MECE (no overlap, no gaps)
-[ ] 9. Check DRY (no duplication)
-[ ] 10. Add Author Checklist at end
-```
-
-**5-Second Decision Tree:**
-- Creating .md file? → Use this skill
-- Document >20 lines? → Use this skill
-- User says "write" or "document"? → Use this skill
-
-## Practical Workflow
-
-**BEFORE starting to write .md content:**
-
-1. **Identify document type** (architecture/process/analysis) → determines diagram types
-2. **Extract MECE sections** from user request → these become 1.0, 2.0, 3.0
-3. **Write Thesis** → one sentence previewing those sections
-4. **Write Overview** → one paragraph introducing each section
-5. **Choose diagrams** → TD for structure, LR for process
-6. **Fill sections** → with ¶1 ordering principle, then content
-7. **Add attribution** → sources with dates throughout
-8. **Apply checklist** → verify all requirements met
-
-**Example rapid application:**
-```
-User: "Create a README for the email parser module"
-
-Agent thinks:
-- .md file → trigger knowledge-framework skill
-- Type: Mixed (components + process)
-- MECE sections from context: 1.0 Components, 2.0 Workflow, 3.0 Usage
-- Diagrams needed: TD (email components), LR (parsing flow)
-- Thesis: "Email parser extracts structured data from messages using..."
-```
-
-## Core Principles
-
-**Documentation = Code:**
-- Fractal structure (each level is complete)
-- MECE organization (Mutually Exclusive, Collectively Exhaustive)
-- DRY (Don't Repeat Yourself - each fact appears once)
-- Minimal tokens, maximum clarity
-
-**🚨 CRITICAL: Ground Truth Only**
-- **ONLY document what EXISTS in context** - no speculation, no "future sections", no "might need"
-- **NO verbose additions** - if maintenance/troubleshooting wasn't mentioned in task, DON'T add it
-- **NO generic sections** - avoid "Best Practices", "Common Pitfalls", "Advanced Usage" unless explicitly requested
-- **Test: Can you point to source for EVERY paragraph?** If no → delete it
-- **Sections ONLY from user's actual request** - don't invent "nice to have" sections
-
-## Mandatory Structure
-
-### 1. Header Elements (REQUIRED)
-
-```markdown
-## 📋 [Document Title]
-
-**Thesis (1 sentence):** [Specific outcome with who/what/when - must preview MECE sections]
-
-**Overview (1 paragraph):** [Expands thesis AND introduces each MECE section]
-```
-
-### 2. Mermaid Diagrams (REQUIRED - minimum 1, complex docs need 2)
-
-**CRITICAL RULE:** Choose diagram type by ontological category:
-
-**Continuant Diagram (TD) - "What Exists":**
 ```mermaid
 graph TD
-    System[Entity] --> Component1[Part 1]
-    System --> Component2[Part 2]
+    Thesis[1 Sentence Thesis] --> Overview[1 Paragraph Overview]
+    Overview --> Diagrams[Mermaid Diagrams]
+
+    Diagrams --> ContinuantDiagram[Continuant TD: Structure]
+    Diagrams --> OccurrentDiagram[Occurrent LR: Process]
+    Diagrams --> ParticipationDiagram[Participation: Optional]
+
+    ContinuantDiagram --> Sections[3-7 MECE Sections]
+    OccurrentDiagram --> Sections
+
+    Sections --> Details[Fractal Details with ¶1, ¶2, ¶3]
 ```
-- **Use for:** System architecture, data models, component hierarchies
-- **Nodes:** NOUNS (Database, API, User, Service)
-- **Direction:** Top-Down (TD)
-- **Edges:** "contains", "depends on", "is part of"
+**Ontological Rule:** TD for Continuants (what exists), LR for Occurrents (what happens)
 
-**Occurrent Diagram (LR) - "What Happens":**
-```mermaid
-graph LR
-    A[Step 1] --> B[Step 2]
-    B --> C[Step 3]
-```
-- **Use for:** Processes, workflows, pipelines, temporal sequences
-- **Nodes:** VERBS (Extract, Validate, Transform)
-- **Direction:** Left-Right (LR)
-- **Edges:** "then", "triggers", "flows to"
+**Primary source:** `/Users/Kravtsovd/projects/chrome-extension-tcs/How to organize documents_knowladge_framework.md`
+**Session ID:** `e9ce3592-bd66-4a98-b0e7-fcdd8edb5d42` by Daniel Kravtsov (2025-11-13)
 
-**Complex documents REQUIRE BOTH diagrams** - one for structure (TD), one for process (LR).
+### 🎯 6 Pillars
 
-### 3. MECE Sections (REQUIRED)
+¶1 **Minimal Verbosity:** Use minimum text and tokens, but enough for another AI agent or human to execute task or understand document.
 
-```markdown
-## 1.0 [First Section Name]
+¶2 **Minto Principle:** Top-to-bottom structure - thesis → overview → sections → details.
 
-¶1 **Ordering principle:** [Explain why sections appear in THIS order]
+¶3 **MECE (Mutually Exclusive, Collectively Exhaustive):** Sections don't overlap, but cover everything.
 
-¶2 [General concept]
+¶4 **Mermaid Diagrams:** Quick visual explanation of core concepts.
 
-¶3 [Specific detail]
+¶5 **Fractal Structure:** Each level mirrors the whole - subsections follow same 1-sentence → mermaid diagrams (1 or 3 if complex) → 1-paragraph → details pattern.
 
-### 1.1 [Subsection]
-[Follows same pattern: 1-sentence → paragraph → details]
+¶6 **DRY (Don't Repeat Yourself):** Each fact appears exactly ONCE. Reference, don't duplicate.
 
-## 2.0 [Second Section Name]
-...
-```
+¶7 **Ground Truth (CRITICAL):** EVERY piece of information MUST have traceable source attribution. See §"Ground Truth Attribution Rules" for mandatory patterns.
 
-**Numbering Rules:**
-- Sections: 1.0, 2.0, 3.0
-- Subsections: 1.1, 1.2, 1.3
-- Paragraphs: ¶1, ¶2, ¶3
+(Try not to use terms like "MECE", "fractal", "DRY" in the doc itself. These are internal terms - docs should focus on subject content, not metadata about doc creation.)
 
-**Ordering Logic (¶1 MUST explain):**
-- Importance (critical → nice-to-have)
-- Logical flow (context → implementation → validation)
-- Chronology (setup → execution → cleanup)
+### 📐 Structure Rules
+- **Thesis:** Specific outcome with who/what/when - must preview your MECE sections structure
+- **Overview Paragraph:** Expands thesis AND introduces each MECE section (like function docs listing parameters)
+- **Sections (1.0, 2.0, 3.0):** Number all sections and subsections (1.1, 1.2). Order by: importance, logical flow, or chronology
+- **Paragraph Numbering:** Within sections, number paragraphs (¶1, ¶2, ¶3). Sort by: general→specific, problem→solution, or setup→action→result
+- **Ordering Principle (¶1 explains this):** State your ordering logic upfront - readers should understand why content appears in this sequence
+- **Fractal Depth:** Each subsection starts with its own 1-sentence thesis, then expands only if needed
+    -- if docuemnt is big - more then 10 pages, then you may want to split in into multipel files. but you need to add proper urls path to this files md links
+- **Coherence:** If sections are Planning→Execution→Monitoring, thesis must mention all three
 
-### 4. BFO Ontology Classification
+### 🔄 Finding True MECE Structure
+**Core Rule:** Look for the NATURAL structure of your content, don't force a template
 
-**Continuants (Things that exist):**
-- Exist fully at any moment
-- Examples: database tables, API endpoints, configuration
-- Mermaid: `graph TD`
-- Sections: NOUNS (1.0 Data Model, 2.0 Components)
+**🧬 BFO Ontology (Highest Level):** Use formal ontology categories to separate WHAT EXISTS from WHAT HAPPENS:
 
-**Occurrents (Things that happen):**
-- Unfold across time
-- Examples: pipeline execution, API flow, deployment
-- Mermaid: `graph LR`
-- Sections: VERBS (1.0 Setup, 2.0 Execute, 3.0 Monitor)
+¶1 **Continuants (Things that exist):**
+- Exist fully at any moment in time
+- Examples: database tables, API endpoints, user roles, configuration files
+- Mermaid: Use `graph TD` (top-down hierarchy)
+- Sections: Named by nouns (1.0 Data Model, 2.0 System Components)
 
-**Mixed Documents:**
-- Analysis: 1.0 Data (Continuant) → 2.0 Methods (Occurrent) → 3.0 Results
-- Decision: 1.0 Problem (Continuant) → 2.0 Options → 3.0 Solution
+¶2 **Occurrents (Things that happen):**
+- Unfold across time; have beginning, middle, end
+- Examples: data pipeline execution, API request flow, deployment process
+- Mermaid: Use `graph LR` (left-right sequence)
+- Sections: Named by verbs/processes (1.0 Setup, 2.0 Execute, 3.0 Validate)
 
-## DRY Enforcement
+**📊 Practical Structures:**
+- **Temporal Process?** → Occurrent: 1.0 Setup → 2.0 Execution → 3.0 Cleanup
+- **System Architecture?** → Continuant: 1.0 Data Layer → 2.0 Logic Layer → 3.0 Presentation
+- **Decision Document?** → Mixed: 1.0 Problem (Continuant) → 2.0 Options → 3.0 Solution
+- **Analysis?** → Mixed: 1.0 Data (Continuant) → 2.0 Methods (Occurrent) → 3.0 Results
 
-- Each fact appears EXACTLY ONCE
-- Use references, not duplication
-- Example:
-  ```markdown
-  See §2.1¶3 for configuration details
-  Full process in section 3.0
-  ```
+**Key:** BFO ensures your categories reflect reality's actual structure. The TRUE structure makes the document write itself.
 
-## Ground Truth Attribution (MANDATORY)
+### 🎨 Mermaid Ontological Patterns (MANDATORY)
 
-**Core Rule:** Every piece of information MUST be traceable to its source. This enables verification, trust, updates, and audit trails.
+¶1 **Why Two Diagrams Minimum, but if subject is complex, you 3 diagrams:**
+- **Ontological completeness:** Every domain has BOTH structure (what exists) AND behavior (what happens)
+- **Cognitive clarity:** Mixing "system architecture" with "process flow" in ONE diagram creates confusion
+- **MECE enforcement:** Separate diagrams prevent mixing Continuants with Occurrents
+- **Rule:** Complex documents REQUIRE both Continuant (TD) and Occurrent (LR) diagrams
 
-### Attribution Patterns
+¶2 **Continuant Diagram (Structure/Architecture):**
+- **Type:** `graph TD` (top-down hierarchy)
+- **Shows:** System components, data models, organizational structure, dependencies
+- **Nodes:** NOUNS (Database, API, User, Table, Service)
+- **Edges:** "contains", "depends on", "is part of", "inherits from"
+- **Example:** System architecture, data schema, component hierarchy
 
-**External articles/research:**
+¶3 **Occurrent Diagram (Process/Flow):**
+- **Type:** `graph LR` (left-right sequence)
+- **Shows:** Workflows, pipelines, request flows, temporal sequences
+- **Nodes:** VERBS or process states (Extract, Transform, Load, Validate)
+- **Edges:** "then", "triggers", "flows to", temporal ordering
+- **Example:** Data pipeline, API request flow, deployment process
+
+¶4 **Participation Diagram (How Continuants participate in Occurrents) - OPTIONAL:**
+- **Type:** `graph TD` or `graph LR` depending on emphasis
+- **Shows:** Which entities (Continuants) are involved in which processes (Occurrents)
+- **Pattern:** Entity nodes + Process nodes, edges show "participates in", "executes", "produces"
+- **Example:** User triggers Pipeline which updates Database
+
+### 🧭 Mermaid Enforcement Rules
+
+¶1 **Mandatory Diagram Gate:**
+- Every document MUST include minimum ONE Mermaid diagram at top-level overview
+- Complex documents (system specs, architecture docs) REQUIRE BOTH Continuant (TD) and Occurrent (LR) diagrams
+- See §"🎨 Mermaid Ontological Patterns" for selection guide
+
+¶2 **Placement:**
+- **Primary diagrams:** Directly after Overview paragraph, before Section 1.0
+- **Secondary diagrams:** Within sections to illustrate complex subsystems or sub-processes
+- **Order:** If both present, show Continuant (structure) BEFORE Occurrent (process)
+
+¶3 **Size and Labeling:**
+- **Node count:** 5–12 nodes per diagram; if more, split into multiple diagrams
+- **Labels:** Short (1-3 words); nouns for Continuants, verbs for Occurrents
+- **Edges:** Label only when relationship is not obvious from context
+
+¶4 **DRY Principle:**
+- One diagram per abstraction level
+- Deeper sections get smaller, focused diagrams
+- Never duplicate information between diagrams - reference parent diagram instead
+
+---
+
+## 🔗 Ground Truth Attribution Rules (MANDATORY)
+
+**Core Rule:** Every piece of information in documentation MUST be traceable to its source. This enables verification, trust, updates, and audit trails.
+
+### Source Attribution Patterns
+
+¶1 **External articles/research:**
 ```markdown
 **Source:** [Article Title](URL) (accessed YYYY-MM-DD)
+**Key insight from:** Author Name, "Article Title", Publication, Date
 ```
 
-**YouTube videos with timestamps (MUST be clickable):**
-```markdown
-**Source:** [Creator], "Video Title", YouTube (YYYY-MM-DD) [Full video](https://youtu.be/VIDEO_ID)
-**Quote:** "Exact quote" ([timestamp 23:11](https://youtu.be/VIDEO_ID?t=1391))
-**Key insight:** Explanation at [15:30-17:45](https://youtu.be/VIDEO_ID?t=930)
-```
-
-**Timestamp URL format:**
-- Pattern: `https://youtu.be/VIDEO_ID?t=SECONDS`
-- Calculation: `MM:SS → (MM × 60) + SS`
-- Example: `23:11 → (23 × 60) + 11 = 1391`
-- Use markdown link syntax: `[timestamp MM:SS](URL)`
-
-**Code references:**
+¶2 **Code references:**
 ```markdown
 **Source:** `path/to/file.py:123-145` (function `calculate_metrics`)
 **Implementation:** See `db_utils.py:67` for connection logic
 ```
 
-**Claude Code sessions:**
+¶3 **Claude Code session results:**
 ```markdown
-**Generated by:** Claude Code session `abc123xyz` by [Author Name] (YYYY-MM-DD)
+**Generated by:** Claude Code session `abc123xyz` by Daniel Kravtsov (2025-11-10)
 **Session ID:** Get via `python data_sources/claude_code/get_session_id.py --quiet`
-**Context:** Analysis based on §2.1, §2.3
+**Context:** Analysis of customer churn patterns based on §2.1, §2.3
 ```
 
-**LLM reasoning:**
+¶4 **LLM reasoning/analysis:**
 ```markdown
-**LLM Analysis:** Based on ¶1 (customer data) and ¶3 (usage metrics)
-**Reasoning chain:** Combined §1.2 + §3.1 to derive conclusion
+**LLM Analysis:** Based on ¶1 (customer data patterns) and ¶3 (usage metrics)
+**Reasoning chain:** Combined insights from sections §1.2 + §3.1 to derive conclusion
 **Note:** This is synthesized analysis, not direct source data
 ```
 
-**Database queries:**
+¶5 **Database query results:**
 ```markdown
-**Query:** `ch_query.py "SELECT COUNT(*) FROM table"` (YYYY-MM-DD)
-**Result:** 1,247 records as of query date
+**Query:** `ch_query.py "SELECT COUNT(*) FROM internal_analytics.dim_agencies"` (2025-11-10)
+**Result:** 1,247 active agencies as of query date
 ```
 
-**Human expert input:**
+¶6 **Human expert input:**
 ```markdown
-**Expert input:** [Name] ([Role]), discussed YYYY-MM-DD
-**Decision context:** Based on [ticket/meeting reference]
+**Expert input:** Iuliia Kholodova (Product Manager), discussed 2025-11-10
+**Decision context:** Based on customer feedback from Notion ticket N-12345
 ```
 
-### Attribution Placement
+¶7 **Meeting notes/calls:**
+```markdown
+**Source:** Gong call ID `gong_123456` with Customer name (2025-10-15)
+**Transcript:** See `/calls/2025-10-15/transcript.txt`
+**Key decision:** Client requested ROAS optimization (timestamp 15:30)
+```
 
-**Document-level (in Overview):**
+
+### Attribution Placement Rules
+
+¶1 **Document-level:** Add primary source in Overview paragraph immediately after thesis
 ```markdown
 ## Overview
-[Overview text...]
+[Thesis and overview text...]
 
-**Primary source:** [Main reference] (accessed YYYY-MM-DD)
+**Primary source:** [Main reference] (accessed date)
 ```
 
-**Section-level:**
+¶2 **Section-level:** Add source at start of section if entire section derives from single source
 ```markdown
 ### 2.1 Customer Segmentation
 
-**Source:** Internal analysis by [Author], Claude Code session `xyz789` (YYYY-MM-DD)
+**Source:** Internal analysis by Daniel Kravtsov, Claude Code session `xyz789` (2025-11-10)
 
 ¶1 [Content...]
 ```
 
-**Paragraph-level (inline):**
+¶3 **Paragraph-level:** Inline attribution for specific facts or claims
 ```markdown
-¶3 Customer churn rate is 12% (**Source:** query YYYY-MM-DD). This represents...
+¶3 The customer churn rate is 12% annually (**Source:** `SELECT AVG(churn_rate) FROM metrics.customer_health` query 2025-11-10). This represents...
+```
+
+¶4 **Mixed sources:** When paragraph combines multiple sources, attribute each piece
+```markdown
+¶2 Customer satisfaction scores averaged 8.7/10 (**Source:** Zendesk report Q4-2025), while NPS remained at 45 (**Source:** internal survey `surveys/nps_q4.csv`). The correlation (**LLM analysis:** based on these two metrics) suggests...
 ```
 
 ### Verification Requirements
 
-- **URLs tested:** All external links verified accessible
-- **Code references precise:** Include line numbers/function names
-- **Session IDs retrievable:** Use session ID getter script
-- **Dates mandatory:** Every source has YYYY-MM-DD format
-- **Query timestamps:** Database queries note execution time
+¶1 **URLs must be accessible:** Test all external links - use archive.org snapshot if original may disappear
 
-### Common Violations
+¶2 **Code references must be precise:** Include line numbers or function names, not just file paths
 
-❌ "Based on research" → ✅ "Based on Gartner Report 2025 (URL, accessed YYYY-MM-DD)"
-❌ "Customers prefer X" → ✅ "Customers prefer X (**Source:** Survey `surveys/pref_2025.csv`)"
-❌ Presenting synthesis as fact → ✅ "**LLM Analysis:** Combined §1.2 + §3.1"
-❌ "See the function" → ✅ "See `utils.py:145` function `calculate_total`"
-❌ "(timestamp 23:11)" → ✅ "([timestamp 23:11](https://youtu.be/ID?t=1391))" for YouTube sources
+¶3 **Session IDs must be retrievable:** Use `python data_sources/claude_code/get_session_id.py --quiet` to get current session
 
-## Author Checklist
+¶4 **Dates are mandatory:** Every source attribution MUST include date (YYYY-MM-DD format)
 
-Before finalizing ANY document, verify:
+¶5 **Query results include timestamp:** Database queries should note execution date/time since data changes
 
-```markdown
-## ✅ Documentation Checklist
+### Common Violations to Avoid
 
-Structure:
-- [ ] Thesis (1 sentence) previews ALL MECE sections
-- [ ] Overview paragraph introduces each section
-- [ ] Minimum 1 Mermaid (complex docs: both TD and LR)
-- [ ] Sections numbered (1.0, 2.0, 3.0)
-- [ ] ¶1 explains ordering principle
+❌ **Vague attribution:** "Based on research" → ✅ "Based on Gartner Report 2025 (URL, accessed 2025-11-10)"
 
-MECE:
-- [ ] Sections mutually exclusive (no overlap)
-- [ ] Sections collectively exhaustive (covers everything)
-- [ ] Can't move content without breaking logic
+❌ **No source for claims:** "Customers prefer X" → ✅ "Customers prefer X (Source: Survey results `surveys/pref_2025.csv`)"
 
-BFO Ontology:
-- [ ] Continuants (TD diagrams) for structure
-- [ ] Occurrents (LR diagrams) for processes
-- [ ] Nodes match type (nouns vs verbs)
+❌ **Missing LLM reasoning flag:** Presenting synthesis as fact → ✅ "LLM Analysis: Combined §1.2 + §3.1"
 
-DRY:
-- [ ] Each fact appears exactly once
-- [ ] References used instead of duplication
-- [ ] No redundant Mermaid diagrams
+❌ **Code without location:** "See the function" → ✅ "See `utils.py:145` function `calculate_total`"
 
-Ground Truth (CRITICAL):
-- [ ] Primary source in Overview with date
-- [ ] Section sources attributed if single origin
-- [ ] Inline attribution for specific facts
-- [ ] LLM reasoning marked as synthesis
-- [ ] Code refs include file:line/function
-- [ ] All sources have YYYY-MM-DD dates
-- [ ] Session IDs for Claude Code work
-- [ ] URLs tested and accessible
+❌ **Outdated sources:** Link from 2020 without noting if still valid → ✅ Include access date and freshness note
 
-Clarity:
-- [ ] Minimal tokens, maximum clarity
-- [ ] Each level is complete (fractal principle)
-- [ ] Readable by AI agent or human
-```
+### ✅ Author Checklist (paste at document end and tick)
 
-## Common Patterns
+**Structure:**
+- [ ] **Thesis:** Single sentence previewing ALL MECE sections with specific outcome
+- [ ] **Overview:** One paragraph introducing each major section
+- [ ] **Mermaid diagrams:** At minimum ONE diagram (complex docs need both Continuant TD + Occurrent LR)
+- [ ] **MECE sections:** 3-7 top-level sections (1.0, 2.0, 3.0) that don't overlap but cover everything
+- [ ] **Ordering principle:** ¶1 of each section states WHY this ordering (importance/flow/chronology)
+- [ ] **Paragraph numbering:** ¶1, ¶2, ¶3 used within all sections
+- [ ] **Fractal depth:** Subsections mirror parent structure where needed
+- [ ] **Coherence:** Thesis mentions all sections actually present in document
 
-### Pattern 1: System Architecture (Continuant-heavy)
-```markdown
-Thesis: Analytics system processes client data through three layers...
+**Content Quality:**
+- [ ] **DRY compliance:** Each fact appears exactly ONCE, referenced by §X.Y elsewhere
+- [ ] **Minimal verbosity:** No unnecessary words, but sufficient for execution/understanding
+- [ ] **Section references:** Use §X.Y format for cross-references (e.g., "See §2.1")
+- [ ] **Clear labels:** Section titles are descriptive nouns (Continuants) or verbs (Occurrents)
 
-[Continuant TD diagram: Data → Logic → Presentation]
-
-1.0 Data Layer (what exists)
-2.0 Business Logic (what exists)
-3.0 Presentation Layer (what exists)
-```
-
-### Pattern 2: Process Guide (Occurrent-heavy)
-```markdown
-Thesis: Data pipeline extracts, transforms, and loads...
-
-[Occurrent LR diagram: Extract → Transform → Load]
-
-1.0 Extract Phase (what happens)
-2.0 Transform Phase (what happens)
-3.0 Load Phase (what happens)
-```
-
-### Pattern 3: Analysis (Mixed)
-```markdown
-Thesis: Facebook Ads analysis evaluates performance using CTR metrics...
-
-[Continuant TD: Data sources hierarchy]
-[Occurrent LR: Analysis workflow]
-
-1.0 Data Sources (Continuant)
-2.0 Analysis Methods (Occurrent)
-3.0 Results & Insights (Continuant)
-```
-
-## Anti-Patterns to Avoid
-
-❌ **No Thesis:** Document starts directly with sections
-❌ **Missing Diagrams:** Text-only documentation
-❌ **Wrong Diagram Type:** Process shown in TD instead of LR
-❌ **No ¶1 Ordering:** Reader doesn't know why sections ordered this way
-❌ **Duplication:** Same information repeated in multiple sections
-❌ **Non-MECE:** Overlapping sections or gaps in coverage
-❌ **Verbose:** Using more tokens than necessary
-❌ **CRITICAL: Speculation/Invention:** Adding sections not in user's context (e.g., "Troubleshooting" when user only asked to document setup)
-❌ **Generic fluff:** "Best Practices", "Tips & Tricks", "Common Mistakes" sections without actual content from context
-
-## Quality Gates
-
-**Before claiming documentation is complete:**
-
-1. Can I delete the thesis and still understand document scope? → ❌ Thesis not specific enough
-2. Can I swap section order without breaking logic? → ❌ Missing ¶1 ordering principle
-3. Can I find same information in multiple places? → ❌ Violates DRY
-4. Are diagrams missing or using wrong orientation? → ❌ Violates BFO ontology
-5. Do sections overlap in scope? → ❌ Not MECE
-6. **🚨 Can I point to source in context for EVERY paragraph?** → ❌ Speculation/invention - DELETE IT
-7. **🚨 Did I add sections user didn't ask for?** → ❌ Verbose - REMOVE THEM
-8. **🚨 Is every fact attributed to source (URL/file/session/query)?** → ❌ Missing Ground Truth - ADD ATTRIBUTION
-9. **🚨 Are all sources dated (YYYY-MM-DD)?** → ❌ Can't verify freshness - ADD DATES
-10. **🚨 Is LLM reasoning flagged as synthesis?** → ❌ Misleading - MARK AS "LLM Analysis"
-
-**Gold Standard:** Another AI agent OR human can:
-1. Execute task/understand content with ZERO ambiguity using ONLY information from user's context
-2. Verify EVERY claim by following source attribution to original data/code/article
-3. Update document when sources change by following Ground Truth links
-
-## Examples Reference
-
-See `examples/` directory for:
-- System architecture doc (Continuant-heavy)
-- ETL pipeline doc (Occurrent-heavy)
-- Analysis report (Mixed)
-- API documentation (Mixed)
-
----
-
-**Meta Note:** This skill itself follows the framework - thesis, overview, MECE sections, BFO classification. Use as template!
+**Ground Truth (CRITICAL):**
+- [ ] **Primary source documented:** Main source listed in Overview with URL/path and date
+- [ ] **Section sources attributed:** Each section has source if from single origin
+- [ ] **Inline attribution:** Specific facts cite source (URL, file path, query, session ID)
+- [ ] **LLM reasoning flagged:** Synthesized analysis marked as "LLM Analysis: based on §X, §Y"
+- [ ] **Code references precise:** Include file path + line numbers/function names
+- [ ] **Dates present:** All sources have YYYY-MM-DD access/execution dates
+- [ ] **Session IDs included:** Claude Code work includes session ID and author
+- [ ] **URLs tested:** External links verified accessible (or archived)
+- [ ] **Query timestamps:** Database queries note execution date/time
