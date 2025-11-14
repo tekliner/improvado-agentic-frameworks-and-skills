@@ -67,26 +67,26 @@ git push -u origin main
 
 ```json
 {
-  "name": "Team Internal Skills",
-  "description": "Internal skills and tools for team",
-  "owner": "your-org",
+  "name": "Improvado Internal Skills",
+  "description": "Internal skills and tools for Improvado team",
+  "owner": "improvado",
   "plugins": [
     {
       "name": "knowledge-framework",
       "description": "MECE + BFO documentation framework",
-      "source": "https://github.com/your-org/claude-code-knowledge-framework.git",
+      "source": "https://github.com/improvado/claude-code-knowledge-framework.git",
       "type": "skill",
       "version": "1.0.0",
-      "author": "Team",
+      "author": "Daniel Kravtsov",
       "tags": ["documentation", "mece", "ontology"]
     },
     {
-      "name": "custom-helpers",
-      "description": "Custom query patterns and utilities",
-      "source": "https://github.com/your-org/claude-code-custom.git",
+      "name": "clickhouse-helpers",
+      "description": "ClickHouse query patterns and utilities",
+      "source": "https://github.com/improvado/claude-code-clickhouse.git",
       "type": "skill",
       "version": "1.0.0",
-      "author": "Team"
+      "author": "Improvado Team"
     }
   ]
 }
@@ -97,7 +97,7 @@ git push -u origin main
 For your team to access the marketplace automatically in specific projects:
 
 ```bash
-# In your project
+# In your project (chrome-extension-tcs)
 cd ~/project
 
 # Add to .claude/settings.json
@@ -191,21 +191,21 @@ YOUR-USERNAME/claude-code-marketplace/
 
 ## 🚀 Quick Start Example
 
-**For Your Team:**
+**For Improvado Team:**
 
 ```bash
 # 1. Create marketplace repo
-mkdir ~/team-claude-marketplace
-cd ~/team-claude-marketplace
+mkdir ~/improvado-claude-marketplace
+cd ~/improvado-claude-marketplace
 
 # 2. Create marketplace.json
 {
-  "name": "Team Claude Skills",
-  "owner": "your-org",
+  "name": "Improvado Claude Skills",
+  "owner": "improvado",
   "plugins": [
     {
       "name": "knowledge-framework",
-      "source": "https://github.com/your-org/knowledge-framework.git",
+      "source": "https://github.com/improvado/knowledge-framework.git",
       "type": "skill",
       "version": "1.0.0"
     }
@@ -214,11 +214,11 @@ cd ~/team-claude-marketplace
 
 # 3. Publish to GitHub
 git init && git add . && git commit -m "Init marketplace"
-git remote add origin git@github.com:your-org/claude-marketplace.git
+git remote add origin git@github.com:improvado/claude-marketplace.git
 git push -u origin main
 
 # 4. Team members install
-/plugin marketplace add your-org/claude-marketplace
+/plugin marketplace add improvado/claude-marketplace
 /plugin install knowledge-framework
 ```
 
@@ -274,6 +274,6 @@ git push
 **Example:**
 ```bash
 /plugin marketplace add anthropics/skills          # Official
-/plugin marketplace add your-org/claude-skills     # Team
+/plugin marketplace add improvado/claude-skills    # Team
 /plugin marketplace add your-name/experiments      # Personal
 ```

@@ -12,6 +12,7 @@ Complete collection of production-ready skills ordered by importance and usage f
 | 2️⃣ | **[Multi-Agent Orchestrator](skills/multi-agent-orchestrator/)** | Orchestrate parallel execution of multiple CLI agents (Claude Code, Codex, Gemini) for competitive evaluation with objective winner selection | Complex tasks (>7/10), multiple valid approaches, high-stakes solutions |
 | 3️⃣ | **[Claude Code Sessions](skills/claude-code-sessions/)** | Universal session management - search, resume, and analyze conversations from any directory | Resuming sessions, searching conversation history, tracking work |
 | 4️⃣ | **[YouTube to Knowledge Doc](skills/youtube-to-knowledge-doc/)** | Extract YouTube transcripts and convert to Knowledge Framework documentation with clickable timestamps | Documenting videos, preserving external learning, research archival |
+| 5️⃣ | **[Skill Public Git Sync](skills/skill-public-git-sync/)** | Synchronize Claude Code skills to public GitHub with automated security scanning and sanitization | Publishing skills publicly, removing sensitive data, automated sync workflows |
 
 ## 🎯 Quick Selection Guide
 
@@ -21,6 +22,7 @@ Complete collection of production-ready skills ordered by importance and usage f
 - 🤖 **Complex task needing best solution?** → Multi-Agent Orchestrator
 - 🔄 **Finding previous work?** → Claude Code Sessions
 - 🎥 **Learning from YouTube?** → YouTube to Knowledge Doc
+- 🔒 **Publishing skills to GitHub?** → Skill Public Git Sync
 
 ## 📖 Core Documentation
 
@@ -55,6 +57,7 @@ cp -r skills/* /path/to/your-project/.claude/skills/
 - "Run multi-agent framework" → `multi-agent-orchestrator`
 - "Resume session abc123" → `claude-code-sessions`
 - "Document this YouTube video" → `youtube-to-knowledge-doc`
+- "Sync skills to public repo" → `skill-public-git-sync`
 
 **Manual invocation:**
 ```
@@ -62,6 +65,7 @@ cp -r skills/* /path/to/your-project/.claude/skills/
 /skill multi-agent-orchestrator
 /skill claude-code-sessions
 /skill youtube-to-knowledge-doc
+/skill skill-public-git-sync
 ```
 
 ## 🔧 Detailed Skill Information
@@ -182,6 +186,37 @@ rc-list --days 7
 **Quote:** "Direct quote" ([timestamp 23:11](https://youtu.be/VIDEO_ID?t=1391))
 ```
 
+### 5️⃣ Skill Public Git Sync
+
+**Purpose:** Synchronize Claude Code skills to public GitHub repository with automated security
+
+**Key features:**
+- Automated security scanning for API keys, credentials, and sensitive data
+- Pattern-based sanitization (paths, client IDs, workspace IDs)
+- Context-aware email preservation (keeps author attribution)
+- Batch sync workflow for all skills
+- Pre-sync validation with detailed reports
+- Automated git commit and push
+
+**Dependencies:** Bash, Python 3.8+, Git
+
+**Workflow:**
+```
+1. Scan all local skills for security issues
+2. Run sanitization on each skill
+3. Copy sanitized versions to public repo
+4. Update public README with skill count
+5. Git commit and push changes
+```
+
+**Security patterns detected:**
+- ❌ API keys (sk-, AIza, AKIA patterns) - BLOCKING
+- ❌ Hardcoded credentials - BLOCKING
+- ⚠️  Absolute paths (/Users/...) - AUTO-FIX
+- ⚠️  Client database IDs (im_XXXX_XXX) - AUTO-FIX
+- ⚠️  Workspace/Agency IDs - AUTO-FIX
+- ⚠️  Client names - AUTO-FIX
+
 ## 🎯 Skill Structure
 
 All skills follow consistent architecture:
@@ -266,4 +301,4 @@ Internal use. Not for public distribution without authorization.
 
 **Repository:** https://github.com/tekliner/improvado-agentic-frameworks-and-skills
 **Last updated:** 2025-11-13
-**Skills count:** 4 production-ready skills
+**Skills count:** 5 production-ready skills

@@ -11,18 +11,18 @@ Expert documentation framework using MECE, BFO ontology, and fractal structure. 
 
 ## When to Use
 
-**AUTOMATIC TRIGGERS (use skill proactively):**
-- **CRITICAL:** When creating ANY .md file (README, guides, docs, analysis)
-- **CRITICAL:** When user requests documentation or asks to "write" something structured
-- **CRITICAL:** Before finalizing any markdown document >20 lines
-
-**USER-REQUESTED TRIGGERS:**
+Use this skill when:
 - User asks to create/improve documentation
 - User needs to structure complex information
 - User mentions: MECE, ontology, documentation framework, knowledge base
 - User asks "how to organize documentation"
 - Creating README, architecture docs, process guides, or analysis reports
 - ANY situation requiring clear, structured explanation
+
+**PROACTIVE APPLICATION:**
+- Automatically apply when creating ANY .md file (README, guides, docs, analysis)
+- Automatically apply when user requests documentation or asks to "write" something structured
+- Automatically apply before finalizing any markdown document >20 lines
 
 **IMPORTANT:** Apply this skill BEFORE writing .md files, not after. The framework guides the writing process itself.
 

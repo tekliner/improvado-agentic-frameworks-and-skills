@@ -114,11 +114,11 @@ rc-last                 # Latest session
 
 ```
 ~/.claude/projects/
-├── -Users-username-projects/
+├── -Users-Kravtsovd-projects/
 │   └── b2435f08-65e2-4b88-91c6.jsonl
-├── -Users-username-projects-main-project/
+├── -Users-username-projects-project/
 │   └── c080fd31-1fea-44e2-8690.jsonl
-└── -Users-username-projects-other-project/
+└── -Users-username-projects-ai-dashboards/
     └── a7f3e290-4b3c-11ef-8901.jsonl
 ```
 
@@ -138,7 +138,7 @@ rc-last                 # Latest session
 
 ### Project History
 ```
-"What did I work on in my project this week?"
+"What did I work on in chrome-extension-tcs this week?"
 → Shows all sessions from last 7 days with details
 ```
 

@@ -121,7 +121,7 @@ if grep --version > /dev/null 2>&1; then
 
     # Try a test search
     if [ -d "$HOME/.claude/projects" ]; then
-        TEST_RESULTS=$(grep -l "session" "$HOME/.claude/projects"/*/*.jsonl 2>/dev/null | head -3)
+        TEST_RESULTS=$(grep -l "session" "$HOME/.claude/projects"/-Users-*/*.jsonl 2>/dev/null | head -3)
         if [ -n "$TEST_RESULTS" ]; then
             print_info "Sample grep search found sessions"
         else

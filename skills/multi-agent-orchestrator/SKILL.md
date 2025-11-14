@@ -1,8 +1,6 @@
 ---
 name: multi-agent-orchestrator
-description: Orchestrate parallel execution of multiple CLI agents (Claude Code, Codex, Gemini) for competitive evaluation of complex tasks. Use when user says "run multi-agent", "compare agents", "competitive evaluation", "parallel agents", "запусти мульти-агент", "сравни агентов", "конкурентная оценка", "параллельные агенты", or requests multiple approaches for high-complexity tasks (7+ out of 10) where best solution matters.
-version: "1.0.0"
-allowed-tools: Read, Write, Edit, Bash, Glob, Grep, TodoWrite
+description: Orchestrate parallel execution of multiple CLI agents (Claude Code, Codex, Gemini) for competitive evaluation of complex tasks. Use when user says "run multi-agent framework", "compare agents", "launch competitive evaluation", "use parallel agents", or requests multiple approaches for tasks with complexity >7/10 where multiple valid implementation strategies exist and best solution matters.
 ---
 
 # Multi-Agent Orchestrator Skill
@@ -50,55 +48,6 @@ When user wants multi-agent comparison:
 **CRITICAL: 🔴 NEVER MOCK DATA!** Try multiple approaches to obtain real data. If all attempts fail, stop the task and document all attempted approaches.
 
 **Progressive disclosure workflow:** Agree on location → Create draft task file → User edits criteria → Confirm readiness → Launch agents → Compare results.
-
-## Understanding Success Criteria & Agent Comparison
-
-**Why Success Criteria Matter:**
-Success criteria are the ONLY objective way to compare agent performance. Without them, comparison is subjective and meaningless.
-
-**Good vs Bad Criteria:**
-
-✅ **GOOD (Measurable, Specific, Testable):**
-- Generate conversion rates with >95% accuracy for Google, Facebook, LinkedIn
-- Identify drop-off points with >20% loss AND provide root causes
-- Complete using ClickHouse data from im_XXXX_XXX database in <2 hours
-- Provide 3+ specific, actionable recommendations with expected impact
-
-❌ **BAD (Vague, Subjective, Untestable):**
-- Analyze data (too vague - what analysis?)
-- Make it good (subjective - what is "good"?)
-- Be thorough (not measurable)
-- Do your best (not testable)
-
-**How Agent Comparison Works:**
-
-1. **Each agent reads THE SAME task file** with success criteria
-2. **Each agent works independently** in their workspace
-3. **Each agent creates self-evaluation** in `90_results_[agent].md`:
-   ```markdown
-   ### Criterion 1: Generate conversion rates >95%
-   **Status:** ✅ | **Evidence:** Google: 97.2%, FB: 96.8% | **Details:** Queried mrt_campaigns
-
-   ### Criterion 2: Identify drop-off >20%
-   **Status:** ✅ | **Evidence:** Cart: 34%, Checkout: 22% | **Details:** Root cause analyzed
-   ```
-
-4. **Main session compares** by reading all 90_results files and counting ✅/❌/⚠️:
-   ```
-   ┌────────────────────────┬──────────────┬─────────────┬─────────────┐
-   │ Criterion              │ Claude Code  │ Codex       │ Gemini      │
-   ├────────────────────────┼──────────────┼─────────────┼─────────────┤
-   │ Conversion rates >95%  │ ✅           │ ✅          │ ❌          │
-   │ Drop-off >20%          │ ✅           │ ✅          │ ✅          │
-   │ 3+ recommendations     │ ⚠️           │ ✅          │ ✅          │
-   │ Complete <2h           │ ❌           │ ✅          │ ✅          │
-   ├────────────────────────┼──────────────┼─────────────┼─────────────┤
-   │ CRITERIA MET           │ 2/4          │ 4/4         │ 3/4         │
-   └────────────────────────┴──────────────┴─────────────┴─────────────┘
-   🏆 WINNER: Codex (4/4 criteria met)
-   ```
-
-**Winner = Agent with most ✅ criteria met**
 
 ## Practical Workflow
 

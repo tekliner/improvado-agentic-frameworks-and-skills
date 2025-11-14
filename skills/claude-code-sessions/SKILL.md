@@ -9,14 +9,7 @@ Comprehensive session management for Claude Code - search, analyze, and resume c
 
 ## When to Use This Skill
 
-**AUTOMATIC TRIGGERS (use skill when user says):**
-- "Resume session [ID]" or "Continue from session [ID]"
-- "What did I work on [date/timeframe]?"
-- "Find conversation about [topic]"
-- "Show my recent sessions"
-- "Resume my last session"
-
-**USER-REQUESTED TRIGGERS:**
+Use this skill when:
 - Search sessions by content or keywords
 - List all available sessions across projects
 - Analyze session history and patterns
@@ -127,7 +120,7 @@ python data_sources/claude_code/22_list_all_sessions.py
 python data_sources/claude_code/22_list_all_sessions.py --detailed
 
 # Filter by project path
-python data_sources/claude_code/22_list_all_sessions.py --project my-project
+python data_sources/claude_code/22_list_all_sessions.py --project chrome-extension-tcs
 
 # Show only recent sessions (last 7 days)
 python data_sources/claude_code/22_list_all_sessions.py --days 7
@@ -147,7 +140,7 @@ python data_sources/claude_code/22_list_all_sessions.py --days 7
    Period: 2024-10-01 to 2025-01-15
    • c080fd31... (2h ago) - dashboard implementation with DataTables...
    • b2435f08... (1d ago) - fix session resume script...
-   • a7f3e290... (3d ago) - integration analysis...
+   • a7f3e290... (3d ago) - Notion integration analysis...
    ... and 86 more sessions
 ```
 
@@ -172,7 +165,7 @@ grep -l "search_term" ~/.claude/projects/-Users-*/*.jsonl
 grep -C 2 "error message" ~/.claude/projects/-Users-*/*.jsonl
 
 # Search in specific project
-grep -i "dashboard" ~/.claude/projects/-Users-username-projects-my-project/*.jsonl
+grep -i "dashboard" ~/.claude/projects/-Users-username-projects-project/*.jsonl
 ```
 
 **Why Grep:**
@@ -186,18 +179,18 @@ grep -i "dashboard" ~/.claude/projects/-Users-username-projects-my-project/*.jso
 ### Storage Location
 ```
 ~/.claude/projects/
-├── -Users-username-projects/
+├── -Users-Kravtsovd-projects/
 │   └── b2435f08-65e2-4b88-91c6-79f3a93ced9a.jsonl
-├── -Users-username-projects-main-project/
+├── -Users-username-projects-project/
 │   └── c080fd31-1fea-44e2-8690-c58ad0f4a829.jsonl
-└── -Users-username-projects-other-project/
+└── -Users-username-projects-ai-dashboards/
     └── a7f3e290-4b3c-11ef-8901-234567890abc.jsonl
 ```
 
 **Directory Naming:**
 - Claude Code creates unique folder for each working directory
 - Path format: `-` separated segments
-- Example: `/Users/username/projects` → `-Users-username-projects`
+- Example: `~/projects` → `-Users-Kravtsovd-projects`
 
 ### Session File Format (JSONL)
 
@@ -432,3 +425,7 @@ rc-find "notion"              # Find by keyword
 ## Version
 
 v1.0 (2025-01-15)
+
+## Author
+
+Daniel Kravtsov (daniel@improvado.io)
