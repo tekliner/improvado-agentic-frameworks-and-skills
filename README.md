@@ -2,136 +2,221 @@
 
 Production-ready Claude Code skills and frameworks for building, evaluating, and scaling agentic AI systems.
 
-## 📦 Skills Collection
+## 📋 Skills Registry
 
-Production-ready Claude Code skills for common agentic workflows:
+Complete collection of production-ready skills ordered by importance and usage frequency:
 
-### 1. 📋 Knowledge Framework
-**Location:** `skills/knowledge-framework/`
+| # | Skill | Description | When to Use |
+|---|-------|-------------|-------------|
+| 1️⃣ | **[Knowledge Framework](skills/knowledge-framework/)** | Automatic documentation framework using MECE/BFO ontology principles with Mermaid diagrams and Ground Truth attribution | Creating any .md file, documenting systems, building knowledge base |
+| 2️⃣ | **[Multi-Agent Orchestrator](skills/multi-agent-orchestrator/)** | Orchestrate parallel execution of multiple CLI agents (Claude Code, Codex, Gemini) for competitive evaluation with objective winner selection | Complex tasks (>7/10), multiple valid approaches, high-stakes solutions |
+| 3️⃣ | **[Claude Code Sessions](skills/claude-code-sessions/)** | Universal session management - search, resume, and analyze conversations from any directory | Resuming sessions, searching conversation history, tracking work |
+| 4️⃣ | **[YouTube to Knowledge Doc](skills/youtube-to-knowledge-doc/)** | Extract YouTube transcripts and convert to Knowledge Framework documentation with clickable timestamps | Documenting videos, preserving external learning, research archival |
 
-Automatic documentation framework using MECE/BFO ontology principles. Creates structured documents with thesis, overview, Mermaid diagrams, and Ground Truth attribution.
+## 🎯 Quick Selection Guide
 
-**Use when:**
-- Creating any .md file (README, guides, documentation)
-- Documenting complex systems or processes
-- Need structured, maintainable knowledge base
+**Choose your skill based on task type:**
 
-**Key features:**
-- Automatic MECE section organization
-- Continuant (TD) and Occurrent (LR) Mermaid diagrams
-- Numbered sections (§1.0, §2.0) and paragraphs (¶1, ¶2)
-- Ground Truth attribution with clickable sources
-- Quick Start checklist for rapid application
+- 📝 **Writing documentation?** → Knowledge Framework
+- 🤖 **Complex task needing best solution?** → Multi-Agent Orchestrator
+- 🔄 **Finding previous work?** → Claude Code Sessions
+- 🎥 **Learning from YouTube?** → YouTube to Knowledge Doc
 
-### 2. 🔄 Claude Code Sessions
-**Location:** `skills/claude-code-sessions/`
+## 📖 Core Documentation
 
-Universal session management for Claude Code - search, resume, and analyze conversations from any directory.
+**[How to organize documents - Knowledge Framework Guide](How%20to%20organize%20documents_knowladge_framework.md)**
 
-**Use when:**
-- Resuming previous Claude Code conversation
-- Searching sessions by content or keywords
-- Finding work from specific dates
-- Analyzing session history and patterns
-
-**Key features:**
-- Resume by session ID or text search
-- Universal session discovery across all projects
-- Automatic path resolution and project switching
-- Shell integration (`rc` command)
-- Session statistics and metadata
-
-### 3. 🎥 YouTube to Knowledge Doc
-**Location:** `skills/youtube-to-knowledge-doc/`
-
-Extract YouTube video transcripts and convert to Knowledge Framework documentation with proper folder placement and clickable timestamp citations.
-
-**Use when:**
-- User provides YouTube URL for documentation
-- Converting external learning to internal knowledge base
-- Preserving video knowledge in repository structure
-
-**Key features:**
-- Automatic transcript extraction with yt-dlp
-- Intelligent folder placement recommendation
-- Clickable YouTube timestamp links (MM:SS → ?t=SECONDS)
-- Knowledge Framework compliance
-- Ground Truth attribution with video source
-
-### 4. 🤖 Multi-Agent Orchestrator
-**Location:** `skills/multi-agent-orchestrator/`
-
-Orchestrate parallel execution of multiple CLI agents (Claude Code, Codex, Gemini) for competitive evaluation of complex tasks with self-evaluation and winner selection.
-
-**Use when:**
-- Complex tasks requiring competitive evaluation (complexity >7/10)
-- Multiple valid implementation approaches exist
-- Need to compare different agent strategies
-- High-stakes tasks where best solution matters
-
-**Key features:**
-- Parallel CLI agent execution (Claude Code, Codex, Gemini)
-- Self-evaluation with measurable success criteria
-- Automated winner selection based on objective metrics
-- Progressive disclosure workflow (task file → user edits → launch)
-- Artifact placement enforcement (all outputs in agent workspace)
-- Ready-to-use execution scripts
+Complete guide to MECE/BFO documentation principles - the foundation for all skills in this repository.
 
 ## 🚀 Quick Start
 
 ### Installing Skills
 
-1. **Claude Code Desktop:**
-   ```bash
-   # Copy skills to global skills directory
-   cp -r skills/* ~/.claude/skills/
-   ```
+**Global installation (recommended):**
+```bash
+# Clone repository
+git clone https://github.com/tekliner/improvado-agentic-frameworks-and-skills.git
+cd improvado-agentic-frameworks-and-skills
 
-2. **Project-level:**
-   ```bash
-   # Copy to project skills directory
-   cp -r skills/* ~/project/.claude/skills/
-   ```
+# Install all skills globally
+cp -r skills/* ~/.claude/skills/
+```
+
+**Project-level installation:**
+```bash
+# Copy to specific project
+cp -r skills/* /path/to/your-project/.claude/skills/
+```
 
 ### Using Skills
 
-Skills trigger automatically when Claude Code detects relevant context:
+**Automatic activation** - Skills trigger when Claude Code detects relevant context:
 - Creating .md files → `knowledge-framework`
+- "Run multi-agent framework" → `multi-agent-orchestrator`
 - "Resume session abc123" → `claude-code-sessions`
 - "Document this YouTube video" → `youtube-to-knowledge-doc`
-- "Run multi-agent framework" → `multi-agent-orchestrator`
 
-Or invoke explicitly:
+**Manual invocation:**
 ```
 /skill knowledge-framework
+/skill multi-agent-orchestrator
 /skill claude-code-sessions
 /skill youtube-to-knowledge-doc
-/skill multi-agent-orchestrator
 ```
 
-## 📖 Documentation
+## 🔧 Detailed Skill Information
 
-Each skill includes:
-- `SKILL.md` - Complete skill documentation with Quick Start
-- `README.md` - Technical details and implementation guide
-- `examples/` - Real-world usage examples (where applicable)
+### 1️⃣ Knowledge Framework
+
+**Purpose:** Create structured, maintainable documentation automatically
+
+**Key features:**
+- MECE section organization (Mutually Exclusive, Collectively Exhaustive)
+- Continuant (TD) and Occurrent (LR) Mermaid diagrams
+- Numbered sections (§1.0, §2.0) and paragraphs (¶1, ¶2)
+- Ground Truth attribution with sources and dates
+- Quick Start checklist for rapid application
+- Author checklist for quality validation
+
+**Dependencies:** None
+
+**Example output:**
+```markdown
+## 📋 [Title]
+**Thesis:** One sentence previewing all MECE sections...
+
+**Overview:** Paragraph introducing each section...
+
+[Mermaid diagrams - structure + process]
+
+## 1.0 First Section
+¶1 Ordering principle: [why this order]...
+```
+
+### 2️⃣ Multi-Agent Orchestrator
+
+**Purpose:** Competitive evaluation of complex tasks using multiple AI agents
+
+**Key features:**
+- Parallel CLI agent execution (Claude Code, Codex, Gemini)
+- Self-evaluation with measurable success criteria (✅/❌/⚠️)
+- Automated winner selection based on objective metrics
+- Progressive disclosure workflow (location → task file → user edits → launch)
+- Artifact placement enforcement (workspace isolation)
+- Ready-to-use execution scripts with background monitoring
+
+**Dependencies:** Bash, Python 3.8+, Multiple CLI agents (Claude Code CLI, Codex CLI, Gemini CLI)
+
+**Workflow:**
+```
+1. User describes complex task
+2. Agree on folder location
+3. Create task file with success criteria
+4. User edits and confirms "Ready"
+5. Launch ./run_parallel_agents.sh
+6. Compare self-evaluations
+7. Declare winner based on criteria met
+```
+
+**Success criteria example:**
+```markdown
+- [✅] Process 1M rows in <5 seconds
+- [✅] Handle edge cases (nulls, duplicates)
+- [❌] Memory usage <500MB
+```
+
+### 3️⃣ Claude Code Sessions
+
+**Purpose:** Universal session management and conversation history
+
+**Key features:**
+- Resume by session ID or text search
+- Universal session discovery across all projects
+- Automatic path resolution and project switching
+- Shell integration (`rc` command for quick access)
+- Session statistics and metadata
+- Search by content, date, or participant
+
+**Dependencies:** Python 3.8+
+
+**Common commands:**
+```bash
+# Resume by ID
+rc c080fd31-1fea-44e2
+
+# Search by text
+rc --text "dashboard implementation"
+
+# Resume latest
+rc --last
+
+# List all sessions
+rc-list --days 7
+```
+
+### 4️⃣ YouTube to Knowledge Doc
+
+**Purpose:** Preserve external learning as structured documentation
+
+**Key features:**
+- Automatic transcript extraction with yt-dlp
+- Intelligent folder placement recommendation
+- Clickable YouTube timestamp links (MM:SS → ?t=SECONDS)
+- Knowledge Framework compliance (MECE structure, diagrams)
+- Ground Truth attribution with video source
+- Session ID tracking for provenance
+
+**Dependencies:** yt-dlp, Python 3.8+
+
+**Workflow:**
+```
+1. User provides YouTube URL
+2. Extract transcript and metadata
+3. Recommend folder location
+4. Generate Knowledge Framework doc
+5. Add clickable timestamp citations
+```
+
+**Timestamp format:**
+```markdown
+**Quote:** "Direct quote" ([timestamp 23:11](https://youtu.be/VIDEO_ID?t=1391))
+```
 
 ## 🎯 Skill Structure
 
-All skills follow consistent structure:
+All skills follow consistent architecture:
+
 ```
 skill-name/
-├── SKILL.md                 # Main skill documentation
-│   ├── YAML frontmatter (name, description)
-│   ├── When to Use (automatic triggers)
-│   ├── Quick Start Checklist
+├── SKILL.md                 # Main documentation
+│   ├── YAML frontmatter (name, description, triggers)
+│   ├── When to Use (automatic + manual triggers)
+│   ├── Quick Start Checklist (5-10 steps)
 │   ├── 5-Second Decision Tree
-│   ├── Practical Workflow
+│   ├── Practical Workflow examples
 │   └── Detailed documentation
 ├── README.md                # Technical implementation
-├── examples/                # Usage examples
-└── references/              # Additional documentation
+├── references/              # Additional documentation (loaded as needed)
+│   ├── script_usage.md
+│   └── task_templates.md
+└── scripts/                 # Executable helpers
+    └── create_task_file.sh
 ```
+
+## 📊 Skills Compatibility
+
+**Tested with:**
+- Claude Code Desktop v1.0+
+- Claude Sonnet 4.5 model
+- macOS (primary), Linux (compatible)
+
+**All skills include:**
+- ✅ YAML frontmatter with explicit triggers
+- ✅ Quick Start Checklist (5-10 steps)
+- ✅ 5-Second Decision Tree
+- ✅ Practical Workflow examples
+- ✅ Clear "When to Use" section
+- ✅ Automatic trigger descriptions
 
 ## 🛠️ Development
 
@@ -143,43 +228,42 @@ Follow the skill-creator framework:
 3. Initialize skill structure
 4. Write SKILL.md with YAML frontmatter
 5. Add Quick Start and Decision Tree sections
-6. Validate against checklist
+6. Validate against quality checklist
 
 ### Quality Standards
 
-All skills must include:
-- ✅ YAML frontmatter with explicit triggers
-- ✅ Quick Start Checklist (5-10 steps)
-- ✅ 5-Second Decision Tree
-- ✅ Practical Workflow example
+**MANDATORY for all skills:**
+- ✅ YAML frontmatter with explicit trigger phrases
+- ✅ Quick Start Checklist (actionable steps)
+- ✅ 5-Second Decision Tree (rapid selection)
+- ✅ Practical Workflow (real examples)
 - ✅ Clear "When to Use" section
-- ✅ Automatic trigger descriptions
-
-## 📊 Skills Compatibility
-
-**Tested with:**
-- Claude Code Desktop v1.0+
-- Claude Sonnet 4.5 model
-- macOS (primary), Linux (compatible)
-
-**Dependencies:**
-- `knowledge-framework`: None
-- `claude-code-sessions`: Python 3.8+
-- `youtube-to-knowledge-doc`: yt-dlp, Python 3.8+
-- `multi-agent-orchestrator`: Bash, Python 3.8+, multiple CLI agents (Claude Code CLI, Codex CLI, Gemini CLI)
+- ✅ No hardcoded paths or credentials
+- ✅ Generic examples (no client-specific data)
 
 ## 🤝 Contributing
 
-Skills in this repository are production-tested. For improvements:
-1. Test changes thoroughly in your project
+Skills in this repository are production-tested and follow strict quality standards.
+
+**For improvements:**
+1. Test changes thoroughly in real projects
 2. Update Quick Start/Decision Tree if workflow changes
 3. Maintain YAML frontmatter accuracy
 4. Add examples for new features
+5. Ensure no sensitive data (API keys, paths, client names)
 
 ## 📝 License
 
-MIT License - Free for personal and commercial use
+Internal use. Not for public distribution without authorization.
+
+## 🔗 Related Resources
+
+- **Knowledge Framework Full Guide:** [How to organize documents](How%20to%20organize%20documents_knowladge_framework.md)
+- **Multi-Agent Framework:** `skills/multi-agent-orchestrator/references/`
+- **Task Templates:** Available in respective skill `references/` folders
 
 ---
 
-**Generated by:** Claude Code (2025-11-12)
+**Repository:** https://github.com/tekliner/improvado-agentic-frameworks-and-skills
+**Last updated:** 2025-11-13
+**Skills count:** 4 production-ready skills
