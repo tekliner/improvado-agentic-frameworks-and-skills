@@ -1,29 +1,36 @@
 ---
 name: knowledge-framework
 description: Auto-applies MECE/BFO framework (thesis, Mermaid TD/LR, numbered sections, Ground Truth) to ANY .md file creation.
+version: "1.1.0"
 ---
 ## 📋 Documentation = Code (Minto + MECE + BFO + DRY)
 
 **Core Principle:** Write documentation like code - fractal structure where each abstraction level is complete, MECE-organized, with zero redundancy with links to source for ground truth.
 
+**Documentation Framework Structure (Continuant - TD):**
 ```mermaid
 graph TD
-    Thesis[1 Sentence Thesis] --> Overview[1 Paragraph Overview]
-    Overview --> Diagrams[Mermaid Diagrams]
+    Thesis[Minto Thesis: 1 Sentence] --> Overview[Overview: 1 Paragraph]
+    Overview --> Diagrams[Mermaid: TD + LR]
 
-    Diagrams --> ContinuantDiagram[Continuant TD: Structure]
-    Diagrams --> OccurrentDiagram[Occurrent LR: Process]
-    Diagrams --> ParticipationDiagram[Participation: Optional]
+    Diagrams --> TD[TD: Structure/Continuants]
+    Diagrams --> LR[LR: Process/Occurrents]
 
-    ContinuantDiagram --> Sections[3-7 MECE Sections]
-    OccurrentDiagram --> Sections
+    TD --> MECE[MECE Sections 1.0-7.0]
+    LR --> MECE
 
-    Sections --> Details[Fractal Details with ¶1, ¶2, ¶3]
+    MECE --> Details[¶1, ¶2, ¶3 Fractal Details]
+
+    GroundTruth[Ground Truth: Sources + Dates] --> Thesis
+    GroundTruth --> MECE
+    GroundTruth --> Details
 ```
 **Ontological Rule:** TD for Continuants (what exists), LR for Occurrents (what happens)
 
 **Primary source:** `/Users/Kravtsovd/projects/chrome-extension-tcs/How to organize documents_knowladge_framework.md`
-**Session ID:** `e9ce3592-bd66-4a98-b0e7-fcdd8edb5d42` by Daniel Kravtsov (2025-11-13)
+**Original session:** `e9ce3592-bd66-4a98-b0e7-fcdd8edb5d42` by Daniel Kravtsov (2025-11-13) - v1.0.0 Initial
+**Latest update:** `e9ce3592-bd66-4a98-b0e7-fcdd8edb5d42` by Daniel Kravtsov (2025-11-13) - v1.1.0 Mermaid headers
+**Release log:** See `SKILL_RELEASE_LOG.md` for full version history
 
 ### 🎯 6 Pillars
 
@@ -80,31 +87,44 @@ graph TD
 
 ### 🎨 Mermaid Ontological Patterns (MANDATORY)
 
-¶1 **Why Two Diagrams Minimum, but if subject is complex, you 3 diagrams:**
+¶1 **Diagram Headers (REQUIRED):**
+- **Every Mermaid diagram MUST have descriptive header** (2-5 words) specific to THIS document
+- **Format:** `**[Specific Description] ([Type] - [Direction]):**`
+- **Examples:**
+  - ✅ `**Skill Package Structure (Continuant - TD):**` (specific to skill-creator)
+  - ✅ `**Data Pipeline Workflow (Occurrent - LR):**` (specific to ETL system)
+  - ❌ `**System Structure:**` (too generic, no type/direction)
+  - ❌ Just diagram without header (missing completely)
+- **Placement:** Header goes BEFORE ```mermaid code block
+
+¶2 **Why Two Diagrams Minimum, but if subject is complex, you 3 diagrams:**
 - **Ontological completeness:** Every domain has BOTH structure (what exists) AND behavior (what happens)
 - **Cognitive clarity:** Mixing "system architecture" with "process flow" in ONE diagram creates confusion
 - **MECE enforcement:** Separate diagrams prevent mixing Continuants with Occurrents
 - **Rule:** Complex documents REQUIRE both Continuant (TD) and Occurrent (LR) diagrams
 
-¶2 **Continuant Diagram (Structure/Architecture):**
+¶3 **Continuant Diagram (Structure/Architecture):**
 - **Type:** `graph TD` (top-down hierarchy)
 - **Shows:** System components, data models, organizational structure, dependencies
 - **Nodes:** NOUNS (Database, API, User, Table, Service)
 - **Edges:** "contains", "depends on", "is part of", "inherits from"
 - **Example:** System architecture, data schema, component hierarchy
+- **Header example:** `**Customer Data Model (Continuant - TD):**`
 
-¶3 **Occurrent Diagram (Process/Flow):**
+¶4 **Occurrent Diagram (Process/Flow):**
 - **Type:** `graph LR` (left-right sequence)
 - **Shows:** Workflows, pipelines, request flows, temporal sequences
 - **Nodes:** VERBS or process states (Extract, Transform, Load, Validate)
 - **Edges:** "then", "triggers", "flows to", temporal ordering
 - **Example:** Data pipeline, API request flow, deployment process
+- **Header example:** `**ETL Pipeline Execution (Occurrent - LR):**`
 
-¶4 **Participation Diagram (How Continuants participate in Occurrents) - OPTIONAL:**
+¶5 **Participation Diagram (How Continuants participate in Occurrents) - OPTIONAL:**
 - **Type:** `graph TD` or `graph LR` depending on emphasis
 - **Shows:** Which entities (Continuants) are involved in which processes (Occurrents)
 - **Pattern:** Entity nodes + Process nodes, edges show "participates in", "executes", "produces"
 - **Example:** User triggers Pipeline which updates Database
+- **Header example:** `**User-Pipeline Interaction (Participation - TD):**`
 
 ### 🧭 Mermaid Enforcement Rules
 
