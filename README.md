@@ -58,6 +58,25 @@ Extract YouTube video transcripts and convert to Knowledge Framework documentati
 - Knowledge Framework compliance
 - Ground Truth attribution with video source
 
+### 4. 🤖 Multi-Agent Orchestrator
+**Location:** `skills/multi-agent-orchestrator/`
+
+Orchestrate parallel execution of multiple CLI agents (Claude Code, Codex, Gemini) for competitive evaluation of complex tasks with self-evaluation and winner selection.
+
+**Use when:**
+- Complex tasks requiring competitive evaluation (complexity >7/10)
+- Multiple valid implementation approaches exist
+- Need to compare different agent strategies
+- High-stakes tasks where best solution matters
+
+**Key features:**
+- Parallel CLI agent execution (Claude Code, Codex, Gemini)
+- Self-evaluation with measurable success criteria
+- Automated winner selection based on objective metrics
+- Progressive disclosure workflow (task file → user edits → launch)
+- Artifact placement enforcement (all outputs in agent workspace)
+- Ready-to-use execution scripts
+
 ## 🚀 Quick Start
 
 ### Installing Skills
@@ -80,12 +99,14 @@ Skills trigger automatically when Claude Code detects relevant context:
 - Creating .md files → `knowledge-framework`
 - "Resume session abc123" → `claude-code-sessions`
 - "Document this YouTube video" → `youtube-to-knowledge-doc`
+- "Run multi-agent framework" → `multi-agent-orchestrator`
 
 Or invoke explicitly:
 ```
 /skill knowledge-framework
 /skill claude-code-sessions
 /skill youtube-to-knowledge-doc
+/skill multi-agent-orchestrator
 ```
 
 ## 📖 Documentation
@@ -145,6 +166,7 @@ All skills must include:
 - `knowledge-framework`: None
 - `claude-code-sessions`: Python 3.8+
 - `youtube-to-knowledge-doc`: yt-dlp, Python 3.8+
+- `multi-agent-orchestrator`: Bash, Python 3.8+, multiple CLI agents (Claude Code CLI, Codex CLI, Gemini CLI)
 
 ## 🤝 Contributing
 
