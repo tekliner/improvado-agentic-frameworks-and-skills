@@ -21,8 +21,7 @@ graph TD
 
     MECE --> Details[¶1, ¶2, ¶3 Fractal Details]
 
-    GroundTruth[Ground Truth: Sources + Dates] --> Thesis
-    GroundTruth --> MECE
+    GroundTruth[Ground Truth: Sources + Dates] --> MECE
     GroundTruth --> Details
 ```
 **Ontological Rule:** TD for Continuants (what exists), LR for Occurrents (what happens)
