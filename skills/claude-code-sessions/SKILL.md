@@ -127,7 +127,7 @@ python data_sources/claude_code/22_list_all_sessions.py
 python data_sources/claude_code/22_list_all_sessions.py --detailed
 
 # Filter by project path
-python data_sources/claude_code/22_list_all_sessions.py --project chrome-extension-tcs
+python data_sources/claude_code/22_list_all_sessions.py --project my-project
 
 # Show only recent sessions (last 7 days)
 python data_sources/claude_code/22_list_all_sessions.py --days 7
@@ -142,12 +142,12 @@ python data_sources/claude_code/22_list_all_sessions.py --days 7
 
 📁 Projects and Sessions:
 
-📂 /Users/Kravtsovd/projects/chrome-extension-tcs
+📂 ~/project
    Sessions: 89 | Size: 32.15 MB
    Period: 2024-10-01 to 2025-01-15
    • c080fd31... (2h ago) - dashboard implementation with DataTables...
    • b2435f08... (1d ago) - fix session resume script...
-   • a7f3e290... (3d ago) - Notion integration analysis...
+   • a7f3e290... (3d ago) - integration analysis...
    ... and 86 more sessions
 ```
 
@@ -172,7 +172,7 @@ grep -l "search_term" ~/.claude/projects/-Users-*/*.jsonl
 grep -C 2 "error message" ~/.claude/projects/-Users-*/*.jsonl
 
 # Search in specific project
-grep -i "dashboard" ~/.claude/projects/-Users-Kravtsovd-projects-chrome-extension-tcs/*.jsonl
+grep -i "dashboard" ~/.claude/projects/-Users-username-projects-my-project/*.jsonl
 ```
 
 **Why Grep:**
@@ -186,25 +186,25 @@ grep -i "dashboard" ~/.claude/projects/-Users-Kravtsovd-projects-chrome-extensio
 ### Storage Location
 ```
 ~/.claude/projects/
-├── -Users-Kravtsovd-projects/
+├── -Users-username-projects/
 │   └── b2435f08-65e2-4b88-91c6-79f3a93ced9a.jsonl
-├── -Users-Kravtsovd-projects-chrome-extension-tcs/
+├── -Users-username-projects-main-project/
 │   └── c080fd31-1fea-44e2-8690-c58ad0f4a829.jsonl
-└── -Users-Kravtsovd-projects-ai-dashboards/
+└── -Users-username-projects-other-project/
     └── a7f3e290-4b3c-11ef-8901-234567890abc.jsonl
 ```
 
 **Directory Naming:**
 - Claude Code creates unique folder for each working directory
 - Path format: `-` separated segments
-- Example: `/Users/Kravtsovd/projects` → `-Users-Kravtsovd-projects`
+- Example: `/Users/username/projects` → `-Users-username-projects`
 
 ### Session File Format (JSONL)
 
 Each line is a JSON object representing a message or event:
 
 ```jsonl
-{"type":"system","cwd":"/Users/Kravtsovd/projects/chrome-extension-tcs","timestamp":"2025-01-15T10:30:00Z"}
+{"type":"system","cwd":"~/project","timestamp":"2025-01-15T10:30:00Z"}
 {"type":"user","message":{"content":"implement dashboard"},"timestamp":"2025-01-15T10:30:15Z"}
 {"type":"assistant","message":{"content":"I'll help..."},"timestamp":"2025-01-15T10:30:20Z"}
 ```
@@ -261,7 +261,7 @@ all_sessions = scanner.list_all_sessions()
 
 # Get project sessions
 project_sessions = scanner.get_project_sessions(
-    project_path="/Users/Kravtsovd/projects/chrome-extension-tcs"
+    project_path="~/project"
 )
 ```
 
@@ -279,13 +279,13 @@ python data_sources/claude_code/21_universal_session_resume.py --text "dashboard
 # Output:
 ✅ Found session!
   Session ID: c080fd31-1fea-44e2-8690-c58ad0f4a829
-  Created in: /Users/Kravtsovd/projects/chrome-extension-tcs
+  Created in: ~/project
   Modified: 2025-01-15 10:30:00
   Size: 2.45 MB
   Content: implement dashboard with DataTables and real-time updates...
 
 🚀 Resuming session...
-  📁 Directory: /Users/Kravtsovd/projects/chrome-extension-tcs
+  📁 Directory: ~/project
   🔄 Launching Claude Code...
 ```
 
@@ -376,12 +376,12 @@ Add to `~/.zshrc` for quick access:
 ```bash
 # Claude Code session resume
 rc() {
-    python /Users/Kravtsovd/projects/chrome-extension-tcs/data_sources/claude_code/21_universal_session_resume.py "$@"
+    python ~/project/data_sources/claude_code/21_universal_session_resume.py "$@"
 }
 
 # List sessions
 rc-list() {
-    python /Users/Kravtsovd/projects/chrome-extension-tcs/data_sources/claude_code/22_list_all_sessions.py "$@"
+    python ~/project/data_sources/claude_code/22_list_all_sessions.py "$@"
 }
 
 # Quick last session
@@ -432,7 +432,3 @@ rc-find "notion"              # Find by keyword
 ## Version
 
 v1.0 (2025-01-15)
-
-## Author
-
-Daniel Kravtsov (daniel@improvado.io)

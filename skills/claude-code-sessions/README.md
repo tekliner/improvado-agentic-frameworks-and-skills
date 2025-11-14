@@ -37,13 +37,13 @@ Resume session c080fd31-1fea-44e2-8690
 
 ✅ Found session!
   Session ID: c080fd31-1fea-44e2-8690-c58ad0f4a829
-  Created in: /Users/Kravtsovd/projects/chrome-extension-tcs
+  Created in: ~/project
   Modified: 2025-01-15 10:30:00
   Size: 2.45 MB
   Content: implement dashboard with DataTables and real-time...
 
 🚀 Resuming session...
-  📁 Directory: /Users/Kravtsovd/projects/chrome-extension-tcs
+  📁 Directory: ~/project
   🔄 Launching Claude Code...
 ```
 
@@ -114,11 +114,11 @@ rc-last                 # Latest session
 
 ```
 ~/.claude/projects/
-├── -Users-Kravtsovd-projects/
+├── -Users-username-projects/
 │   └── b2435f08-65e2-4b88-91c6.jsonl
-├── -Users-Kravtsovd-projects-chrome-extension-tcs/
+├── -Users-username-projects-main-project/
 │   └── c080fd31-1fea-44e2-8690.jsonl
-└── -Users-Kravtsovd-projects-ai-dashboards/
+└── -Users-username-projects-other-project/
     └── a7f3e290-4b3c-11ef-8901.jsonl
 ```
 
@@ -138,7 +138,7 @@ rc-last                 # Latest session
 
 ### Project History
 ```
-"What did I work on in chrome-extension-tcs this week?"
+"What did I work on in my project this week?"
 → Shows all sessions from last 7 days with details
 ```
 
