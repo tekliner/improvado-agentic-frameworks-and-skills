@@ -10,9 +10,9 @@ Complete collection of production-ready skills ordered by importance and usage f
 |---|-------|-------------|-------------|
 | 1️⃣ | **[Knowledge Framework](skills/knowledge-framework/)** | Automatic documentation framework using MECE/BFO ontology principles with Mermaid diagrams and Ground Truth attribution | Creating any .md file, documenting systems, building knowledge base |
 | 2️⃣ | **[Multi-Agent Orchestrator](skills/multi-agent-orchestrator/)** | Orchestrate parallel execution of multiple CLI agents (Claude Code, Codex, Gemini) for competitive evaluation with objective winner selection | Complex tasks (>7/10), multiple valid approaches, high-stakes solutions |
-| 3️⃣ | **[Claude Code Sessions](skills/claude-code-sessions/)** | Universal session management - search, resume, and analyze conversations from any directory | Resuming sessions, searching conversation history, tracking work |
-| 4️⃣ | **[YouTube to Knowledge Doc](skills/youtube-to-knowledge-doc/)** | Extract YouTube transcripts and convert to Knowledge Framework documentation with clickable timestamps | Documenting videos, preserving external learning, research archival |
-| 5️⃣ | **[Skill Public Git Sync](skills/skill-public-git-sync/)** | Synchronize Claude Code skills to public GitHub with automated security scanning and sanitization | Publishing skills publicly, removing sensitive data, automated sync workflows |
+| 3️⃣ | **[Skill Creator](skills/skill-creator/)** | Guide for creating effective Claude Code skills with YAML frontmatter, Quick Start checklists, and Decision Trees | Building new skills, improving existing skills, skill architecture |
+| 4️⃣ | **[Claude Code Sessions](skills/claude-code-sessions/)** | Universal session management - search, resume, and analyze conversations from any directory | Resuming sessions, searching conversation history, tracking work |
+| 5️⃣ | **[YouTube to Knowledge Doc](skills/youtube-to-knowledge-doc/)** | Extract YouTube transcripts and convert to Knowledge Framework documentation with clickable timestamps | Documenting videos, preserving external learning, research archival |
 
 ## 🎯 Quick Selection Guide
 
@@ -20,9 +20,9 @@ Complete collection of production-ready skills ordered by importance and usage f
 
 - 📝 **Writing documentation?** → Knowledge Framework
 - 🤖 **Complex task needing best solution?** → Multi-Agent Orchestrator
+- 🛠️ **Building new skills?** → Skill Creator
 - 🔄 **Finding previous work?** → Claude Code Sessions
 - 🎥 **Learning from YouTube?** → YouTube to Knowledge Doc
-- 🔒 **Publishing skills to GitHub?** → Skill Public Git Sync
 
 ## 📖 Core Documentation
 
@@ -55,17 +55,17 @@ cp -r skills/* /path/to/your-project/.claude/skills/
 **Automatic activation** - Skills trigger when Claude Code detects relevant context:
 - Creating .md files → `knowledge-framework`
 - "Run multi-agent framework" → `multi-agent-orchestrator`
+- "Create new skill" → `skill-creator`
 - "Resume session abc123" → `claude-code-sessions`
 - "Document this YouTube video" → `youtube-to-knowledge-doc`
-- "Sync skills to public repo" → `skill-public-git-sync`
 
 **Manual invocation:**
 ```
 /skill knowledge-framework
 /skill multi-agent-orchestrator
+/skill skill-creator
 /skill claude-code-sessions
 /skill youtube-to-knowledge-doc
-/skill skill-public-git-sync
 ```
 
 ## 🔧 Detailed Skill Information
@@ -186,36 +186,36 @@ rc-list --days 7
 **Quote:** "Direct quote" ([timestamp 23:11](https://youtu.be/VIDEO_ID?t=1391))
 ```
 
-### 5️⃣ Skill Public Git Sync
+### 3️⃣ Skill Creator
 
-**Purpose:** Synchronize Claude Code skills to public GitHub repository with automated security
+**Purpose:** Guide for creating effective Claude Code skills with best practices
 
 **Key features:**
-- Automated security scanning for API keys, credentials, and sensitive data
-- Pattern-based sanitization (paths, client IDs, workspace IDs)
-- Context-aware email preservation (keeps author attribution)
-- Batch sync workflow for all skills
-- Pre-sync validation with detailed reports
-- Automated git commit and push
+- YAML frontmatter structure and patterns
+- Quick Start Checklist creation (5-10 actionable steps)
+- 5-Second Decision Tree design
+- Practical Workflow examples
+- Progressive disclosure architecture
+- Reusable resource identification (scripts, references, assets)
 
-**Dependencies:** Bash, Python 3.8+, Git
+**Dependencies:** None
 
 **Workflow:**
 ```
-1. Scan all local skills for security issues
-2. Run sanitization on each skill
-3. Copy sanitized versions to public repo
-4. Update public README with skill count
-5. Git commit and push changes
+1. Define concrete usage examples
+2. Identify reusable resources
+3. Initialize skill structure (SKILL.md, README.md, references/, scripts/)
+4. Write YAML frontmatter with triggers
+5. Add Quick Start Checklist
+6. Create 5-Second Decision Tree
+7. Validate against quality checklist
 ```
 
-**Security patterns detected:**
-- ❌ API keys (sk-, AIza, AKIA patterns) - BLOCKING
-- ❌ Hardcoded credentials - BLOCKING
-- ⚠️  Absolute paths (/Users/...) - AUTO-FIX
-- ⚠️  Client database IDs (im_XXXX_XXX) - AUTO-FIX
-- ⚠️  Workspace/Agency IDs - AUTO-FIX
-- ⚠️  Client names - AUTO-FIX
+**Quality standards:**
+- Clear "When to Use" section with automatic triggers
+- Actionable Quick Start (not documentation, but steps)
+- Decision Tree for rapid skill selection
+- Real workflow examples (not abstract descriptions)
 
 ## 🎯 Skill Structure
 
