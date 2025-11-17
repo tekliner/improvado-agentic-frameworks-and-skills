@@ -50,6 +50,37 @@ cp -r skills/* ~/.claude/skills/
 cp -r skills/* /path/to/your-project/.claude/skills/
 ```
 
+### Installing Dependencies
+
+Some skills require utility scripts and frameworks. Install them to your project:
+
+```bash
+# Navigate to your project directory
+cd /path/to/your-project
+
+# Copy session management utilities (required for claude-code-sessions, knowledge-framework)
+mkdir -p data_sources/claude_code
+cp -r data_sources/claude_code/* /path/to/your-project/data_sources/claude_code/
+
+# Copy multi-agent framework (required for multi-agent-orchestrator)
+mkdir -p algorithms/product_div/Multi_agent_framework
+cp -r algorithms/product_div/Multi_agent_framework/* /path/to/your-project/algorithms/product_div/Multi_agent_framework/
+
+# Make scripts executable
+chmod +x /path/to/your-project/algorithms/product_div/Multi_agent_framework/*.sh
+chmod +x /path/to/your-project/data_sources/claude_code/get_session_id.py
+```
+
+**Dependency matrix:**
+
+| Skill | Dependencies |
+|-------|--------------|
+| Knowledge Framework | `data_sources/claude_code/get_session_id.py` (optional) |
+| Claude Code Sessions | `data_sources/claude_code/{get_session_id.py, 21_universal_session_resume.py, 22_list_all_sessions.py}` (required) |
+| Multi-Agent Orchestrator | `algorithms/product_div/Multi_agent_framework/{run_parallel_agents.sh, run_claude_agent.sh, run_codex_agent.sh, run_gemini_agent.sh}` (required) |
+| YouTube to Knowledge Doc | None |
+| Skill Creator | None |
+
 ### Using Skills
 
 **Automatic activation** - Skills trigger when Claude Code detects relevant context:
@@ -109,7 +140,10 @@ cp -r skills/* /path/to/your-project/.claude/skills/
 - Artifact placement enforcement (workspace isolation)
 - Ready-to-use execution scripts with background monitoring
 
-**Dependencies:** Bash, Python 3.8+, Multiple CLI agents (Claude Code CLI, Codex CLI, Gemini CLI)
+**Dependencies:**
+- Bash, Python 3.8+
+- Multiple CLI agents (Claude Code CLI, Codex CLI, Gemini CLI)
+- Scripts: `algorithms/product_div/Multi_agent_framework/*.sh` (see Installation section)
 
 **Workflow:**
 ```
@@ -141,7 +175,9 @@ cp -r skills/* /path/to/your-project/.claude/skills/
 - Session statistics and metadata
 - Search by content, date, or participant
 
-**Dependencies:** Python 3.8+
+**Dependencies:**
+- Python 3.8+
+- Scripts: `data_sources/claude_code/{get_session_id.py, 21_universal_session_resume.py, 22_list_all_sessions.py}` (see Installation section)
 
 **Common commands:**
 ```bash
