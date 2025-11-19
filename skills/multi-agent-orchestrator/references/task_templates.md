@@ -275,7 +275,7 @@ Each agent MUST create:
 
 **Context:**
 - System: Google Ads API v16
-- Purpose: Discover available ad accounts for workspace_id 7661
+- Purpose: Discover available ad accounts for workspace_id XXXX
 - Authentication: OAuth 2.0 via DTS proxy
 - Rate limits: 10 requests/second
 

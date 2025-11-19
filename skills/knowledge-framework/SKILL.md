@@ -26,7 +26,7 @@ graph TD
 ```
 **Ontological Rule:** TD for Continuants (what exists), LR for Occurrents (what happens)
 
-**Primary source:** `/Users/Kravtsovd/projects/chrome-extension-tcs/How to organize documents_knowladge_framework.md`
+**Primary source:** `~/projects/chrome-extension-tcs/How to organize documents_knowladge_framework.md`
 **Original session:** `e9ce3592-bd66-4a98-b0e7-fcdd8edb5d42` by Daniel Kravtsov (2025-11-13) - v1.0.0 Initial
 **Latest update:** `e9ce3592-bd66-4a98-b0e7-fcdd8edb5d42` by Daniel Kravtsov (2025-11-13) - v1.1.0 Mermaid headers
 **Release log:** See `SKILL_RELEASE_LOG.md` for full version history
@@ -103,12 +103,18 @@ graph TD
 - **Rule:** Complex documents REQUIRE both Continuant (TD) and Occurrent (LR) diagrams
 
 ¶3 **Continuant Diagram (Structure/Architecture):**
-- **Type:** `graph TD` (top-down hierarchy)
+- **Type:** `graph TD` or `graph TB` (top-down/top-bottom vertical hierarchy)
 - **Shows:** System components, data models, organizational structure, dependencies
 - **Nodes:** NOUNS (Database, API, User, Table, Service)
 - **Edges:** "contains", "depends on", "is part of", "inherits from"
 - **Example:** System architecture, data schema, component hierarchy
 - **Header example:** `**Customer Data Model (Continuant - TD):**`
+
+¶3.1 **Vertical Layout for Readability (TD/TB):**
+- **Prefer vertical flow** - easier to read than wide horizontal diagrams
+- **Group related items** - use intermediate nodes to group 2-4 items when category has many children
+- **Pattern:** `Root --> Category1 --> [Item1<br/>Item2]` groups items in single node with line breaks
+- **Color coding** - use `style` declarations for visual hierarchy (categories darker, items lighter)
 
 ¶4 **Occurrent Diagram (Process/Flow):**
 - **Type:** `graph LR` (left-right sequence)

@@ -26,7 +26,8 @@ When user provides YouTube URL:
 [ ] 5. Get Claude Code session ID (get_session_id.py --quiet)
 [ ] 6. Generate Knowledge Framework doc (Thesis, Overview, Mermaid, MECE)
 [ ] 7. Include clickable timestamp links ([timestamp MM:SS](URL?t=SECONDS))
-[ ] 8. Add Author Checklist at end
+[ ] 8. [OPTIONAL] Upload to Notion using youtube_to_notion.py library (NO temp scripts!)
+[ ] 9. Add Author Checklist at end
 ```
 
 **5-Second Decision Tree:**
@@ -149,6 +150,86 @@ SESSION_ID=$(~/project/claude_venv/bin/python \
 2. Include timestamp in link text (MM:SS or MM:SS-MM:SS)
 3. Calculate seconds for `?t=` parameter
 4. Use same VIDEO_ID from original YouTube URL
+
+### Step 3.5: Upload to Notion (Optional)
+
+¶1 **Using the youtube_to_notion.py library (CRITICAL - No temporary scripts!):**
+
+❌ **WRONG - Creating temporary Python scripts:**
+```python
+# DON'T DO THIS - Creates files that clutter repo
+with open("upload_to_notion.py", "w") as f:
+    f.write("# Script code...")
+```
+
+✅ **CORRECT - Using reusable library:**
+```python
+from data_sources.notion.youtube_to_notion import create_youtube_notion_page
+
+# Runtime mode - create directly from memory, no temp files
+create_youtube_notion_page(
+    page_id="abc123",
+    video_id="DxL2HoqLbyA",
+    video_title="Entropy and Life",
+    content_sections=[
+        {
+            "type": "heading",
+            "level": 1,
+            "content": "Энтропия и Жизнь"
+        },
+        {
+            "type": "paragraph",
+            "content": "Энтропия - это тенденция энергии рассеиваться.",
+            "timestamps": [("04:19", "[таймкод 04:19]")]
+        },
+        {
+            "type": "mermaid",
+            "mermaid_code": "graph TD\n  A[Start] --> B[End]"
+        },
+        {
+            "type": "callout",
+            "icon": "💡",
+            "color": "yellow_background",
+            "content": "Важный инсайт!"
+        },
+        {
+            "type": "list",
+            "items": ["Пункт 1", "Пункт 2"]
+        }
+    ],
+    language="ru",
+    session_id="a725304d-8bb9-42d5-9a0e-95258889f959"
+)
+```
+
+¶2 **Library Architecture:**
+- **Location:** `data_sources/notion/youtube_to_notion.py`
+- **Mode 1 - Runtime:** Create Notion page directly from structured data (recommended)
+- **Mode 2 - File:** Convert existing MD file to Notion (TODO - not yet implemented)
+- **No temp files:** All operations in memory
+- **Proper blocks:** Automatically adds `"object": "block"` to all blocks
+- **Mermaid support:** Native Notion Mermaid code blocks
+
+¶3 **Helper functions available:**
+```python
+from data_sources.notion.youtube_to_notion import (
+    add_block,                  # Add any block type
+    create_mermaid_block,       # Create Mermaid diagram
+    create_timestamp_link,      # Create clickable timestamp
+    create_youtube_notion_page  # Main function (runtime mode)
+)
+```
+
+¶4 **When to use Notion upload:**
+- User explicitly says "upload to Notion" or "создай в Notion"
+- User provides Notion page URL alongside YouTube URL
+- User has existing Notion page they want to populate
+
+¶5 **Notion Page ID extraction:**
+```python
+# From URL: https://www.notion.so/improvado-home/Entropy-VS-life-2ad9aec621258187b81edc7e0144d38a
+# Page ID is the last part: 2ad9aec621258187b81edc7e0144d38a
+```
 
 ### Step 4: File Naming Convention
 
