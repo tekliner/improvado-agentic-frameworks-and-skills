@@ -31,7 +31,7 @@ graph TD
 **Latest update:** `e9ce3592-bd66-4a98-b0e7-fcdd8edb5d42` by Daniel Kravtsov (2025-11-13) - v1.1.0 Mermaid headers
 **Release log:** See `SKILL_RELEASE_LOG.md` for full version history
 
-### 🎯 6 Pillars
+### 🎯 7 Pillars
 
 ¶1 **Minimal Verbosity:** Use minimum text and tokens, but enough for another AI agent or human to execute task or understand document.
 
