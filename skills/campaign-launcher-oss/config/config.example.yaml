@@ -1,0 +1,111 @@
+# Campaign Launcher OSS — Configuration
+# Copy this file to campaign-launcher.yaml in your project root
+# API keys go in environment variables (never in this file)
+
+# ─── Your Company ───────────────────────────────────────────
+company:
+  name: "Your Company"
+  product: "Your Product"
+  website: "https://example.com"
+  brand_colors:
+    primary: "#000000"
+    accent: "#0066FF"
+  logo_url: ""  # URL to your logo (used in creatives if provided)
+
+  # Business context (populated via discovery conversation on first run):
+  value_prop: ""  # One-line value proposition
+  cta: "Book a Demo"  # Primary call-to-action
+  differentiators: []  # What makes you different from alternatives
+  #  - "Feature 1 that competitors don't have"
+  #  - "Unique approach to solving the problem"
+  proof_points: []  # Customer quotes, stats, social proof
+  #  - "Saves 20 hours/week on reporting"
+  #  - "'Best tool we've used' — VP Marketing, Acme Corp"
+  competitors: []  # Top 2-3 competitors
+  #  - "Competitor A"
+  #  - "Competitor B"
+  objections: []  # Common objections during sales
+  #  - "Already invested in another tool"
+  #  - "Not sure it handles our use case"
+  avg_deal_size: ""  # e.g., "$50K ARR" or "$99/mo"
+  sales_cycle: ""  # e.g., "14 days" or "3 months"
+  current_channels: []  # How customers find you today
+  #  - "Google search"
+  #  - "Word of mouth"
+
+# ─── ICP Segments ───────────────────────────────────────────
+# Define your Ideal Customer Profile segments.
+# The skill uses these to auto-recommend targeting for each campaign.
+icp_segments:
+  - name: "Enterprise"
+    description: "500+ employees, $50M+ revenue"
+    best_angles: ["cost reduction", "automation", "consolidation"]
+  - name: "Mid-Market"
+    description: "100-500 employees, $10M-$50M revenue"
+    best_angles: ["ease of use", "time savings", "self-serve"]
+
+# ─── Personas ───────────────────────────────────────────────
+# Target buyer/champion personas. Matched to ICP segments.
+personas:
+  - name: "VP Marketing"
+    role: "Buyer"
+    segment: "Enterprise"
+    pain_points: ["manual reporting", "no ROI visibility", "too many tools"]
+    language: ["ROI", "board reporting", "marketing efficiency"]
+  - name: "Marketing Analyst"
+    role: "Champion"
+    segment: "Mid-Market"
+    pain_points: ["manual data pulls", "spreadsheet hell", "no unified view"]
+    language: ["data pipeline", "automation", "dashboards"]
+
+# ─── Landing Pages ──────────────────────────────────────────
+# Known landing pages. The skill matches positioning angles to LPs.
+landing_pages:
+  - name: "Main Demo"
+    url: "https://example.com/demo"
+    positioning: "general"
+  - name: "Product Tour"
+    url: "https://example.com/tour"
+    positioning: "product-led"
+
+# ─── Channels ───────────────────────────────────────────────
+# Enable/disable channels. API keys go in env vars, not here.
+channels:
+  google_ads:
+    enabled: false
+    mode: "csv_export"  # "api" or "csv_export"
+    # API mode env vars: GOOGLE_ADS_DEVELOPER_TOKEN, GOOGLE_ADS_CLIENT_ID,
+    #   GOOGLE_ADS_CLIENT_SECRET, GOOGLE_ADS_REFRESH_TOKEN
+    # Config (only for API mode):
+    # customer_id: "1234567890"  # Your Google Ads customer ID (no dashes)
+
+  meta_ads:
+    enabled: false
+    # Env vars: META_ACCESS_TOKEN
+    # Config:
+    # ad_account_id: "act_123456789"
+    # page_id: "123456789"
+    # pixel_id: "123456789"
+    # instagram_account_id: "123456789"  # optional
+
+  email_outreach:
+    enabled: false
+    provider: "lemlist"  # "lemlist", "resend", or "sendgrid"
+    # Lemlist env var: LEMLIST_API_KEY
+    # Resend env var: RESEND_API_KEY
+    # SendGrid env var: SENDGRID_API_KEY
+    # Config (Lemlist only):
+    # sender_email: "you@company.com"
+
+# ─── Creatives ──────────────────────────────────────────────
+# AI image generation for ad creatives.
+creatives:
+  provider: "manual"  # "xai", "fal", or "manual"
+  # xai: set XAI_KEY env var (console.x.ai, ~$0.14/image)
+  # fal: set FAL_KEY env var (fal.ai, ~$0.003-$0.14/image)
+  # manual: generates detailed prompts you can use with Midjourney/DALL-E/Canva
+
+# ─── Experiments ────────────────────────────────────────────
+experiments:
+  output_dir: "./campaigns"  # Where plan files and assets are saved
+  next_id: 1  # Auto-incremented after each experiment

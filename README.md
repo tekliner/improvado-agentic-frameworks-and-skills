@@ -13,6 +13,7 @@ Complete collection of production-ready skills ordered by importance and usage f
 | 3️⃣ | **[Skill Creator](skills/skill-creator/)** | Guide for creating effective Claude Code skills with YAML frontmatter, Quick Start checklists, and Decision Trees | Building new skills, improving existing skills, skill architecture |
 | 4️⃣ | **[Claude Code Sessions](skills/claude-code-sessions/)** | Universal session management - search, resume, and analyze conversations from any directory | Resuming sessions, searching conversation history, tracking work |
 | 5️⃣ | **[YouTube to Knowledge Doc](skills/youtube-to-knowledge-doc/)** | Extract YouTube transcripts and convert to Knowledge Framework documentation with clickable timestamps | Documenting videos, preserving external learning, research archival |
+| 6️⃣ | **[Campaign Launcher OSS](skills/campaign-launcher-oss/)** | Multi-channel marketing experiment orchestrator — Google Ads, Meta Ads, email outreach with AI creative generation. BYOK (bring your own keys). | Launch marketing campaigns, A/B test positioning, orchestrate multi-channel experiments |
 
 ## 🎯 Quick Selection Guide
 
@@ -23,6 +24,7 @@ Complete collection of production-ready skills ordered by importance and usage f
 - 🛠️ **Building new skills?** → Skill Creator
 - 🔄 **Finding previous work?** → Claude Code Sessions
 - 🎥 **Learning from YouTube?** → YouTube to Knowledge Doc
+- 📣 **Launching marketing campaigns?** → Campaign Launcher OSS
 
 ## 📖 Core Documentation
 
