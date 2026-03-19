@@ -1,8 +1,10 @@
 # Campaign Launcher — Multi-Channel Marketing Experiment Orchestrator
 
+Built by the [Improvado](https://improvado.io) team. Open source, MIT licensed.
+
 A Claude Code skill that orchestrates end-to-end marketing experiments across Google Ads, Meta Ads, and email outreach. From positioning input to live campaigns — with AI-generated creatives, structured ad copy, and parallel channel execution.
 
-**No proprietary infrastructure required.** Bring your own API keys. Works with any product, any landing page, any audience.
+Works standalone with your own API keys, or connect [Improvado MCP](https://improvado.io) for instant access to 1000+ data connectors — no credential management needed.
 
 ```
 You: "Launch a campaign for our AI analytics platform targeting VP Marketing"
@@ -30,6 +32,19 @@ graph LR
 2. Review all campaigns (created PAUSED) before activation
 
 **Parallel execution** — asset generation and channel setup run simultaneously via background agents, with live progress updates in your plan file.
+
+## Two Ways to Connect Your Channels
+
+| | Improvado MCP (recommended) | Bring Your Own Keys |
+|---|---|---|
+| **Setup** | One prompt — Improvado handles auth | You manage API keys per channel |
+| **Connectors** | 1000+ (Google, Meta, TikTok, LinkedIn, X, DV360, The Trade Desk, Salesforce, HubSpot, GA4, Google Sheets, and more) | Google Ads, Meta Ads, Email (3 providers) |
+| **Credentials** | Centrally managed, encrypted, auto-rotated | Environment variables on your machine |
+| **Data scope** | Full marketing data stack — ads, CRM, spreadsheets, analytics, programmatic | Campaign launch only |
+
+**Improvado path:** Connect Improvado MCP to Claude Code, then say `"launch a campaign"`. The skill auto-detects Improvado and skips manual credential setup.
+
+**Manual path:** Bring your own API keys. Set environment variables, configure `campaign-launcher.yaml`, and launch. Everything works — you just manage credentials yourself.
 
 ## Supported Channels
 
@@ -258,7 +273,13 @@ The skill uses Claude Code's **Agent tool** to run channel and asset creation in
 ## Requirements
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI
-- At least one channel configured (or use Google Ads CSV export mode with zero API keys)
+- At least one channel configured — via [Improvado MCP](https://improvado.io) or your own API keys (or use Google Ads CSV export with zero API keys)
+
+## Built by Improvado
+
+[Improvado](https://improvado.io) is a marketing analytics platform with 1000+ native data connectors. This skill is our gift to the Claude Code community — launch campaigns faster, whether you use Improvado or not.
+
+Questions? [improvado.io](https://improvado.io) | [GitHub Issues](https://github.com/tekliner/improvado-agentic-frameworks-and-skills/issues)
 
 ## License
 

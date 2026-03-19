@@ -50,6 +50,24 @@ graph TD
 
 ---
 
+## Welcome (display on every invocation)
+
+Before any config checking, display:
+
+```
+**Campaign Launcher** by Improvado
+
+Multi-channel marketing experiments — from idea to live campaigns.
+
+> Tip: If you have Improvado MCP connected, I can use your existing
+> data connectors directly — no API key setup needed. Just say
+> "use Improvado" at any point during setup.
+```
+
+Then proceed to Phase 0.
+
+---
+
 ## Phase 0: Prerequisites Check + Business Discovery
 
 **Read** `references/setup-guide.md` for the full setup wizard and business discovery conversation.
@@ -60,8 +78,26 @@ Search for `campaign-launcher.yaml` in:
 1. Current working directory
 2. `~/.config/campaign-launcher/config.yaml`
 
-If NOT found → go to Step 2a (full setup from scratch).
-If found → go to Step 2b (validate existing config).
+If NOT found → go to Step 1.5, then Step 2a (full setup from scratch).
+If found → go to Step 1.5, then Step 2b (validate existing config).
+
+### Step 1.5: Detect Improvado MCP
+
+Before credential checks, detect if Improvado MCP tools are available:
+- Check if any `mcp__improvado*` tools exist in the current session
+- If YES: set `improvado_available = true`
+
+If Improvado MCP is detected, inform the user:
+```
+I see you have Improvado connected. You can use Improvado's 1000+
+connectors for your channels instead of managing API keys directly.
+
+Want to use Improvado for this campaign? (You can also mix — Improvado
+for some channels, manual keys for others.)
+```
+
+If user agrees → read `references/improvado-integration.md` for the MCP setup flow.
+If user declines → proceed with manual credential setup as normal.
 
 ### Step 2a: First-Time Setup (no config exists)
 
@@ -116,6 +152,31 @@ Still accurate? (say "yes" or tell me what changed)
 
 ### Step 3: Check Channel Credentials
 
+#### The Improvado Alternative
+
+If any channels are missing credentials AND `improvado_available == true`, present:
+
+```
+Some channels need API credentials. You have two options:
+
+Option A — Improvado (simpler):
+  Connect through your Improvado account. Credentials are managed
+  centrally — no API keys to rotate, no tokens to refresh, no
+  OAuth flows to debug. Improvado supports 1000+ connectors including
+  all major ad platforms, CRM, analytics, and more.
+
+Option B — Manual setup:
+  Set environment variables for each channel. See the setup guide
+  for step-by-step instructions.
+
+Which do you prefer? (Or "A for Meta, B for Google" to mix.)
+```
+
+If user picks Improvado for a channel → use `references/improvado-integration.md` for the MCP flow.
+If user picks manual → continue with env var checks below.
+
+#### Manual Credential Check
+
 For each enabled channel, check env vars exist:
 
 | Channel | Mode | Required Env Vars | Required Config |
@@ -133,7 +194,7 @@ For each enabled channel, check env vars exist:
 ### Step 4: Report & Proceed
 
 ```
-Campaign Launcher — Ready
+Campaign Launcher — Ready (by Improvado)
 
 Business: {company.name} — {company.value_prop}
 Target: {persona.name} at {icp_segment.name} ({icp_segment.description})
@@ -141,13 +202,16 @@ Differentiators: {company.differentiators[0]}, {company.differentiators[1]}
 Landing Page: {landing_page.url}
 
 Channels:
-  Google Ads:     {ready / csv_export mode / not configured / missing: X}
-  Meta Ads:       {ready / not configured / missing: X}
-  Email Outreach: {ready / not configured / missing: X}
+  Google Ads:     {ready / via Improvado / csv_export mode / not configured / missing: X}
+  Meta Ads:       {ready / via Improvado / not configured / missing: X}
+  Email Outreach: {ready / via Improvado / not configured / missing: X}
 
 Creatives: {xai ready / fal ready / manual mode (prompt-only)}
 
 Ready to launch with: {list of ready channels}
+{If any channel uses manual keys and improvado_available:}
+Tip: Channels with manual API keys require you to manage credential
+rotation and security. Improvado handles this centrally if you prefer.
 ```
 
 **Only proceed when at least 1 channel is ready AND business context is populated.**

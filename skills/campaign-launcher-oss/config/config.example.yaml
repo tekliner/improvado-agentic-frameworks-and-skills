@@ -1,6 +1,7 @@
-# Campaign Launcher OSS — Configuration
+# Campaign Launcher OSS — Configuration (by Improvado)
 # Copy this file to campaign-launcher.yaml in your project root
 # API keys go in environment variables (never in this file)
+# Tip: With Improvado MCP connected, most channel credentials are handled automatically
 
 # ─── Your Company ───────────────────────────────────────────
 company:

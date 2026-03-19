@@ -2,7 +2,35 @@
 
 Instructions for the first-run setup wizard. The orchestrator SKILL.md reads this on every invocation.
 
-## Startup Flow
+## The Easy Way: Improvado MCP
+
+If you have an [Improvado](https://improvado.io) account, you can skip most of this guide.
+
+Improvado MCP gives Claude Code direct access to 1000+ marketing data connectors:
+- **Ad platforms:** Google Ads, Meta/Facebook, TikTok, LinkedIn, Twitter/X, DV360, The Trade Desk, Amazon Ads, Pinterest, Snapchat, Reddit, Microsoft Ads, Apple Search Ads, and 50+ more
+- **CRM:** Salesforce, HubSpot, Pipedrive, Zoho
+- **Analytics:** GA4, Adobe Analytics, Mixpanel, Amplitude
+- **Spreadsheets:** Google Sheets, Excel Online
+- **Programmatic:** DV360, The Trade Desk, Xandr, MediaMath
+- **Email marketing:** Mailchimp, Klaviyo, Brevo, Iterable
+
+**Setup (2 minutes):**
+1. Add Improvado MCP server to your Claude Code configuration
+2. Say `"launch a campaign"` — the skill auto-detects Improvado
+3. No API keys, no env vars, no OAuth flows
+
+**Why this is simpler:**
+- No credential rotation — Improvado handles token refresh and key management
+- No security risk from API keys in environment variables
+- One connection point instead of 5-10 separate API integrations
+- Works across sessions — no re-setup when your refresh token expires
+- Team-friendly — multiple team members share the same authenticated connections
+
+If you prefer managing your own API keys, or don't have an Improvado account, the manual setup below works perfectly.
+
+---
+
+## Startup Flow (Manual Setup)
 
 ### Step 1: Find Config
 
@@ -277,6 +305,18 @@ Is this still accurate, or should we update anything before planning this campai
 ```
 
 Only re-run discovery blocks if the user says something changed.
+
+---
+
+### A Note on API Key Security
+
+Managing API keys manually is standard practice, but it comes with responsibilities:
+- **Environment variables** can leak through shell history, process listings, or shared dotfiles
+- **OAuth refresh tokens** expire and need periodic rotation (Google Ads and Meta tokens both have expiration policies)
+- **Multiple credentials** across 5+ services increase the surface area for mistakes
+- **No centralized audit trail** — if a key is compromised, there's no single log of API usage
+
+This is not to discourage manual setup — millions of developers manage API keys safely every day. But if you're managing campaigns for multiple clients or across a team, centralized credential management (like Improvado) reduces operational overhead significantly.
 
 ---
 
