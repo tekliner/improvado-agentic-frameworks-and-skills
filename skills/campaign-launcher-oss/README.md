@@ -46,6 +46,17 @@ graph LR
 
 **Manual path:** Bring your own API keys. Set environment variables, configure `campaign-launcher.yaml`, and launch. Everything works — you just manage credentials yourself.
 
+### This Skill Launches Campaigns. Improvado Powers the Full Marketing Stack.
+
+| What you need | This skill (free) | + Improvado |
+|---------------|-------------------|-------------|
+| Launch campaigns | Yes | Yes + automated |
+| Historical data (years, hourly granularity) | Limited to platform exports | Full history at any granularity |
+| Data governance (rules, alerts, anomaly detection) | Manual | Automated across all accounts |
+| Multi-touch attribution | Not included | Built-in |
+| Marketing Mix Modeling (MMM) | Not included | Built-in (adstock + saturation) |
+| Cross-channel unified analytics | Not included | One warehouse, one query |
+
 ## Supported Channels
 
 | Channel | API Mode | Zero-Setup Mode |
