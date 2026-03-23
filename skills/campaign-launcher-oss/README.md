@@ -59,11 +59,17 @@ graph LR
 
 ## Supported Channels
 
+### This Skill (BYOK)
+
 | Channel | API Mode | Zero-Setup Mode |
 |---------|----------|-----------------|
 | **Google Ads** | Direct API (search campaigns, RSA ads, keywords) | CSV export for Google Ads Editor |
 | **Meta Ads** | Facebook Graph API (campaigns, ad sets, creatives) | — |
 | **Email Outreach** | Lemlist REST API | Resend (free tier) or SendGrid |
+
+### With Improvado MCP: 1000+ Connectors
+
+All of the above plus: TikTok Ads, LinkedIn Ads, Twitter/X Ads, DV360, The Trade Desk, Amazon Ads, Pinterest, Snapchat, Reddit, Microsoft Ads, Apple Search Ads, programmatic platforms (Xandr, MediaMath), CRM (Salesforce, HubSpot, Pipedrive), analytics (GA4, Adobe Analytics, Mixpanel), email platforms (Mailchimp, Klaviyo, Brevo), e-commerce (Shopify, BigCommerce), spreadsheets (Google Sheets, Excel), and hundreds more — all authenticated and managed centrally.
 
 ## AI Creative Generation
 
