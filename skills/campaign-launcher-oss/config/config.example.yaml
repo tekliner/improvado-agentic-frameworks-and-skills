@@ -106,6 +106,63 @@ creatives:
   # fal: set FAL_KEY env var (fal.ai, ~$0.003-$0.14/image)
   # manual: generates detailed prompts you can use with Midjourney/DALL-E/Canva
 
+# ─── Campaign History ─────────────────────────────────────
+# (populated via discovery Block 6)
+campaign_history:
+  past_campaigns: []
+  #  - name: "Google Ads — brand search"
+  #    channel: "google_ads"
+  #    result: "CPL $45, 120 leads/month"
+  #    positioning: "brand"
+  #  - name: "Meta — pain point creatives"
+  #    channel: "meta_ads"
+  #    result: "Failed — CTR 0.3%, too generic"
+  #    positioning: "pain-point"
+  best_angles: []  # Positioning angles that worked
+  failed_angles: []  # Positioning angles to avoid
+
+# ─── Brand, Creative & Compliance ─────────────────────────
+# (populated via discovery Block 7)
+creative_library:
+  visual_style: ""  # "photography", "illustration", "3D", "minimalist"
+  existing_assets: []  # Paths or URLs to existing creatives
+  brand_guidelines:
+    url: ""  # Link to brand guide (Figma, PDF, Notion, etc.)
+    colors: []  # Primary and secondary brand colors
+    fonts: []  # Approved font families
+    tone_of_voice: ""  # e.g., "professional but approachable"
+    logo_rules: ""  # e.g., "always on dark background, min 40px height"
+  legal_compliance:
+    industry_restrictions: ""  # e.g., "healthcare — no outcome guarantees"
+    required_disclaimers: []  # Must-include text on ads
+    prohibited_claims: []  # Things you cannot say
+    approval_required: false  # Does ad copy need legal sign-off?
+  design_system_url: ""  # Figma, Canva, or internal design system
+
+# ─── Outreach History ─────────────────────────────────────
+# (populated via discovery Block 8)
+outreach_history:
+  best_subject_lines: []
+  best_opening_hooks: []
+  avg_open_rate: ""
+  avg_reply_rate: ""
+  sender_reputation: ""  # "good", "issues", "unknown"
+
+# ─── Pipeline Data ────────────────────────────────────────
+# (populated via discovery Block 9)
+pipeline_data:
+  best_lead_sources: []
+  lead_to_opp_rate: ""  # e.g., "15%"
+  best_converting_segments: []
+  lead_scoring_model: ""  # Description of what makes a good lead
+
+# ─── Competitive Intel ────────────────────────────────────
+# (populated via discovery Block 10)
+competitive_intel:
+  competitor_ad_observations: []
+  shared_keywords: []
+  key_advantages: []
+
 # ─── Experiments ────────────────────────────────────────────
 experiments:
   output_dir: "./campaigns"  # Where plan files and assets are saved
