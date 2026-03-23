@@ -189,7 +189,7 @@ Run this as an interactive conversation. Ask one block at a time — don't dump 
 
 ```
 Before we launch anything, I need to understand your business so I can write
-campaigns that actually convert. This takes ~5 minutes.
+campaigns that actually convert. This takes ~10 minutes.
 
 Let's start:
 1. What's your company name and website?
@@ -368,7 +368,7 @@ For now, let's set up your channels and launch this campaign!
 
 ### Processing Discovery Answers
 
-After the conversation, synthesize the answers into config YAML:
+After the conversation, synthesize the answers into config YAML. **Show the generated YAML to the user for confirmation before writing the file.** Let them correct any misinterpretations before proceeding to channel setup.
 
 1. **company section**: name, product, website, brand_colors (ask or extract from website), logo_url
 2. **company.value_prop**: One-line value proposition synthesized from answers 2, 4, 5

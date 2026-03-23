@@ -94,15 +94,17 @@ git clone https://github.com/YOUR_USERNAME/campaign-launcher.git
 ln -s $(pwd)/campaign-launcher/.claude/skills/campaign-launcher-oss /path/to/your/project/.claude/skills/campaign-launcher-oss
 ```
 
-### 2. Create your config
+### 2. Launch — the skill creates your config
 
-Copy the example config to your project root:
+Just run the skill. It will detect that no config exists and walk you through an interactive setup:
+- 10-block business discovery (~10 minutes) to understand your product, ICP, competitors, past campaigns, brand guidelines, and more
+- Channel selection and credential setup
+- Config file generated automatically from your answers
 
+Or if you prefer to fill the config manually first:
 ```bash
 cp .claude/skills/campaign-launcher-oss/config/config.example.yaml ./campaign-launcher.yaml
 ```
-
-Edit `campaign-launcher.yaml` with your company info, ICP segments, personas, and landing pages.
 
 ### 3. Set up API keys (for channels you want)
 
@@ -194,6 +196,13 @@ channels:
 
 creatives:
   provider: "manual"      # "xai", "fal", or "manual"
+
+# These sections are populated automatically from the 10-block discovery:
+campaign_history:           # Block 6: past experiments, what worked/failed
+creative_library:           # Block 7: brand guidelines, visual style, legal compliance
+outreach_history:           # Block 8: email templates, open/reply rates
+pipeline_data:              # Block 9: lead sources, conversion rates, scoring
+competitive_intel:          # Block 10: competitor ads, shared keywords
 
 experiments:
   output_dir: "./campaigns"
