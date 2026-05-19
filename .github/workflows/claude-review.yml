@@ -8,7 +8,7 @@ jobs:
     concurrency:
       group: claude-code-review-${{ github.event.pull_request.number }}-${{ github.ref }}
       cancel-in-progress: true
-    runs-on: ubuntu-latest
+    runs-on: runners-set-amd64-medium
     permissions:
       actions: read
       checks: write
