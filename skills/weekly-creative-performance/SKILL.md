@@ -143,8 +143,8 @@ cat > .context/wcp-state.json <<'EOF'
   "step": "ready_for_fetch",
   "platforms": ["facebook","google_ads"],
   "connectors_by_platform": {
-    "facebook":   { "connector_id": 14082, "accounts": [{"account_id":"act_1211478595627548","name":"Improvado.io"}] },
-    "google_ads": { "connector_id": 1985,  "customer_id": "9521562011" }
+    "facebook":   { "connector_id": "FACEBOOK_CONNECTOR_ID", "accounts": [{"account_id":"act_EXAMPLE_ACCOUNT_ID","name":"Example Brand"}] },
+    "google_ads": { "connector_id": "GOOGLE_ADS_CONNECTOR_ID",  "customer_id": "GOOGLE_CUSTOMER_ID" }
   },
   "google_api_version": "v23"
 }
@@ -633,7 +633,7 @@ config:
 | Pinterest | `/pins/{id}` | 404 | Stamp `thumbnail_type="placeholder"` for that pin |
 | TikTok | `/ad/get/` | `code != 0` | Read `message` field; auth → try next connector |
 | TikTok | `/report/integrated/get/` | `code != 0` | Show ads without metrics |
-| LinkedIn | `/adCreativesV2` | 401/403 / `REVOKED_ACCESS_TOKEN` | Try next connector |
+| LinkedIn | `/adCreativesV2` | 401/403 auth error | Try next connector |
 | LinkedIn | `/rest/*` | 404 | Use `/v2/`, not `/rest/` |
 | any | 429 | rate limit | Wait 60s, retry once; if still 429 skip platform |
 
@@ -723,8 +723,8 @@ If fresh (≤ 30 min), branch on `step`:
   "step": "ready_for_mirror",
   "platforms": ["facebook", "google_ads"],
   "connectors_by_platform": {
-    "facebook":   { "connector_id": 14082, "accounts": [{"account_id":"act_1211478595627548","name":"Improvado.io"}] },
-    "google_ads": { "connector_id": 1985,  "customer_id": "9521562011" }
+    "facebook":   { "connector_id": "FACEBOOK_CONNECTOR_ID", "accounts": [{"account_id":"act_EXAMPLE_ACCOUNT_ID","name":"Example Brand"}] },
+    "google_ads": { "connector_id": "GOOGLE_ADS_CONNECTOR_ID",  "customer_id": "GOOGLE_CUSTOMER_ID" }
   },
   "google_api_version": "v23",
   "creative_items": [

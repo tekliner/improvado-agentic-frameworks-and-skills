@@ -1,7 +1,7 @@
 # Audit Playbooks — Source of Truth
 
 Source: vault `Improvado/05-Product/Marketing OS (Operational System)/data-sources/`
-Authors: Roman + ALG team
+Authors: Internal marketing audit team
 When SKILL.md says "follow the audit playbook for the source", read the relevant section here.
 Last sync: 2026-05-04
 
@@ -36,4 +36,3 @@ tags:
   - playbook
   - hybrid-3tier
 ---
-

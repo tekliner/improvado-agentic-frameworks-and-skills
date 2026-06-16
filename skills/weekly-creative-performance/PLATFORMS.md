@@ -161,7 +161,7 @@ Insights metrics correlate by `ad_id`; set them on the new CreativeItem directly
 
 **On failure — alternate connector retry, then graceful degrade.**
 
-If the call returns `Invalid token` / `Permission denied` / `OAuthException` AND the account appears in `/discoveryListAccountsTool` results from MORE THAN ONE Facebook connector (e.g. account `act_1211478595627548` was listed by both connectors 14082 and 45600 in the 2026-05-27 trace), retry the SAME call with each alternate connector_id in turn before giving up. Token grants are per-connector; one connector's user may have `ads_management` permission on the account while another's user only has `ads_read`.
+If the call returns `Invalid token` / `Permission denied` / `OAuthException` AND the account appears in `/discoveryListAccountsTool` results from MORE THAN ONE Facebook connector, retry the SAME call with each alternate connector_id in turn before giving up. Token grants are per-connector; one connector's user may have `ads_management` permission on the account while another's user only has `ads_read`.
 
 If every alternate connector also fails, OR no alternates exist:
 
@@ -204,7 +204,7 @@ Insights row → CreativeItem: `impressions` / `clicks` / `ctr` (already a perce
 - ❌ **`thumbnail_url` from `/ads` or `/insights` as the primary for standard (non-DPA) creatives.** Both return the 64×64 placeholder, not the full-res `image_url` on `/adcreatives`. If a `/adcreatives` row has only `thumbnail_url`, re-issue Call 1 with explicit `image_url,url_tags` fields (truncation defense), not render 64px. (For DPA creatives, 64×64 IS the canonical thumbnail — there is no full-res alternative.)
 - ❌ **Strip or re-encode the fbcdn URL signature.** Pass `image_url` through verbatim. FB CDN rejects requests with stripped / re-encoded / reordered query parameters.
 - ❌ **Re-paginate `/adcreatives` past 200 creatives searching for missing insights ad_ids.** When `/insights` returns ad_ids that don't appear in pages 1-4, they're DPA / Advantage+ campaigns — use the fallback above. Pagination past page 4 won't find them; the agent in 2026-05-27 burned 3 wasted page fetches before realizing this.
-- ❌ **Probe the same account through a different connector** hoping to find creatives that match insights ad_ids. Both connectors hit the same underlying account; the response is identical. (Verified in 2026-05-27 trace: connector 14082 and 45600 returned the exact same `/adcreatives` cursor + rows for `act_1211478595627548`.)
+- ❌ **Probe the same account through a different connector** hoping to find creatives that match insights ad_ids. Both connectors hit the same underlying account; the response is identical.
 - ❌ **Per-creative fetches.** `/adcreatives` with `limit=50` + pagination is the canonical batch path; per-creative `/{creative_id}?fields=image_url` fans out against the 200/hr ceiling.
 
 ---

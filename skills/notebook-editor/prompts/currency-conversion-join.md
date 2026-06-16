@@ -26,8 +26,8 @@ The `datasource_account_item` column is a JSON object. Example value:
 
 ```json
 {
-  "id": "act_374507908381175",
-  "name": "Andrey Igorevich",
+  "id": "act_EXAMPLE_ACCOUNT_ID",
+  "name": "Example Account",
   "status": "active",
   "currency": "USD",
   "business_id": null,

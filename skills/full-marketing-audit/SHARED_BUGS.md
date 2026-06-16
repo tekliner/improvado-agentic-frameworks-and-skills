@@ -1,6 +1,6 @@
 # Shared Bugs — full-marketing-audit (v4.0+)
 
-Canvas-open mechanics + failure-mode catalog. As of v4 (2026-05-08), the audit-paper visual is a single `custom-component` widget on a generic `CrossChannelEditableDashboard.tsx` — Nick Snopov's pattern (frozen from v3.2.0). The historic ClickHouse SQL hygiene rules from v3.x § 1 are **deleted** — v4 is Discovery API only, no warehouse fallback in the hot path. If you need warehouse data, that's a different skill.
+Canvas-open mechanics + failure-mode catalog. As of v4 (2026-05-08), the audit-paper visual is a single `custom-component` widget on a generic `CrossChannelEditableDashboard.tsx` using the single-custom-component-widget pattern (frozen from v3.2.0). The historic ClickHouse SQL hygiene rules from v3.x § 1 are **deleted** — v4 is Discovery API only, no warehouse fallback in the hot path. If you need warehouse data, that's a different skill.
 
 Per-platform pre-flight gotchas (Reddit alias, LinkedIn connector-pick, Meta `campaign_status` absence, etc.) live in their respective `playbooks/{platform}.md` files now, not here.
 

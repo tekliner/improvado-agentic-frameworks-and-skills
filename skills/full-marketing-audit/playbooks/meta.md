@@ -231,8 +231,8 @@ GET /v23.0/act_<account_id>/adsets?fields=id,name,campaign_id,effective_status,e
               excluded_custom_audiences,targeting_automation}&limit=1
 → 200 OK, sample shape:
 {
-  "id": "6595388754791",
-  "campaign_id": "6595381810591",
+  "id": "EXAMPLE_AD_SET_ID",
+  "campaign_id": "EXAMPLE_CAMPAIGN_ID",
   "effective_status": "CAMPAIGN_PAUSED",
   "end_time": "2024-06-16T21:00:00-0700",
   "start_time": "2024-06-07T07:00:00-0700",
@@ -332,4 +332,3 @@ tags:
   - playbook
   - hybrid-3tier
 ---
-

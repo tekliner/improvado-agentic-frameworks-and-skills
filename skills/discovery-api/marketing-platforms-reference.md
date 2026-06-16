@@ -33,9 +33,9 @@ If all fail, invoke `/discovery` skill's API Version Discovery Protocol.
 ### Working request body for searchStream (most fragile)
 
 ```http
-POST https://googleads.googleapis.com/v24/customers/9521562011/googleAds:searchStream
+POST https://googleads.googleapis.com/v24/customers/GOOGLE_CUSTOMER_ID/googleAds:searchStream
 Authorization: Bearer <handled by /discovery>
-login-customer-id: 9521562011         ← required header
+login-customer-id: MCC_CUSTOMER_ID    ← required header
 Content-Type: application/json
 ```
 
@@ -169,40 +169,40 @@ ORDER BY name;
 
 ---
 
-## QA test fixtures (May 2026 verified)
+## QA test fixtures
 
-These paths from the May 2026 discovery report can be replayed by engineers to validate the skills end-to-end without onboarding new accounts.
+Use workspace-owned QA connectors when validating the skills end-to-end without onboarding new accounts. Keep concrete cluster names, agency IDs, connector IDs, account IDs, teammate names, and token-state labels out of public fixtures.
 
 ```
-Cluster: lisbon
-Workspace: 121 / Main Group (agency 3756) — Improvado dogfood
+Cluster: <cluster_name>
+Workspace: <workspace_id> / <workspace_name> (agency <agency_id>)
 
 Facebook
-  agency_id: 3756, connector_id: 14082, ad_account_id: act_1211478595627548
-  Sample creative: 4124405944370070 ("creative-C-empowerment 2026-03-27-…")
+  agency_id: <agency_id>, connector_id: <facebook_connector_id>, ad_account_id: act_EXAMPLE_ACCOUNT_ID
+  Sample creative: <creative_id> ("example creative")
   Expected: 10+ creatives, image_url + thumbnail_url present
 
 Google Ads
-  agency_id: 3756, connector_id: 1985, customer_id: 9521562011 (Improvado)
-  Sample ad: 596371013272 (RESPONSIVE_DISPLAY_AD, "No-Code Revenue Data Platform")
+  agency_id: <agency_id>, connector_id: <google_ads_connector_id>, customer_id: GOOGLE_CUSTOMER_ID
+  Sample ad: <ad_id> (RESPONSIVE_DISPLAY_AD, "example responsive display ad")
 
 LinkedIn Ads (active connector)
-  agency_id: 3059, connector_id: 3567 (Daniel Mironov), account 507446188
-  Expected: 733 total creatives; sample IDs 51007346, 60919306, 68770876
+  agency_id: <agency_id>, connector_id: <linkedin_connector_id>, account LINKEDIN_ACCOUNT_ID
+  Expected: non-empty creatives; sample IDs <creative_id_1>, <creative_id_2>, <creative_id_3>
 
-LinkedIn Ads (revoked — for auth_error → CH-fallback test)
-  agency_id: 3756, connector_id: 19935 — REVOKED_ACCESS_TOKEN
+LinkedIn Ads (auth-error fixture)
+  agency_id: <agency_id>, connector_id: <linkedin_auth_error_connector_id>
 
 TikTok Ads
-  agency_id: 1, workspace 26, connector_id: 6447, advertiser_id: 6804972988073508869
-  Expected: 235 ads; sample IDs 1679282120411138, 1679282120409090
+  agency_id: <agency_id>, workspace <workspace_id>, connector_id: <tiktok_connector_id>, advertiser_id: TIKTOK_ADVERTISER_ID
+  Expected: non-empty ads; sample IDs <ad_id_1>, <ad_id_2>
 
 Pinterest Ads
-  agency_id: 1, workspace 26, connector_id: 6619, ad_account_id: 549756488767 (Improvado.io)
-  Expected: Improvado.io ads with image URLs (i.pinimg.com)
+  agency_id: <agency_id>, workspace <workspace_id>, connector_id: <pinterest_connector_id>, ad_account_id: PINTEREST_AD_ACCOUNT_ID
+  Expected: ads with image URLs (i.pinimg.com)
 ```
 
-These agency IDs are for **QA only** — never embed them as defaults in either skill's flow.
+These placeholder IDs are for **QA only** — never embed concrete tenant IDs as defaults in either skill's flow.
 
 ---
 

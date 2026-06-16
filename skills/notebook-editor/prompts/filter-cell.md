@@ -35,7 +35,7 @@ Content is an **array** (not object):
                     "id": "nxw0b8cuvo",
                     "column": "campaign_id",
                     "expression": "contains",
-                    "value": ["120211677871930638"]
+                    "value": ["EXAMPLE_CAMPAIGN_ID"]
                   }
                 ]
               },

@@ -1,6 +1,6 @@
 ---
 name: full-marketing-audit
-description: Triggers on the "Full Marketing Audit" onboarding card OR phrases like "audit my account / agency / Google / Meta / what's wasting spend". Three phases — A connection check + heal (Discovery API only), B parallel per-channel audits (each loads only its own playbook), C synthesis via Nick Snopov's single-custom-component-widget pattern. Idempotent — same `(workspace_id, audit_window_start_utc, '4.0.0')` triple → identical findings.
+description: Triggers on the "Full Marketing Audit" onboarding card OR phrases like "audit my account / agency / Google / Meta / what's wasting spend". Three phases — A connection check + heal (Discovery API only), B parallel per-channel audits (each loads only its own playbook), C synthesis via a single-custom-component-widget pattern. Idempotent — same `(workspace_id, audit_window_start_utc, '4.0.0')` triple → identical findings.
 version: "4.0.0"
 ---
 
@@ -237,9 +237,9 @@ If a phase is genuinely incomplete (auth outage, total connector failure), say s
   2. **Phase A connection check + heal** replaces v3.x's three-step Phase 0 / 1 / 1c. Discovery probes happen in Phase A; healers (`healers/auth_expired.md`, `healers/dead_extract.md`) attempt fast in-line recovery before declaring BLOCKED.
   3. **Discovery API ONLY.** ClickHouse fallback retired from the audit's hot path. The historic CH SQL hygiene rules are dropped from `SHARED_BUGS.md § 1`. The "ClickHouse-before-Discovery inversion" failure mode is impossible in v4.
   4. **Per-channel parallel audits** in Phase B — each platform loads only its own playbook. Tier 1 + Tier 2 + Tier 3 collapse into one logical round per channel. Cross-channel synthesis happens once, in Phase B/C boundary.
-  5. **`audit-paper.html` + `dashboard-template.json` frozen from v3.2.0** — Nick Snopov's single-custom-component-widget pattern carries forward; visual unchanged.
+  5. **`audit-paper.html` + `dashboard-template.json` frozen from v3.2.0** — single-custom-component-widget pattern carries forward; visual unchanged.
   6. **Hardened invariants from v3.2.0** kept: anti-fabrication clause (A.4), ALL-account fan-out (B.2), Tier 2 mandatory evaluation (B.3), accounts-weighted `audited_pct` (B.6), `</script>` escape (C.3).
   7. **SKILL.md size**: 489 lines (v3.2.0) → ~245 lines (v4). Depth lives in per-platform playbooks; orchestrator stays terse.
   Origin sessions: `0c1c2fa9-08ab-419f-8d6b-f3ca21362094` (v3.1.0 prod incident), `0af49e17-2782-419c-88ce-db35782afc2c` (2026-05-08 single-client self-review), `7688c013-f5b1-4f03-b967-3da099a4c60a` (v4 design with Sasha + Roman).
-- **3.2.0** (2026-05-08) — Pivoted Phase 3 to Nick Snopov's single-custom-component-widget pattern; six self-review fixes. See git history for full notes.
+- **3.2.0** (2026-05-08) — Pivoted Phase 3 to the single-custom-component-widget pattern; six self-review fixes. See git history for full notes.
 - **3.1.0** (2026-05-07) — Phase 0 mandatory PLAYBOOKS read; 1b connections-cache hard assertion; 1c-FAST.6 Tier 1 lighthouse enforcement; Phase 2.9 pre-render self-audit gate.

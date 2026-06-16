@@ -36,7 +36,7 @@
 
 Sources:
 - **`algorithms/revenue_div/projects/marketing experiments/google_ads_audit/checks.py`** — 75 rule implementations across 11 series (C/B/S/Q/A/K/E/H/R/I/G/T/L/P/D)
-- **[[Cerebro] Google Ads Audit Rules](https://www.notion.so/d343ff84eb3742dc98b2b8947d59f455)** — 9-rule Best Practices + linked Google Sheet (Daniel Mironov + Alexander Petrov validated)
+- **[[Cerebro] Google Ads Audit Rules](https://www.notion.so/d343ff84eb3742dc98b2b8947d59f455)** — 9-rule Best Practices + linked Google Sheet (validated by internal QA)
 - **[Filter out audit rules from other library charts](https://www.notion.so/1239aec6212580d98d41d6c123c5beb9)** — canonical 20-rule Cerebro guideline list
 - **[Google Ads Data Audit Enablement](https://www.notion.so/10a9aec621258015b15affc48aa49ced)** — 3 audit DSL functions (#30/32/33: Naming Convention / UTM / Best Practices)
 
@@ -312,4 +312,3 @@ tags:
   - playbook
   - hybrid-3tier
 ---
-

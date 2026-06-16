@@ -192,13 +192,13 @@ Filter spend by account ID (only count if account matches, else 0):
       "mapping": [
         {
           "original_title": "spend",
-          "new_title": ["CASE WHEN __account_id = '9521562011' THEN spend ELSE 0.0 END"],
+          "new_title": ["CASE WHEN __account_id = 'GOOGLE_CUSTOMER_ID' THEN spend ELSE 0.0 END"],
           "conditions": null
         }
       ]
     }
   ],
-  "formula": "CASE WHEN __account_id = '9521562011' THEN spend ELSE 0.0 END"
+  "formula": "CASE WHEN __account_id = 'GOOGLE_CUSTOMER_ID' THEN spend ELSE 0.0 END"
 }
 ```
 

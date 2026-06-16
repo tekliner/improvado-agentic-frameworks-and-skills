@@ -1,5 +1,5 @@
 {
-  "_template_doc": "BIE config template for full-marketing-audit v3.2.0. ARCHITECTURE PIVOT (2026-05-08): retired the bespoke MarketingAuditDashboard.tsx route in favor of Nick Snopov's single-custom-component-widget pattern (vault: Nick Snopov — HTML to Editable BI Dashboard Prompt 2026-05-07). The audit-paper visual is now a self-contained <style>+<script>+markup HTML document (audit-paper.html) embedded as the componentCode of ONE custom-component widget on a CrossChannelEditableDashboard. BIE skill-cli.ts:295 hardcodes dashboardUrl to CrossChannelEditableDashboard.tsx — this template now matches that hardcode (no fight). Pre-prod PR-preview deploys no longer block the audit because there is zero ai-dashboards code dependency beyond the generic editable-dashboard host that ships everywhere.",
+  "_template_doc": "BIE config template for full-marketing-audit v3.2.0. ARCHITECTURE PIVOT (2026-05-08): retired the bespoke MarketingAuditDashboard.tsx route in favor of the single-custom-component-widget pattern. The audit-paper visual is now a self-contained <style>+<script>+markup HTML document (audit-paper.html) embedded as the componentCode of ONE custom-component widget on a CrossChannelEditableDashboard. BIE skill-cli.ts:295 hardcodes dashboardUrl to CrossChannelEditableDashboard.tsx — this template now matches that hardcode (no fight). Pre-prod PR-preview deploys no longer block the audit because there is zero ai-dashboards code dependency beyond the generic editable-dashboard host that ships everywhere.",
   "_slots_overview": "Two placeholder strings to substitute before save: {{COMPONENT_CODE}} (the rendered audit-paper.html with __AUDIT_PAYLOAD_JSON__ replaced by JSON.stringify(payload)) and the title/tree/audit-date scalar slots. The widgets/layout arrays are NOT empty in v3.2.0 — they hold the single custom-component widget that renders the audit. The skill builds the auditPayload as before; it just no longer travels as a top-level config field — it's stringified into componentCode.",
   "_lint_before_save": [
     "Zero {{...}} tokens remain anywhere in the saved JSON",
@@ -33,16 +33,16 @@
   "_finding_shape_example": {
     "rank": 1,
     "rule_id": "T3-ZERO-CONV",
-    "client": "Tennis Channel",
+    "client": "Example Client",
     "source": "Meta Ads",
     "status": "FAIL",
     "severity": "CRIT",
     "headline": "Zero conversion signals",
-    "subline": "Tennis Channel is spending $121,545/month on Meta AppSpecific subscription campaigns with zero measurable conversion events.",
-    "observed": "Account act_441508018218989: $121,545 in 30d across 4 campaign groups. mobile_app_install = 0, purchase = 0, lead = 0.",
+    "subline": "Example Client is spending $121,545/month on Meta AppSpecific subscription campaigns with zero measurable conversion events.",
+    "observed": "Account act_EXAMPLE_ACCOUNT_ID: $121,545 in 30d across 4 campaign groups. mobile_app_install = 0, purchase = 0, lead = 0.",
     "fix": "Verify Meta pixel fires on subscription confirmation screen. Create custom Subscribe event in Meta Events Manager. Pause AppSpecific campaigns until pixel verified.",
     "action_link_label": "Open in Meta Ads Manager",
-    "action_link_url": "https://business.facebook.com/adsmanager/manage/campaigns?act=441508018218989",
+    "action_link_url": "https://business.facebook.com/adsmanager/manage/campaigns?act=EXAMPLE_ACCOUNT_ID",
     "at_risk_per_mo": 121545
   },
   "_pass_blocked_shape_example": {

@@ -464,7 +464,7 @@ Starts an integrated progressive build for a transformation with specified data 
       "connection_id": 789,
       "connection_data_source": "Facebook Ads",
       "accounts": [
-        {"id": 101, "account_id": "act_9876543210"}
+        {"id": 101, "account_id": "act_EXAMPLE_ACCOUNT_ID"}
       ]
     }
   ]
@@ -549,7 +549,7 @@ python3 .claude/skills/notebook-editor/notebook_client.py insert-cell \
 The file must contain:
 ```json
 {
-  "previous_cell_id": "10132307506615765091",
+  "previous_cell_id": "PREVIOUS_CELL_ID",
   "new_cell": {
     "cell_type": "union",
     "title": "Blend data",
@@ -560,7 +560,7 @@ The file must contain:
   },
   "cells_to_update": [
     {
-      "cell_id": "11364602580561385172",
+      "cell_id": "CELL_ID",
       "content": { ... }
     }
   ]
