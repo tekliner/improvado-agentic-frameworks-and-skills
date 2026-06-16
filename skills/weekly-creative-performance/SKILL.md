@@ -27,13 +27,13 @@ User typed any of:
 - "which creatives are dying" / "creative fatigue" / "RSA / quality score"
 - Anything combining creative visuals + performance metrics.
 
-OR the ALG `onboarding_summary` names this skill (see § 4).
+OR an `onboarding_summary` names this skill (see § 4).
 
 ## 3. Mode selection
 
 | Signal (check in this order; first match wins) | Mode |
 |---|---|
-| ALG dispatch — `onboarding_summary` contains `Weekly Creatives Analysis` / `startingSkillId: "weekly-creatives-analysis"` | B (mandatory) |
+| Onboarding dispatch — `onboarding_summary` contains `Weekly Creatives Analysis` / `startingSkillId: "weekly-creatives-analysis"` | B (mandatory) |
 | User's typed message contains literal `document` / `markdown` / `deck` / `report me` / `as a report` (case-insensitive, in their OWN message, not in Q&A recap) | A |
 | User's typed message contains `chart` or `visualize` | C |
 | `/business-intelligence-editor` skill unavailable at runtime | A (with explicit note `Saved as a document — dashboard skill not available right now.`) |
@@ -51,7 +51,7 @@ Examples: `Selected Mode B (Dashboard) — Path A dispatch.` / `Selected Mode A 
 | A | Build markdown report via `createDocument` | skip § 7c–7f and § 8 (see § 12 Mode A skeleton) |
 | C | Single chart via `visualizationTool` | skip §§ 6–8 |
 
-## 4. ALG dispatch (Path A)
+## 4. Onboarding Dispatch (Path A)
 
 Source the run config from whichever is present:
 
@@ -255,7 +255,7 @@ Output (stdout JSON, also written to `/tmp/wcp-norm.json` above):
 
 The script handles ALL of: hsa_ad parsing + join, DPA / Advantage+ fallback merge via `/ads?filtering`, STEP 1G backfill merge, Asset API URL resolution (Responsive Display + App ads), YouTube `video_url` + mirrored-poster derivation for VIDEO_RESPONSIVE_AD, RSA `text_preview` extraction, fatigue bucketing (CTR thresholds), aggregate totals (health_score, spend_at_risk_str), per-platform palette / letter / full-name lookup, **AND** the § 7c mirror-priority sort + 35-cap + queue emission. **The agent does NOT compute any of this.** Read the output JSON; it's the input to § 7b's (now mechanical) lookup + § 7c's (now mechanical) mirror dispatch.
 
-LinkedIn / TikTok / Pinterest are not yet handled by the script. For those platforms, the agent normalizes inline per PLATFORMS.md and passes the resulting CreativeItems as `input.other_platforms_items` (an array — the script appends them to the FB+Google output before sorting + computing aggregates). Most ALG-dispatched runs are FB+Google only and don't hit this path.
+LinkedIn / TikTok / Pinterest are not yet handled by the script. For those platforms, the agent normalizes inline per PLATFORMS.md and passes the resulting CreativeItems as `input.other_platforms_items` (an array — the script appends them to the FB+Google output before sorting + computing aggregates). Most onboarding-dispatched runs are FB+Google only and don't hit this path.
 
 **CreativeItem output schema (for reference only — the script produces this; you don't construct it):**
 
@@ -742,7 +742,7 @@ If fresh (≤ 30 min), branch on `step`:
 ### 13d. When NOT to resume
 
 - The user's prompt explicitly says "redo from scratch", "start over", or similar → ignore the stash even if fresh.
-- The active platforms in this invocation's ALG prebrief differ from `platforms` in the stash → ignore (different scope).
+- The active platforms in this invocation's prebrief differ from `platforms` in the stash → ignore (different scope).
 - `google_api_version` in the stash returns 404 on a current probe → ignore (API rotated).
 - After any restored-state failure (BIE save rejection, lint failure that names a CreativeItem the stash describes) → `rm -f .context/wcp-state.json` and continue fresh from STEP 1.
 

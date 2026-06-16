@@ -28,11 +28,11 @@ This skill **replaces v1.0.0** (the prior tactical Slack-brief format). The XML 
 
 Two trigger paths feed this skill:
 
-### Path A — ALG dispatch (post-onboarding, new users)
+### Path A — Onboarding dispatch (new users)
 
 **Company personalization:** if the dispatch message carries an `alg-prebrief` fenced block with a `company_research:` line, tailor exactly ONE headline/intro sentence in the closing chat hand-off to this company — always hedged ("looks like…"), never as a fact. If absent, proceed generically.
 
-When invoked via `/alg-onboarding` §3.6 dispatch, the conversation contains an `onboarding_summary` message with `Interview answers:`. Scan those answers for **bias signals**:
+If the conversation contains an `onboarding_summary` message with `Interview answers:`, scan those answers for **bias signals**:
 
 - **Role**
   - `marketer` / `performance-marketer` → operator voice; KPI strip surfaces all 8 metrics; Warnings tab is the default landing tab; Recommendations card severity emphasised

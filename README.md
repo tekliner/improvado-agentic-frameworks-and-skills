@@ -27,21 +27,18 @@ Current plugin skill inventory:
 | 6 | **[Campaign Launcher OSS](skills/campaign-launcher-oss/)** | Open-source multi-channel campaign planning and launch workflow. | Launching marketing experiments |
 | 7 | **[Secure Agents](skills/secure-agents/)** | Plain-English checks for credential leaks, prompt-injection sinks, and missing audit trails. | Quick security checks for AI agents |
 | 8 | **[Google Meet Manager](skills/google-meet-manager/)** | Manage Google Meet recordings, transcripts, and Gemini Notes through Drive and Docs. | Searching recordings or meeting transcripts |
-| 9 | **[ALG Onboarding](skills/alg-onboarding/)** | Customer-visible ALG onboarding recap and use-case dispatch workflow. | Agent-Led Growth onboarding follow-up |
-| 10 | **[CMO Cross-Channel Dashboard](skills/cmo-cross-channel-dashboard/)** | Executive cross-channel marketing dashboard across spend, funnel, and attribution views. | CMO or VP-level performance dashboards |
-| 11 | **[Daily Performance Report](skills/daily-performance-report/)** | Operational daily performance console for multi-channel paid media. | Performance marketer daily monitoring |
-| 12 | **[Discovery API](skills/discovery-api/)** | Mandatory protocol for live platform data access through Improvado Discovery API tools. | Fetching current data from ad and analytics platforms |
-| 13 | **[Field Mapping](skills/field-mapping/)** | Field mapping and extract setup validation with coverage options. | Finding report types and validating fields |
-| 14 | **[Flat Data File Import](skills/flat-data-file-import/)** | File, email, SFTP, and S3 import workflows for flat data. | Importing CSV, Excel, TSV, email, SFTP, or S3 files |
-| 15 | **[Full Marketing Audit](skills/full-marketing-audit/)** | Read-only paid-media audit with connection checks, per-channel audits, and dashboard synthesis. | Account, agency, or platform spend audits |
-| 16 | **[ISD Diagnostics](skills/isd-diagnostics/)** | Tenant-scoped diagnostics for connection, extraction, load, destination, and recipe issues. | Investigating customer ISD issues |
-| 17 | **[ISD Remediation](skills/isd-remediation/)** | Confirm-before-mutate remediation actions after diagnostics. | Applying safe fixes for diagnosed ISD problems |
-| 18 | **[MDG Create and Edit](skills/mdg-create-and-edit/)** | Marketing Data Governance rule creation, editing, testing, and alerts. | Creating MDG rules or monitoring metrics |
-| 19 | **[Notebook Editor](skills/notebook-editor/)** | Edit and run recipe/notebook cells with SQL, union, join, group, and filter operations. | Managing Improvado recipes and notebooks |
-| 20 | **[Recipe QA Rules](skills/recipe-qa-rules/)** | Recipe QA flow with topology discovery, QRDs, duplicate checks, and discrepancy checks. | Checking or creating QA for recipe views |
-| 21 | **[SQL Import](skills/sql-import/)** | SQL source import workflow for MySQL, Postgres, and MSSQL. | Connecting SQL databases and scheduling extracts |
-| 22 | **[Temporal Pipelines](skills/temporal-pipelines/)** | Create, edit, run, and debug Python Temporal workflow pipelines. | Working with Improvado Temporal pipeline workflows |
-| 23 | **[Weekly Creative Performance](skills/weekly-creative-performance/)** | Creative performance dashboard with thumbnails, fatigue segments, and Discovery API data. | Weekly creative analysis across paid platforms |
+| 9 | **[CMO Cross-Channel Dashboard](skills/cmo-cross-channel-dashboard/)** | Executive cross-channel marketing dashboard across spend, funnel, and attribution views. | CMO or VP-level performance dashboards |
+| 10 | **[Daily Performance Report](skills/daily-performance-report/)** | Operational daily performance console for multi-channel paid media. | Performance marketer daily monitoring |
+| 11 | **[Discovery API](skills/discovery-api/)** | Mandatory protocol for live platform data access through Improvado Discovery API tools. | Fetching current data from ad and analytics platforms |
+| 12 | **[Field Mapping](skills/field-mapping/)** | Field mapping and extract setup validation with coverage options. | Finding report types and validating fields |
+| 13 | **[Flat Data File Import](skills/flat-data-file-import/)** | File, email, SFTP, and S3 import workflows for flat data. | Importing CSV, Excel, TSV, email, SFTP, or S3 files |
+| 14 | **[Full Marketing Audit](skills/full-marketing-audit/)** | Read-only paid-media audit with connection checks, per-channel audits, and dashboard synthesis. | Account, agency, or platform spend audits |
+| 15 | **[MDG Create and Edit](skills/mdg-create-and-edit/)** | Marketing Data Governance rule creation, editing, testing, and alerts. | Creating MDG rules or monitoring metrics |
+| 16 | **[Notebook Editor](skills/notebook-editor/)** | Edit and run recipe/notebook cells with SQL, union, join, group, and filter operations. | Managing Improvado recipes and notebooks |
+| 17 | **[Recipe QA Rules](skills/recipe-qa-rules/)** | Recipe QA flow with topology discovery, QRDs, duplicate checks, and discrepancy checks. | Checking or creating QA for recipe views |
+| 18 | **[SQL Import](skills/sql-import/)** | SQL source import workflow for MySQL, Postgres, and MSSQL. | Connecting SQL databases and scheduling extracts |
+| 19 | **[Temporal Pipelines](skills/temporal-pipelines/)** | Create, edit, run, and debug Python Temporal workflow pipelines. | Working with Improvado Temporal pipeline workflows |
+| 20 | **[Weekly Creative Performance](skills/weekly-creative-performance/)** | Creative performance dashboard with thumbnails, fatigue segments, and Discovery API data. | Weekly creative analysis across paid platforms |
 
 ## 🎯 Quick Selection Guide
 

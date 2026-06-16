@@ -24,11 +24,11 @@ The dashboard is **executive** (read 1–3× per week, share to leadership / boa
 
 Two trigger paths feed this skill:
 
-### Path A — ALG dispatch (post-onboarding, new users)
+### Path A — Onboarding dispatch (new users)
 
 **Company personalization:** if the dispatch message carries an `alg-prebrief` fenced block with a `company_research:` line, tailor exactly ONE headline/intro sentence in the closing chat hand-off to this company — always hedged ("looks like…"), never as a fact. If absent, proceed generically.
 
-When invoked via `/alg-onboarding` §3.6 dispatch, the conversation contains an `onboarding_summary` message with `Interview answers:`. Scan those answers for **bias signals**:
+If the conversation contains an `onboarding_summary` message with `Interview answers:`, scan those answers for **bias signals**:
 
 - **Role**
   - `cmo-director` / `c-level` / `vp-marketing` → executive voice; topbar `last_sync_label` reads "Live · `<N>` min ago"; default tab is **Overview**; the Channels and Customer Journey tabs are hidden by default behind a "Show details" disclosure (set `editState.persona = 'executive'`)
@@ -2120,4 +2120,3 @@ renderJourneys();
 </html>
 
 ```
-

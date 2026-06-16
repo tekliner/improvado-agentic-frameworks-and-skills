@@ -13,9 +13,9 @@ Paid-media audit. Read-only. Output: an audit-paper-styled dashboard that persis
 - `selectedUseCase === 'full-marketing-audit'`, OR
 - "audit my account / agency / [Google/Meta/LinkedIn/TikTok/Reddit/TTD]", "what's wasting spend".
 
-## ALG dispatch — company personalization
+## Onboarding Dispatch — Company Personalization
 
-When invoked via `/alg-onboarding` §3.6 dispatch, the message may carry an `alg-prebrief` fenced block. If it contains a `company_research:` line, tailor exactly ONE headline/intro sentence in the chat hand-off to this company — always hedged ("looks like…"), never as a fact. If absent, proceed generically.
+If the message carries an `alg-prebrief` fenced block, and it contains a `company_research:` line, tailor exactly ONE headline/intro sentence in the chat hand-off to this company — always hedged ("looks like…"), never as a fact. If absent, proceed generically.
 
 ## Customer-visibility rules
 
