@@ -1,0 +1,108 @@
+{
+  "_template_doc": "BIE config template for full-marketing-audit v3.2.0. ARCHITECTURE PIVOT (2026-05-08): retired the bespoke MarketingAuditDashboard.tsx route in favor of Nick Snopov's single-custom-component-widget pattern (vault: Nick Snopov — HTML to Editable BI Dashboard Prompt 2026-05-07). The audit-paper visual is now a self-contained <style>+<script>+markup HTML document (audit-paper.html) embedded as the componentCode of ONE custom-component widget on a CrossChannelEditableDashboard. BIE skill-cli.ts:295 hardcodes dashboardUrl to CrossChannelEditableDashboard.tsx — this template now matches that hardcode (no fight). Pre-prod PR-preview deploys no longer block the audit because there is zero ai-dashboards code dependency beyond the generic editable-dashboard host that ships everywhere.",
+  "_slots_overview": "Two placeholder strings to substitute before save: {{COMPONENT_CODE}} (the rendered audit-paper.html with __AUDIT_PAYLOAD_JSON__ replaced by JSON.stringify(payload)) and the title/tree/audit-date scalar slots. The widgets/layout arrays are NOT empty in v3.2.0 — they hold the single custom-component widget that renders the audit. The skill builds the auditPayload as before; it just no longer travels as a top-level config field — it's stringified into componentCode.",
+  "_lint_before_save": [
+    "Zero {{...}} tokens remain anywhere in the saved JSON",
+    "componentCode contains the full audit-paper.html with __AUDIT_PAYLOAD_JSON__ already substituted to a valid JS object literal",
+    "componentCode does NOT contain a literal `</script>` outside of the closing tag at end of file (use JSON.stringify(payload).replace(/<\\/script/gi, '<\\\\/script') when injecting)",
+    "componentCode size <= 100KB (Nick K3); audit-paper.html base is ~24KB so payload budget ~75KB",
+    "editState.widgets has exactly 1 entry, type='custom-component', renderMode='html', chromeless=true, gridWidth=12, gridHeight='full'",
+    "editState.layout.items has exactly 1 entry with the same id as the widget; static=true so the user can't drag-resize away the audit",
+    "appearance.layout.hideTitle=true, hideFilters=true, hideFooter=true so the audit-paper renders chromeless full-bleed",
+    "appearance.layout.background matches the audit-paper's --paper CSS var (#fafaf9) for seamless edges",
+    "dashboardUrl is the canonical CrossChannelEditableDashboard.tsx (BIE save would force this anyway, but be explicit)",
+    "dashboardTitle and dashboardTree have the audit_date_iso and client_or_agency_name substituted"
+  ],
+  "_audit_payload_shape": {
+    "client_or_agency_name": "string — used in title + plain-English line",
+    "audit_date_iso": "string YYYY-MM-DD — display date",
+    "audit_window_start_utc_iso": "string ISO — pinned 30d start, see SKILL idempotence rule 1",
+    "health_score": "integer 0-100 — drives the gauge color zone",
+    "recoverable_per_mo": "integer USD — money-at-risk hero",
+    "total_monthly_spend": "integer USD (optional) — enables the % of monthly spend context line",
+    "account_state": "'Active' | 'Paused' | 'Disconnected'",
+    "n_paid_platforms": "integer — count of live paid platforms",
+    "agency_or_client_label": "string — informational",
+    "account_caption": "string — terse Phase-1 summary, e.g. '5 active platforms · $296K/mo recoverable'",
+    "fail_count": "integer", "warn_count": "integer", "pass_count": "integer", "blocked_count": "integer",
+    "findings": "array of finding objects (max 12 FAIL+WARN combined)",
+    "passes": "array of {rule_id, text}",
+    "blockeds": "array of {rule_id, text}",
+    "coverage_warning": "string (optional) — set ONLY when audited_pct is in 0.40–0.79 partial branch (Phase 2.9). When set, the audit-paper renders a warning callout above the hero. When null/omitted, the callout is hidden (confident headline branch)."
+  },
+  "_finding_shape_example": {
+    "rank": 1,
+    "rule_id": "T3-ZERO-CONV",
+    "client": "Tennis Channel",
+    "source": "Meta Ads",
+    "status": "FAIL",
+    "severity": "CRIT",
+    "headline": "Zero conversion signals",
+    "subline": "Tennis Channel is spending $121,545/month on Meta AppSpecific subscription campaigns with zero measurable conversion events.",
+    "observed": "Account act_441508018218989: $121,545 in 30d across 4 campaign groups. mobile_app_install = 0, purchase = 0, lead = 0.",
+    "fix": "Verify Meta pixel fires on subscription confirmation screen. Create custom Subscribe event in Meta Events Manager. Pause AppSpecific campaigns until pixel verified.",
+    "action_link_label": "Open in Meta Ads Manager",
+    "action_link_url": "https://business.facebook.com/adsmanager/manage/campaigns?act=441508018218989",
+    "at_risk_per_mo": 121545
+  },
+  "_pass_blocked_shape_example": {
+    "rule_id": "L-LI-01",
+    "text": "Account billing currency matches workspace default"
+  },
+  "config": {
+    "defaultTimePeriod": "30",
+    "database": {
+      "schema": "",
+      "table": "cross_channel_automated_recipe",
+      "accounts": "all"
+    },
+    "appearance": {
+      "colorMode": "light",
+      "layout": {
+        "background": "#fafaf9",
+        "hideTitle": true,
+        "hideFilters": true,
+        "hideFooter": true
+      }
+    },
+    "editState": {
+      "layout": {
+        "items": [
+          {
+            "id": "audit-paper",
+            "x": 0,
+            "y": 0,
+            "w": 12,
+            "h": 60,
+            "static": true
+          }
+        ]
+      },
+      "widgets": [
+        {
+          "id": "audit-paper",
+          "type": "custom-component",
+          "props": {
+            "type": "custom-component",
+            "title": "Marketing Audit",
+            "showTitle": false,
+            "renderMode": "html",
+            "chromeless": true,
+            "gridWidth": 12,
+            "gridHeight": "full",
+            "cardStyle": "default",
+            "inheritFiltersFromDashboard": false,
+            "preloadLibraries": [],
+            "customSqlEnabled": false,
+            "customSqlQuery": "",
+            "componentCode": "{{COMPONENT_CODE}}"
+          }
+        }
+      ]
+    }
+  },
+  "dashboardUrl": "clients/template/dashboards/CrossChannelEditableDashboard.tsx",
+  "dashboardTree": "dashboards/Marketing Audit — {{AUDIT_DATE_ISO}}.tsx",
+  "dashboardTitle": "Marketing Audit — {{CLIENT_OR_AGENCY_NAME}} — {{AUDIT_DATE_ISO}}",
+  "isMenuItem": true
+}

@@ -1,0 +1,661 @@
+<!--
+  audit-paper.html — frozen Marketing-Audit visual template (v3.2.0+)
+
+  Owner: full-marketing-audit skill (UC-AU-1)
+  Render target: <single custom-component widget on CrossChannelEditableDashboard>
+                  renderMode="html", chromeless=true, gridWidth=12, gridHeight="full"
+  Pattern: Nick Snopov's "single-custom-component-widget HTML" hack
+           (vault: Nick Snopov — HTML to Editable BI Dashboard Prompt 2026-05-07).
+
+  Substitution contract:
+    The skill (Phase 3) reads this file verbatim, replaces the SINGLE
+    placeholder `__AUDIT_PAYLOAD_JSON__` (NOT inside any string literal —
+    placed in <script> as the right-hand side of `const AUDIT = ...;`)
+    with `JSON.stringify(audit_payload).replace(/<\/script/gi, '<\\/script')`,
+    and emits the resulting string as `componentCode`.
+
+  Why a placeholder, not `<script type="application/json">` parsing:
+    Simpler. One round of substitution. No JSON-text-then-JSON.parse cost.
+    The trade-off is the </script>-in-string risk; the .replace above
+    handles it deterministically.
+
+  Self-contained: NO external CSS, NO Tailwind CDN, NO React. The widget
+  renders identically whether served from prod, pre-prod, or a fresh
+  PR-preview deploy — because there's no ai-dashboards code dependency
+  beyond the generic CrossChannelEditableDashboard.tsx host that already
+  ships everywhere.
+-->
+<style>
+  :root {
+    --paper: #fafaf9;
+    --surface: #ffffff;
+    --surface-alt: #f5f5f4;
+    --ink: #1c1917;
+    --ink-2: #44403c;
+    --ink-3: #78716c;
+    --ink-4: #a8a29e;
+    --rule: #e7e5e4;
+    --rule-strong: #d6d3d1;
+    --fail: #dc2626;
+    --fail-bg: #fef2f2;
+    --fail-line: #fecaca;
+    --warn: #d97706;
+    --warn-bg: #fffbeb;
+    --warn-line: #fde68a;
+    --pass: #059669;
+    --pass-bg: #ecfdf5;
+    --pass-line: #a7f3d0;
+    --blocked: #57534e;
+    --blocked-bg: #f5f5f4;
+    --fix-bg: #fef9ec;
+    --fix-line: #fcd34d;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  .audit-root {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    padding: 24px 16px 64px;
+  }
+  .audit-main {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* ---------------- Header ---------------- */
+  .a-header {
+    border-bottom: 1px solid var(--rule-strong);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+  }
+  .a-header h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .a-header .meta {
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------------- Hero (3-col) ---------------- */
+  .a-hero {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+  @media (max-width: 760px) {
+    .a-hero { grid-template-columns: 1fr; }
+  }
+  .a-hero .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+  }
+  .gauge-wrap { display: flex; flex-direction: column; align-items: center; }
+  .gauge-pill {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .spend-hero .big {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--fail);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .spend-hero .big .suffix {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--ink-3);
+    margin-left: 4px;
+  }
+  .spend-hero .desc {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .channel-waste { display: flex; flex-direction: column; gap: 10px; }
+  .cw-row .cw-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 4px;
+  }
+  .cw-row .cw-name { font-size: 13px; font-weight: 500; color: var(--ink-2); }
+  .cw-row .cw-val { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .cw-row .cw-val .per { font-size: 10px; color: var(--ink-4); margin-left: 4px; font-weight: 400; }
+  .cw-bar { height: 8px; background: var(--surface-alt); border-radius: 999px; overflow: hidden; position: relative; }
+  .cw-bar .fill {
+    position: absolute; inset: 0 auto 0 0;
+    background: linear-gradient(90deg, #fca5a5 0%, #ef4444 100%);
+    border-radius: 999px;
+  }
+  .cw-meta { font-size: 10px; color: var(--ink-3); margin-top: 4px; display: flex; gap: 12px; }
+  .cw-meta .dot {
+    display: inline-block; width: 6px; height: 6px; border-radius: 999px;
+    vertical-align: middle; margin-right: 4px;
+  }
+  .cw-meta .dot.fail { background: var(--fail); }
+  .cw-meta .dot.warn { background: var(--warn); }
+
+  /* ---------------- Plain-English ---------------- */
+  .a-plain {
+    background: var(--surface-alt);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    margin-bottom: 14px;
+  }
+  .a-plain b { color: var(--ink); font-weight: 600; }
+
+  /* ---------------- Status pills ---------------- */
+  .a-pills {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 10px 18px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-2);
+    margin-bottom: 22px;
+  }
+  .a-pills .sep { color: var(--ink-4); margin: 0 10px; font-weight: 300; }
+
+  /* ---------------- Findings list ---------------- */
+  .a-section h2 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 4px;
+    margin: 18px 0 12px;
+    letter-spacing: -0.005em;
+  }
+  .findings { display: flex; flex-direction: column; gap: 12px; }
+  .empty {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 24px;
+    text-align: center;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--ink-3);
+  }
+
+  .f-card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left-width: 4px;
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px 18px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+  .f-card.s-FAIL { border-left-color: var(--fail); }
+  .f-card.s-WARN { border-left-color: var(--warn); }
+  .f-card.s-PASS { border-left-color: var(--pass); }
+  .f-card.s-BLOCKED { border-left-color: var(--ink-4); }
+
+  .f-head {
+    display: flex; justify-content: space-between; gap: 16px; align-items: flex-start;
+    margin-bottom: 8px; flex-wrap: wrap;
+  }
+  .f-tags { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .f-status {
+    display: inline-flex; gap: 4px; align-items: center;
+    padding: 2px 8px; border-radius: 4px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.02em;
+  }
+  .s-FAIL .f-status { background: var(--fail-bg); color: var(--fail); }
+  .s-WARN .f-status { background: var(--warn-bg); color: var(--warn); }
+  .s-PASS .f-status { background: var(--pass-bg); color: var(--pass); }
+  .s-BLOCKED .f-status { background: var(--blocked-bg); color: var(--blocked); }
+  .f-sev {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--ink-3);
+  }
+  .f-rule {
+    font-size: 11px; font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    color: var(--ink-2); background: var(--surface-alt);
+    padding: 1px 6px; border-radius: 4px;
+  }
+  .f-cs { font-size: 11px; color: var(--ink-3); }
+  .f-cs .dot { color: var(--ink-4); margin: 0 4px; }
+  .f-amt {
+    text-align: right; flex-shrink: 0;
+  }
+  .f-amt .v {
+    font-size: 18px; font-weight: 700; line-height: 1;
+  }
+  .s-FAIL .f-amt .v { color: var(--fail); }
+  .s-WARN .f-amt .v { color: var(--warn); }
+  .s-PASS .f-amt .v { color: var(--pass); }
+  .s-BLOCKED .f-amt .v { color: var(--blocked); }
+  .f-amt .l {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--ink-3); margin-top: 2px;
+  }
+  .f-headline {
+    font-size: 15px; font-weight: 600; color: var(--ink); margin: 0 0 4px;
+  }
+  .f-subline { font-size: 13px; line-height: 1.5; color: var(--ink-2); margin: 0 0 12px; }
+  .f-block {
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    margin-bottom: 8px;
+  }
+  .f-block.observed { background: var(--surface-alt); border: 1px solid var(--rule); }
+  .f-block.fix { background: var(--fix-bg); border: 1px solid var(--fix-line); color: var(--ink); }
+  .f-block .lbl { font-weight: 600; margin-right: 4px; }
+  .f-block.fix .lbl { color: #92400e; }
+  .f-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .f-actions a {
+    display: inline-flex; gap: 4px; align-items: center;
+    padding: 6px 12px;
+    background: var(--surface);
+    border: 1px solid var(--rule-strong);
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: background 120ms;
+  }
+  .f-actions a:hover { background: var(--surface-alt); }
+
+  /* ---------------- Pass / Blocked bullets ---------------- */
+  .a-list { padding: 0; margin: 0; list-style: none; }
+  .a-list li {
+    display: flex; gap: 8px; align-items: flex-start;
+    font-size: 13px; line-height: 1.5;
+    padding: 4px 0; color: var(--ink-2);
+  }
+  .a-list .pdot {
+    width: 6px; height: 6px; border-radius: 999px;
+    margin-top: 7px; flex-shrink: 0;
+  }
+  .a-list.passes .pdot { background: var(--pass); }
+  .a-list.blockeds .pdot { background: var(--ink-4); }
+  .a-list code {
+    font-size: 11px;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    background: var(--surface-alt);
+    color: var(--ink-2);
+    padding: 1px 6px; border-radius: 4px; flex-shrink: 0;
+  }
+
+  /* ---------------- Footer ---------------- */
+  .a-footer {
+    margin-top: 36px;
+    padding-top: 14px;
+    border-top: 1px solid var(--rule);
+    font-size: 11px;
+    color: var(--ink-3);
+    text-align: left;
+  }
+  .a-footer b { color: var(--ink-2); font-weight: 600; }
+
+  /* ---------------- Coverage callout (partial audit) ---------------- */
+  .a-cov {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-line);
+    color: #78350f;
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+  .a-cov b { color: #7c2d12; }
+</style>
+
+<div class="audit-root">
+  <main class="audit-main" id="audit-main">
+    <header class="a-header">
+      <h1 id="a-title"></h1>
+      <p class="meta" id="a-meta"></p>
+    </header>
+
+    <div id="a-coverage"></div>
+
+    <section class="a-hero">
+      <div class="gauge-wrap">
+        <div class="label">Health Score</div>
+        <svg viewBox="0 0 200 130" width="100%" style="max-width:240px;height:auto" id="gauge">
+          <path d="M 10 100 A 90 90 0 0 1 190 100" fill="none" stroke="#e7e5e4" stroke-width="14" stroke-linecap="round"/>
+          <path id="gauge-fill" d="M 10 100 A 90 90 0 0 1 190 100" fill="none" stroke="#059669" stroke-width="14" stroke-linecap="round" stroke-dasharray="0 999"/>
+          <text id="gauge-num" x="100" y="92" text-anchor="middle" fill="#1c1917" style="font-size:42px;font-weight:700;font-variant-numeric:tabular-nums">0</text>
+          <text x="100" y="115" text-anchor="middle" fill="#a8a29e" style="font-size:11px;letter-spacing:0.08em">OF 100</text>
+        </svg>
+        <span class="gauge-pill" id="gauge-pill">—</span>
+      </div>
+
+      <div class="spend-hero">
+        <div class="label">Money at risk</div>
+        <div class="big num"><span id="spend-amt">$0</span><span class="suffix">/mo</span></div>
+        <div class="desc" id="spend-desc"></div>
+      </div>
+
+      <div>
+        <div class="label">Where the money is leaking</div>
+        <div class="channel-waste" id="channel-waste"></div>
+      </div>
+    </section>
+
+    <section class="a-plain" id="a-plain"></section>
+
+    <div class="a-pills" id="a-pills"></div>
+
+    <section class="a-section">
+      <h2>Findings — ranked by money at risk</h2>
+      <div class="findings" id="findings"></div>
+    </section>
+
+    <section class="a-section" id="passes-section" style="display:none">
+      <h2 id="passes-h"></h2>
+      <ul class="a-list passes" id="passes"></ul>
+    </section>
+
+    <section class="a-section" id="blockeds-section" style="display:none">
+      <h2 id="blockeds-h"></h2>
+      <ul class="a-list blockeds" id="blockeds"></ul>
+    </section>
+
+    <footer class="a-footer" id="a-footer"></footer>
+  </main>
+</div>
+
+<script>
+(function () {
+  // The skill substitutes __AUDIT_PAYLOAD_JSON__ with JSON.stringify(payload)
+  // (see SKILL.md Phase 3). Until substituted, the placeholder is invalid JS,
+  // so this file is NOT directly runnable in a browser — it's a template.
+  var AUDIT = __AUDIT_PAYLOAD_JSON__;
+
+  // ---------- formatting ----------
+  function fmtExact(n) {
+    if (n == null || isNaN(n)) return '0';
+    return Number(n).toLocaleString('en-US');
+  }
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  // Reject javascript:, data:, vbscript:, etc. Only http(s) — relative URLs
+  // make no sense here (the audit dashboard is rendered inside a Custom
+  // Component widget, not on a path of the platform).
+  function safeHref(u) {
+    if (u == null) return '';
+    var s = String(u).trim();
+    return /^https?:\/\//i.test(s) ? s : '';
+  }
+  function setHTML(id, html) {
+    var el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+  }
+  function setText(id, text) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+
+  // ---------- health gauge ----------
+  function renderGauge(score) {
+    score = Math.max(0, Math.min(100, score || 0));
+    var arc = Math.PI * 90;
+    var fillLen = (score / 100) * arc;
+    var color, label, bg;
+    if (score <= 30) { color = '#dc2626'; label = 'Critical'; bg = '#fef2f2'; }
+    else if (score <= 70) { color = '#d97706'; label = 'Needs work'; bg = '#fffbeb'; }
+    else { color = '#059669'; label = 'Healthy'; bg = '#ecfdf5'; }
+    var fill = document.getElementById('gauge-fill');
+    if (fill) {
+      fill.setAttribute('stroke', color);
+      fill.setAttribute('stroke-dasharray', fillLen + ' ' + arc);
+    }
+    setText('gauge-num', String(score));
+    var pill = document.getElementById('gauge-pill');
+    if (pill) {
+      pill.textContent = label;
+      pill.style.color = color;
+      pill.style.backgroundColor = bg;
+    }
+  }
+
+  // ---------- money-at-risk hero ----------
+  function renderSpend(payload) {
+    setText('spend-amt', '$' + fmtExact(payload.recoverable_per_mo));
+    var desc = '';
+    var n = (payload.findings || []).length;
+    desc += 'Across <b>' + n + '</b> finding' + (n === 1 ? '' : 's') + '.';
+    if (payload.total_monthly_spend && payload.total_monthly_spend > 0) {
+      var pct = Math.round((payload.recoverable_per_mo / payload.total_monthly_spend) * 1000) / 10;
+      desc += ' That’s <b>' + pct + '%</b> of your <span class="num">$'
+        + fmtExact(payload.total_monthly_spend) + '</span> monthly paid spend.';
+    }
+    setHTML('spend-desc', desc);
+  }
+
+  // ---------- per-channel waste bars ----------
+  function aggregateByChannel(findings) {
+    var map = {};
+    (findings || []).forEach(function (f) {
+      var k = f.source || 'Unknown';
+      if (!map[k]) map[k] = { source: k, total_at_risk: 0, fail_count: 0, warn_count: 0 };
+      map[k].total_at_risk += Number(f.at_risk_per_mo) || 0;
+      if (f.status === 'FAIL') map[k].fail_count++;
+      if (f.status === 'WARN') map[k].warn_count++;
+    });
+    return Object.keys(map).map(function (k) { return map[k]; })
+      .sort(function (a, b) { return b.total_at_risk - a.total_at_risk; });
+  }
+  function renderChannelWaste(findings) {
+    var rows = aggregateByChannel(findings);
+    if (rows.length === 0) {
+      setHTML('channel-waste', '<div style="color:#a8a29e;font-size:12px;font-style:italic">No findings</div>');
+      return;
+    }
+    var max = Math.max.apply(null, rows.map(function (r) { return r.total_at_risk; }).concat([1]));
+    var html = rows.map(function (r) {
+      var pct = (r.total_at_risk / max) * 100;
+      var meta = '';
+      if (r.fail_count > 0) meta += '<span><span class="dot fail"></span>' + r.fail_count + ' fail</span>';
+      if (r.warn_count > 0) meta += '<span><span class="dot warn"></span>' + r.warn_count + ' warn</span>';
+      return ''
+        + '<div class="cw-row">'
+        +   '<div class="cw-head">'
+        +     '<span class="cw-name">' + esc(r.source) + '</span>'
+        +     '<span class="cw-val num">$' + fmtExact(r.total_at_risk) + '<span class="per">/mo</span></span>'
+        +   '</div>'
+        +   '<div class="cw-bar"><div class="fill" style="width:' + pct + '%"></div></div>'
+        +   '<div class="cw-meta">' + meta + '</div>'
+        + '</div>';
+    }).join('');
+    setHTML('channel-waste', html);
+  }
+
+  // ---------- plain-English line ----------
+  function renderPlain(p) {
+    var name = esc(p.client_or_agency_name || 'Account');
+    var n = p.n_paid_platforms || 0;
+    var html = '<b>' + name + '</b> is running ' + n + ' paid platform' + (n === 1 ? '' : 's') + ' with ';
+    if (p.fail_count > 0) {
+      html += '<b style="color:#dc2626">' + p.fail_count + ' critical</b>';
+    }
+    if (p.fail_count > 0 && p.warn_count > 0) html += ' and ';
+    if (p.warn_count > 0) {
+      html += '<b style="color:#d97706">' + p.warn_count + ' medium</b>';
+    }
+    var totalIssues = (p.fail_count || 0) + (p.warn_count || 0);
+    if (totalIssues > 0) {
+      html += ' issue' + (totalIssues === 1 ? '' : 's') + '.';
+    } else {
+      html += 'no critical or medium issues.';
+    }
+    if (p.recoverable_per_mo > 0) {
+      html += ' Fixing them recovers <b class="num">$' + fmtExact(p.recoverable_per_mo) + '/mo</b>.';
+    }
+    if (p.account_caption) {
+      html += ' ' + esc(p.account_caption);
+    }
+    setHTML('a-plain', html);
+  }
+
+  // ---------- status pills ----------
+  function renderPills(p) {
+    var html = ''
+      + '<span>\u{1F534} ' + (p.fail_count || 0) + ' fail</span>'
+      + '<span class="sep">·</span>'
+      + '<span>\u{1F7E1} ' + (p.warn_count || 0) + ' warn</span>'
+      + '<span class="sep">·</span>'
+      + '<span>\u{1F7E2} ' + (p.pass_count || 0) + ' pass</span>'
+      + '<span class="sep">·</span>'
+      + '<span>⚫ ' + (p.blocked_count || 0) + ' blocked (cold-path)</span>';
+    setHTML('a-pills', html);
+  }
+
+  // ---------- findings cards ----------
+  function emojiFor(status) {
+    if (status === 'FAIL') return '\u{1F534}';
+    if (status === 'WARN') return '\u{1F7E1}';
+    if (status === 'PASS') return '\u{1F7E2}';
+    return '⚫';
+  }
+  function renderFinding(f) {
+    var actions = '';
+    var hrefSafe = safeHref(f.action_link_url);
+    if (hrefSafe) {
+      actions = '<div class="f-actions"><a href="' + esc(hrefSafe)
+        + '" target="_blank" rel="noopener noreferrer">→ '
+        + esc(f.action_link_label || 'Open') + '</a></div>';
+    }
+    var observed = f.observed
+      ? '<div class="f-block observed"><span class="lbl">Observed.</span> ' + esc(f.observed) + '</div>'
+      : '';
+    var fix = f.fix
+      ? '<div class="f-block fix"><span class="lbl">Fix.</span> ' + esc(f.fix) + '</div>'
+      : '';
+    var subline = f.subline
+      ? '<p class="f-subline">' + esc(f.subline) + '</p>'
+      : '';
+    return ''
+      + '<article class="f-card s-' + esc(f.status) + '">'
+      +   '<div class="f-head">'
+      +     '<div class="f-tags">'
+      +       '<span class="f-status">' + emojiFor(f.status) + ' ' + esc(f.status) + '</span>'
+      +       '<span class="f-sev">' + esc(f.severity || '') + '</span>'
+      +       '<code class="f-rule">' + esc(f.rule_id || '') + '</code>'
+      +       '<span class="f-cs"><span class="dot">·</span>' + esc(f.client || '')
+      +         ' <span class="dot">·</span> ' + esc(f.source || '') + '</span>'
+      +     '</div>'
+      +     '<div class="f-amt">'
+      +       '<div class="v num">$' + fmtExact(f.at_risk_per_mo) + '</div>'
+      +       '<div class="l">/mo at risk</div>'
+      +     '</div>'
+      +   '</div>'
+      +   '<h3 class="f-headline">' + esc(f.headline || '') + '</h3>'
+      +   subline
+      +   observed
+      +   fix
+      +   actions
+      + '</article>';
+  }
+  function renderFindings(findings) {
+    var arr = findings || [];
+    if (arr.length === 0) {
+      setHTML('findings', '<div class="empty">Tier-1, Tier-2, and Tier-3 OODA all green — no actionable findings on this account.</div>');
+      return;
+    }
+    setHTML('findings', arr.map(renderFinding).join(''));
+  }
+
+  // ---------- passes / blockeds ----------
+  function renderBullets(items, listId, sectionId, headerId, headerText) {
+    if (!items || items.length === 0) return;
+    var html = items.map(function (b) {
+      return '<li><span class="pdot"></span><code>' + esc(b.rule_id || '') + '</code><span>' + esc(b.text || '') + '</span></li>';
+    }).join('');
+    setHTML(listId, html);
+    setText(headerId, headerText);
+    var sec = document.getElementById(sectionId);
+    if (sec) sec.style.display = 'block';
+  }
+
+  // ---------- coverage callout (partial audit) ----------
+  function renderCoverage(p) {
+    if (!p.coverage_warning) return; // only render if skill set the warning text
+    var html = '<div class="a-cov"><b>⚠ Partial audit.</b> ' + esc(p.coverage_warning) + '</div>';
+    setHTML('a-coverage', html);
+  }
+
+  // ---------- footer ----------
+  function renderFooter(p) {
+    var total = (p.fail_count || 0) + (p.warn_count || 0) + (p.pass_count || 0) + (p.blocked_count || 0);
+    var html = 'Generated ' + esc(p.audit_date_iso || '') + ' · '
+      + total + ' findings (' + (p.fail_count || 0) + ' fail · '
+      + (p.warn_count || 0) + ' warn · ' + (p.pass_count || 0) + ' pass · '
+      + (p.blocked_count || 0) + ' blocked) · Total recoverable '
+      + '<b class="num">$' + fmtExact(p.recoverable_per_mo) + '/mo</b>';
+    setHTML('a-footer', html);
+  }
+
+  // ---------- main render ----------
+  function render() {
+    if (!AUDIT || typeof AUDIT !== 'object') {
+      setHTML('audit-main', '<div class="empty">Audit payload missing or malformed. Re-run the marketing-audit skill.</div>');
+      return;
+    }
+    setText('a-title', 'Marketing Audit — ' + (AUDIT.client_or_agency_name || ''));
+    setText('a-meta',
+      'Window: 30 days ending ' + (AUDIT.audit_date_iso || '') +
+      ' · Run: ' + (AUDIT.audit_window_start_utc_iso || '') + ' UTC' +
+      ' · UC-AU-1 v3.2.0 · Idempotent for 24h');
+    renderCoverage(AUDIT);
+    renderGauge(AUDIT.health_score);
+    renderSpend(AUDIT);
+    renderChannelWaste(AUDIT.findings);
+    renderPlain(AUDIT);
+    renderPills(AUDIT);
+    renderFindings(AUDIT.findings);
+    renderBullets(AUDIT.passes, 'passes', 'passes-section', 'passes-h',
+      'Healthy checks (' + (AUDIT.pass_count || (AUDIT.passes || []).length) + ')');
+    renderBullets(AUDIT.blockeds, 'blockeds', 'blockeds-section', 'blockeds-h',
+      'Cold-path (' + (AUDIT.blocked_count || (AUDIT.blockeds || []).length) + ')');
+    renderFooter(AUDIT);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', render);
+  } else {
+    render();
+  }
+})();
+</script>
