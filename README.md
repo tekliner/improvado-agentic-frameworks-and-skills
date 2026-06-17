@@ -1,20 +1,44 @@
 # Agentic Frameworks and Skills
 
-Production-ready Claude Code skills and frameworks for building, evaluating, and scaling agentic AI systems.
+Production-ready Claude Code and Codex skills and frameworks for building, evaluating, and scaling agentic AI systems.
+
+## Codex Plugin Packaging
+
+This repository is prepared as a Codex plugin:
+
+- Plugin manifest: `.codex-plugin/plugin.json`
+- Skills bundle: `./skills/`
+- MCP bundle: `./.mcp.json`
+- MCP endpoint: `https://report.improvado.io/experimental/agent/api/mcp-customer/v1/invoke`
+
+The Improvado customer MCP config contains no checked-in secrets. Authentication and workspace context are expected to be supplied by the runtime/client connection flow.
 
 ## 📋 Skills Registry
 
-Complete collection of production-ready skills ordered by importance and usage frequency:
+Current plugin skill inventory:
 
 | # | Skill | Description | When to Use |
 |---|-------|-------------|-------------|
-| 1️⃣ | **[Knowledge Framework](skills/knowledge-framework/)** | Automatic documentation framework using MECE/BFO ontology principles with Mermaid diagrams and Ground Truth attribution | Creating any .md file, documenting systems, building knowledge base |
-| 2️⃣ | **[Multi-Agent Orchestrator](skills/multi-agent-orchestrator/)** | Orchestrate parallel execution of multiple CLI agents (Claude Code, Codex, Gemini) for competitive evaluation with objective winner selection | Complex tasks (>7/10), multiple valid approaches, high-stakes solutions |
-| 3️⃣ | **[Skill Creator](skills/skill-creator/)** | Guide for creating effective Claude Code skills with YAML frontmatter, Quick Start checklists, and Decision Trees | Building new skills, improving existing skills, skill architecture |
-| 4️⃣ | **[Claude Code Sessions](skills/claude-code-sessions/)** | Universal session management - search, resume, and analyze conversations from any directory | Resuming sessions, searching conversation history, tracking work |
-| 5️⃣ | **[YouTube to Knowledge Doc](skills/youtube-to-knowledge-doc/)** | Extract YouTube transcripts and convert to Knowledge Framework documentation with clickable timestamps | Documenting videos, preserving external learning, research archival |
-| 6️⃣ | **[Campaign Launcher OSS](skills/campaign-launcher-oss/)** | Multi-channel marketing experiment orchestrator — Google Ads, Meta Ads, email outreach with AI creative generation. BYOK (bring your own keys). | Launch marketing campaigns, A/B test positioning, orchestrate multi-channel experiments |
-| 7️⃣ | **[Secure Agents](skills/secure-agents/)** | 30-second 3-check security audit for AI agents (Claude Code, Cursor, custom) — leaked credentials, prompt-injection sinks, missing audit trail. Plain-English report, HIGH-confidence findings only, paste-back fix prompts. | Auditing an AI agent before it touches customer data, after wiring a new tool, when you need a quick "are we leaking keys" gut-check |
+| 1 | **[Knowledge Framework](skills/knowledge-framework/)** | Documentation framework using MECE/BFO principles, Mermaid diagrams, and Ground Truth attribution. | Creating `.md` files, documenting systems, building knowledge bases |
+| 2 | **[Multi-Agent Orchestrator](skills/multi-agent-orchestrator/)** | Parallel CLI agent orchestration for competitive evaluation across Claude Code, Codex, and Gemini. | Complex tasks with multiple valid approaches |
+| 3 | **[Skill Creator](skills/skill-creator/)** | Guide for creating and improving agent skills with frontmatter, workflows, and release logs. | Building or updating skills |
+| 4 | **[Claude Code Sessions](skills/claude-code-sessions/)** | Session discovery, search, resume, and analysis across projects. | Finding or resuming prior Claude Code work |
+| 5 | **[YouTube to Knowledge Doc](skills/youtube-to-knowledge-doc/)** | Converts YouTube transcripts into structured knowledge docs with timestamp citations. | Documenting videos or preserving learning materials |
+| 6 | **[Campaign Launcher OSS](skills/campaign-launcher-oss/)** | Open-source multi-channel campaign planning and launch workflow. | Launching marketing experiments |
+| 7 | **[Secure Agents](skills/secure-agents/)** | Plain-English checks for credential leaks, prompt-injection sinks, and missing audit trails. | Quick security checks for AI agents |
+| 8 | **[Google Meet Manager](skills/google-meet-manager/)** | Manage Google Meet recordings, transcripts, and Gemini Notes through Drive and Docs. | Searching recordings or meeting transcripts |
+| 9 | **[CMO Cross-Channel Dashboard](skills/cmo-cross-channel-dashboard/)** | Executive cross-channel marketing dashboard across spend, funnel, and attribution views. | CMO or VP-level performance dashboards |
+| 10 | **[Daily Performance Report](skills/daily-performance-report/)** | Operational daily performance console for multi-channel paid media. | Performance marketer daily monitoring |
+| 11 | **[Discovery API](skills/discovery-api/)** | Mandatory protocol for live platform data access through Improvado Discovery API tools. | Fetching current data from ad and analytics platforms |
+| 12 | **[Field Mapping](skills/field-mapping/)** | Field mapping and extract setup validation with coverage options. | Finding report types and validating fields |
+| 13 | **[Flat Data File Import](skills/flat-data-file-import/)** | File, email, SFTP, and S3 import workflows for flat data. | Importing CSV, Excel, TSV, email, SFTP, or S3 files |
+| 14 | **[Full Marketing Audit](skills/full-marketing-audit/)** | Read-only paid-media audit with connection checks, per-channel audits, and dashboard synthesis. | Account, agency, or platform spend audits |
+| 15 | **[MDG Create and Edit](skills/mdg-create-and-edit/)** | Marketing Data Governance rule creation, editing, testing, and alerts. | Creating MDG rules or monitoring metrics |
+| 16 | **[Notebook Editor](skills/notebook-editor/)** | Edit and run recipe/notebook cells with SQL, union, join, group, and filter operations. | Managing Improvado recipes and notebooks |
+| 17 | **[Recipe QA Rules](skills/recipe-qa-rules/)** | Recipe QA flow with topology discovery, QRDs, duplicate checks, and discrepancy checks. | Checking or creating QA for recipe views |
+| 18 | **[SQL Import](skills/sql-import/)** | SQL source import workflow for MySQL, Postgres, and MSSQL. | Connecting SQL databases and scheduling extracts |
+| 19 | **[Temporal Pipelines](skills/temporal-pipelines/)** | Create, edit, run, and debug Python Temporal workflow pipelines. | Working with Improvado Temporal pipeline workflows |
+| 20 | **[Weekly Creative Performance](skills/weekly-creative-performance/)** | Creative performance dashboard with thumbnails, fatigue segments, and Discovery API data. | Weekly creative analysis across paid platforms |
 
 ## 🎯 Quick Selection Guide
 

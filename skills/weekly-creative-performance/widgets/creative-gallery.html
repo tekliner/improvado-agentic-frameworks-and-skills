@@ -1,0 +1,1157 @@
+<!-- weekly-creative-performance Creative Gallery widget (main-grid-1). Token contract lives in SKILL.md § STEP 3f (render-widgets.mjs TOKEN_MAP entry for gallery) and scripts/render-widgets.mjs. All styles scoped with .cg- prefix. -->
+<style>
+  /* === Geist (modern, distinctive, tabular-nums by default for data) === */
+  @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap');
+
+  .cg-root {
+    /* Design tokens (cool-neutral; widget-local override of the warm
+       editorial palette used by the other widgets). */
+    --cg-bg:          #fafaf9;
+    --cg-surface:     #ffffff;
+    --cg-surface-2:   #f5f5f4;
+    --cg-surface-3:   #ebeae8;
+    --cg-border:      #e7e5e4;
+    --cg-border-2:    #d6d3d1;
+    --cg-text:        #0c0a09;
+    --cg-text-2:      #44403c;
+    --cg-text-3:      #78716c;
+    --cg-text-4:      #a8a29e;
+    --cg-accent:      #ea580c;        /* refined amber — keeps brand warmth, modernized */
+    --cg-accent-soft: rgba(234,88,12,0.08);
+    --cg-good:        #15803d;
+    --cg-warn:        #b45309;
+    --cg-bad:         #b91c1c;
+    --cg-shadow-sm:   0 1px 2px rgba(12,10,9,0.04), 0 1px 1px rgba(12,10,9,0.03);
+    --cg-shadow-md:   0 8px 24px -8px rgba(12,10,9,0.10), 0 2px 6px -2px rgba(12,10,9,0.06);
+    --cg-radius-sm:   6px;
+    --cg-radius-md:   10px;
+    --cg-radius-lg:   14px;
+
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-feature-settings: 'cv11','ss01','ss03';
+    color: var(--cg-text);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--cg-bg);
+    letter-spacing: -0.005em;
+    min-height: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === Toolbar === */
+  .cg-toolbar {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; flex-direction: column;
+    background: rgba(250,250,249,0.85);
+    backdrop-filter: saturate(180%) blur(10px);
+    -webkit-backdrop-filter: saturate(180%) blur(10px);
+    border-bottom: 1px solid var(--cg-border);
+    flex-shrink: 0;
+  }
+  .cg-tb-actions, .cg-tb-filters {
+    display: flex; flex-wrap: wrap;
+    align-items: center; gap: 8px;
+    padding: 10px 16px;
+  }
+  .cg-tb-filters {
+    border-top: 1px solid var(--cg-border);
+    background: rgba(255,255,255,0.4);
+  }
+  .cg-tb-group { display: flex; align-items: center; gap: 6px; }
+  .cg-tb-lbl {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    color: var(--cg-text-3);
+    white-space: nowrap;
+  }
+  .cg-tb-sel, .cg-tb-input {
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 500;
+    padding: 7px 28px 7px 11px;
+    border: 1px solid var(--cg-border);
+    border-radius: 8px;
+    background: var(--cg-surface);
+    color: var(--cg-text);
+    outline: none;
+    transition: border-color 120ms ease, box-shadow 120ms ease, background 120ms ease;
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a8a29e' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 9px center;
+    cursor: pointer;
+  }
+  .cg-tb-sel:hover { border-color: var(--cg-border-2); }
+  .cg-tb-sel:focus-visible, .cg-tb-input:focus-visible {
+    border-color: var(--cg-accent);
+    box-shadow: 0 0 0 3px var(--cg-accent-soft);
+  }
+  .cg-tb-input {
+    width: 160px;
+    padding: 7px 11px 7px 30px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%23a8a29e' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>");
+    background-position: 10px center;
+    cursor: text;
+  }
+  .cg-tb-input::placeholder { color: var(--cg-text-4); }
+
+  .cg-tb-toggle {
+    display: inline-flex;
+    padding: 3px;
+    background: var(--cg-surface-2);
+    border-radius: 9px;
+    border: 1px solid var(--cg-border);
+  }
+  .cg-tb-toggle button {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 11px;
+    background: transparent;
+    color: var(--cg-text-3);
+    border: 0; border-radius: 6px;
+    cursor: pointer;
+    transition: color 120ms ease, background 120ms ease, box-shadow 120ms ease;
+  }
+  .cg-tb-toggle button:hover { color: var(--cg-text-2); }
+  .cg-tb-toggle button.active {
+    background: var(--cg-surface);
+    color: var(--cg-text);
+    box-shadow: var(--cg-shadow-sm);
+  }
+  .cg-tb-toggle button svg { width: 13px; height: 13px; }
+  .cg-tb-cols { margin-right: 6px; }
+  .cg-tb-cols button { padding: 5px 7px; }
+  .cg-tb-cols button svg { width: 14px; height: 12px; }
+  .cg-tb-right {
+    display: flex; align-items: center; gap: 0;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  /* === Content scroll === */
+  .cg-content { flex: 1; overflow: auto; min-height: 0; }
+  .cg-content::-webkit-scrollbar { width: 10px; height: 10px; }
+  .cg-content::-webkit-scrollbar-thumb { background: var(--cg-border); border-radius: 6px; border: 2px solid var(--cg-bg); }
+  .cg-content::-webkit-scrollbar-thumb:hover { background: var(--cg-border-2); }
+  .cg-content::-webkit-scrollbar-track { background: transparent; }
+
+  /* === Table view === */
+  .cg-table-wrap { min-width: 100%; }
+  .cg-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+  .cg-table thead { position: sticky; top: 0; z-index: 5; }
+  .cg-table thead::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+    background: var(--cg-border);
+  }
+  .cg-table th {
+    background: rgba(250,250,249,0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--cg-text-3);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 11px 14px;
+    text-align: left;
+    user-select: none;
+    white-space: nowrap;
+  }
+  .cg-table th.num { text-align: right; }
+  .cg-table th.sortable { cursor: pointer; transition: color 120ms ease; }
+  .cg-table th.sortable:hover { color: var(--cg-text); }
+  .cg-table th.active { color: var(--cg-text); }
+  .cg-table th.active::after {
+    content: ''; display: inline-block; width: 8px; height: 8px;
+    margin-left: 4px; vertical-align: -1px;
+    background: currentColor;
+    -webkit-mask: var(--cg-arrow); mask: var(--cg-arrow);
+    -webkit-mask-size: contain; mask-size: contain;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  }
+  .cg-table th.active.desc { --cg-arrow: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 10l5 5 5-5z'/></svg>"); }
+  .cg-table th.active.asc  { --cg-arrow: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 14l5-5 5 5z'/></svg>"); }
+
+  .cg-table tbody tr {
+    transition: background 100ms ease;
+  }
+  .cg-table tbody tr + tr td { border-top: 1px solid var(--cg-border); }
+  .cg-table tbody tr:hover { background: var(--cg-surface-2); }
+  .cg-table td {
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--cg-text-2);
+    vertical-align: middle;
+    background: var(--cg-bg);
+  }
+  .cg-table tbody tr:hover td { background: var(--cg-surface-2); }
+  .cg-table td.rank {
+    width: 40px; text-align: center;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px; color: var(--cg-text-4); font-weight: 500;
+  }
+  .cg-table td.num {
+    text-align: right;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 12.5px; font-weight: 500;
+    color: var(--cg-text);
+    font-variant-numeric: tabular-nums;
+  }
+  .cg-tbl-thumb {
+    width: 56px; height: 42px;
+    border-radius: 7px; overflow: hidden;
+    background: var(--cg-surface-2);
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--cg-border);
+    position: relative;
+    transition: transform 200ms ease, box-shadow 200ms ease;
+  }
+  .cg-table tbody tr:hover .cg-tbl-thumb { transform: scale(1.04); box-shadow: var(--cg-shadow-sm); }
+  .cg-tbl-thumb img, .cg-tbl-thumb video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cg-tbl-thumb svg { color: var(--cg-text-4); }
+  .cg-tbl-thumb .cg-tbl-vbadge {
+    position: absolute; bottom: 2px; right: 2px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: rgba(12,10,9,0.7);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+  }
+  .cg-tbl-thumb-text {
+    font-family: 'Geist', sans-serif;
+    font-size: 7px; font-weight: 600;
+    color: var(--cg-text-2); line-height: 1.15;
+    padding: 3px; text-align: center;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .cg-tbl-thumb-fb {
+    background: var(--cg-surface-2); color: var(--cg-text-4);
+    font-weight: 600;
+  }
+
+  .cg-name-cell { max-width: 280px; min-width: 180px; }
+  .cg-name-line {
+    font-size: 13px; font-weight: 500; color: var(--cg-text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cg-perf-bar {
+    width: 100%; height: 2px; margin-top: 6px;
+    border-radius: 2px;
+    opacity: 0.85;
+  }
+  .cg-plat-cell { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--cg-text-2); }
+  .cg-plat-icon {
+    flex: 0 0 auto;
+    width: 22px; height: 22px;
+    border-radius: 5px;
+    display: inline-flex; align-items: center; justify-content: center;
+    line-height: 0;
+    /* color = brand color (currentColor for SVG); background tint set inline */
+  }
+  .cg-plat-icon svg { width: 13px; height: 13px; display: block; }
+  .cg-ctr.ch { color: var(--cg-good); font-weight: 600; }
+  .cg-ctr.cm2 { color: var(--cg-text); font-weight: 500; }
+  .cg-ctr.cl { color: var(--cg-bad); font-weight: 600; }
+
+  .cg-strength {
+    display: inline-flex; align-items: center;
+    font-family: 'Geist', sans-serif;
+    font-size: 9.5px; font-weight: 600;
+    color: #fff;
+    padding: 3px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .cg-strength-empty { color: var(--cg-text-4); font-size: 12px; }
+
+  /* === Grid view === */
+  .cg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    padding: 18px 20px;
+  }
+  .cg-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .cg-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .cg-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+  .cg-section { padding: 0 20px; }
+  .cg-section + .cg-section { padding-top: 4px; }
+  .cg-section-head {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--cg-text-3); font-weight: 600;
+    padding: 24px 0 12px;
+    border-top: 1px solid var(--cg-border);
+    margin-top: 14px;
+  }
+  .cg-section-head::after {
+    content: ''; flex: 1; height: 1px; background: var(--cg-border);
+  }
+  .cg-section:first-child .cg-section-head { border-top: 0; padding-top: 18px; margin-top: 0; }
+  .cg-section .cg-grid { padding: 0 0 6px; }
+
+  .cg-card {
+    position: relative;
+    background: var(--cg-surface);
+    border: 1px solid var(--cg-border);
+    border-radius: var(--cg-radius-lg);
+    overflow: hidden;
+    transition: transform 180ms cubic-bezier(.2,.7,.3,1), box-shadow 180ms ease, border-color 180ms ease;
+    cursor: pointer;
+  }
+  .cg-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--cg-border-2);
+    box-shadow: var(--cg-shadow-md);
+  }
+  .cg-card:hover .cg-media-art { transform: scale(1.04); }
+
+  /* Preview is inset and rounded on all sides, uniform 4:3 frame for every card.
+     Native media ratio is preserved via object-fit:contain; surrounding empty
+     space is filled by a soft blurred copy of the artwork (.cg-media-bg) so
+     vertical TikToks and square Instagram posts read as themselves, not crops. */
+  .cg-media {
+    position: relative; width: auto;
+    margin: 10px 10px 0;
+    aspect-ratio: 4 / 3;
+    background: var(--cg-surface-2);
+    border-radius: var(--cg-radius-md);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cg-media-bg {
+    position: absolute; inset: -8%;
+    background-size: cover; background-position: center;
+    filter: blur(28px) saturate(1.25);
+    opacity: 0.55;
+    z-index: 0;
+  }
+  .cg-media-art {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain; display: block;
+    transition: transform 360ms cubic-bezier(.2,.7,.3,1), opacity 240ms ease;
+    opacity: 0;
+    z-index: 1;
+  }
+  .cg-media-art.loaded { opacity: 1; }
+  .cg-media-rsa {
+    position: absolute; inset: 0;
+    padding: 22px 18px; text-align: center;
+    display: flex; flex-direction: column; justify-content: center;
+    background: linear-gradient(135deg, #fff, var(--cg-surface-2));
+    z-index: 1;
+  }
+  .cg-media-rsa h4 { font-size: 16px; font-weight: 600; margin: 0 0 6px; color: var(--cg-text); line-height: 1.25; letter-spacing: -0.015em; }
+  .cg-media-rsa p { font-size: 12px; margin: 0 0 6px; color: var(--cg-text-2); line-height: 1.4; }
+  .cg-media-rsa em { font-size: 11px; font-style: normal; color: var(--cg-text-4); }
+
+  .cg-play {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cg-text);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    transition: opacity 180ms ease, transform 240ms ease;
+    z-index: 2;
+  }
+  .cg-card.playing .cg-play { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+
+  .cg-vduration {
+    position: absolute; bottom: 8px; right: 8px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px; font-weight: 500;
+    padding: 3px 6px;
+    background: rgba(12,10,9,0.7);
+    color: #fff;
+    border-radius: 4px;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    z-index: 2;
+  }
+
+  .cg-info {
+    padding: 12px 14px;
+    display: flex; align-items: center; gap: 10px;
+    min-width: 0;
+  }
+  .cg-platicon {
+    flex: 0 0 auto;
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    line-height: 0;
+    /* color = brand color (used as currentColor for the SVG fill);
+       background = same color at ~13% opacity via 8-digit hex (set inline). */
+  }
+  .cg-platicon svg { width: 20px; height: 20px; display: block; }
+  .cg-info-text {
+    flex: 1 1 auto; min-width: 0;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .cg-info-row {
+    display: flex; align-items: center; gap: 8px;
+    min-width: 0;
+  }
+  .cg-info-name {
+    flex: 1 1 auto; min-width: 0;
+    font-size: 13.5px; font-weight: 500; color: var(--cg-text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+  .cg-rank {
+    flex: 0 0 auto;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 11px; font-weight: 600;
+    color: var(--cg-text-3);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+  .cg-info-sub {
+    font-size: 11px; color: var(--cg-text-3);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    line-height: 1.3;
+  }
+  .cg-strength {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .cg-metrics {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--cg-border);
+    padding: 10px 12px 11px;
+  }
+  .cg-m-cell { text-align: center; min-width: 0; overflow: hidden; padding: 0 2px; }
+  .cg-m-cell + .cg-m-cell { border-left: 1px solid var(--cg-border); }
+  .cg-m-val {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 13.5px; font-weight: 600; color: var(--cg-text);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cg-m-lbl {
+    font-family: 'Geist', sans-serif;
+    font-size: 8.5px; font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--cg-text-4);
+    margin-top: 4px;
+  }
+
+  .cg-img-fb {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 8px;
+    padding: 14px;
+    color: var(--cg-text-4);
+    font-size: 11px; font-weight: 500;
+    text-align: center;
+    z-index: 1;
+  }
+  /* v7.5.0 — "Open on {platform}" link for failed video playback. Inherits the
+     cg-img-fb container's centering; styles only the anchor itself. */
+  .cg-img-fb .cg-fb-link {
+    color: var(--cg-accent, #2563eb);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-size: 12px; font-weight: 600;
+    cursor: pointer;
+  }
+  .cg-img-fb .cg-fb-link:hover { text-decoration-thickness: 2px; }
+
+  /* === Skeleton shimmer === */
+  @keyframes cg-shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+  .cg-skel {
+    position: relative;
+    background: var(--cg-surface-2);
+    overflow: hidden;
+    border-radius: 4px;
+  }
+  .cg-skel::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+    animation: cg-shimmer 1.4s infinite linear;
+  }
+
+  /* === Hover preview tooltip === */
+  .cg-tip {
+    position: fixed; z-index: 999;
+    pointer-events: none;
+    width: 320px; max-height: 60vh;
+    background: var(--cg-surface);
+    border-radius: 12px;
+    box-shadow: 0 20px 50px -12px rgba(0,0,0,0.25), 0 0 0 1px var(--cg-border);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+    transition: opacity 160ms ease, transform 160ms ease;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cg-tip.show { opacity: 1; transform: translateY(0) scale(1); }
+  .cg-tip img, .cg-tip video {
+    width: 100%; max-width: 100%; max-height: 60vh;
+    height: auto; object-fit: contain; display: block;
+  }
+
+  /* === Empty / no-results === */
+  .cg-empty {
+    padding: 56px 24px 80px;
+    color: var(--cg-text-3);
+    font-size: 13px;
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .cg-empty svg { color: var(--cg-text-4); opacity: 0.6; }
+  .cg-empty-ttl { font-size: 14px; font-weight: 500; color: var(--cg-text-2); margin-top: 4px; }
+
+  /* === Responsive === */
+  @media (max-width: 720px) {
+    .cg-toolbar { /* container stacks rows vertically already */ }
+    .cg-tb-actions, .cg-tb-filters { padding: 10px 12px; gap: 6px 8px; }
+    .cg-tb-input { width: 100%; flex: 1 1 100%; order: 99; }
+
+    .cg-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+      padding: 12px;
+    }
+    .cg-grid.cols-2, .cg-grid.cols-3, .cg-grid.cols-4 {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    .cg-tb-cols { display: none !important; }
+    .cg-section { padding: 0 12px; }
+    .cg-media { margin: 6px 6px 0; border-radius: 8px; }
+    .cg-info { padding: 10px 11px; gap: 8px; }
+    .cg-platicon { width: 30px; height: 30px; border-radius: 7px; }
+    .cg-platicon svg { width: 17px; height: 17px; }
+    .cg-info-name { font-size: 12.5px; }
+    .cg-info-sub { font-size: 10px; }
+    .cg-metrics { grid-template-columns: repeat(3, 1fr); padding: 8px 8px 9px; }
+    .cg-m-cell:nth-child(4) { display: none; }
+    .cg-m-val { font-size: 12px; }
+    .cg-m-lbl { font-size: 7.5px; letter-spacing: 0.06em; }
+
+    .cg-content { overflow-x: auto; }
+    .cg-table th, .cg-table td { padding: 9px 10px; }
+    .cg-table th:nth-child(1), .cg-table td:nth-child(1),
+    .cg-table th:nth-child(2), .cg-table td:nth-child(2) {
+      position: sticky; background: var(--cg-bg); z-index: 2;
+    }
+    .cg-table th:nth-child(1), .cg-table td:nth-child(1) { left: 0; }
+    .cg-table th:nth-child(2), .cg-table td:nth-child(2) { left: 40px; box-shadow: 1px 0 0 var(--cg-border); }
+    .cg-table thead th:nth-child(1), .cg-table thead th:nth-child(2) { z-index: 6; }
+    .cg-table tbody tr:hover td:nth-child(1),
+    .cg-table tbody tr:hover td:nth-child(2) { background: var(--cg-surface-2); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cg-card, .cg-media img, .cg-media video, .cg-tip, .cg-tbl-thumb,
+    .cg-tb-toggle button, .cg-tb-sel, .cg-tb-input { transition: none !important; }
+    .cg-skel::after { animation: none; }
+  }
+</style>
+
+<div class="cg-root" id="cg-root">
+  <div class="cg-toolbar">
+    <div class="cg-tb-actions">
+      <div class="cg-tb-right">
+        <div class="cg-tb-toggle cg-tb-cols" id="cg-cols-wrap" role="tablist" aria-label="Column count" style="display:none">
+          <button data-cols="2" id="cg-cols-2" role="tab" aria-label="2 columns" title="2 columns">
+            <svg viewBox="0 0 14 12" fill="currentColor" aria-hidden="true"><rect x="0.5" y="1" width="5" height="10" rx="1"/><rect x="8.5" y="1" width="5" height="10" rx="1"/></svg>
+          </button>
+          <button data-cols="3" id="cg-cols-3" role="tab" aria-label="3 columns" title="3 columns" class="active">
+            <svg viewBox="0 0 14 12" fill="currentColor" aria-hidden="true"><rect x="0.5" y="1" width="3.4" height="10" rx="0.8"/><rect x="5.3" y="1" width="3.4" height="10" rx="0.8"/><rect x="10.1" y="1" width="3.4" height="10" rx="0.8"/></svg>
+          </button>
+          <button data-cols="4" id="cg-cols-4" role="tab" aria-label="4 columns" title="4 columns">
+            <svg viewBox="0 0 14 12" fill="currentColor" aria-hidden="true"><rect x="0.5" y="1" width="2.5" height="10" rx="0.6"/><rect x="3.9" y="1" width="2.5" height="10" rx="0.6"/><rect x="7.3" y="1" width="2.5" height="10" rx="0.6"/><rect x="10.7" y="1" width="2.5" height="10" rx="0.6"/></svg>
+          </button>
+        </div>
+        <div class="cg-tb-toggle" role="tablist" aria-label="View mode">
+          <button data-vm="grid" id="cg-vm-grid" role="tab" aria-label="Grid view">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><rect x="14" y="14" width="7" height="7" rx="1.2"/></svg>
+            <span>Grid</span>
+          </button>
+          <button data-vm="table" id="cg-vm-table" class="active" role="tab" aria-label="Table view">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            <span>Table</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="cg-tb-filters">
+      <div class="cg-tb-group">
+        <span class="cg-tb-lbl">Sort</span>
+        <select class="cg-tb-sel" id="cg-sort">
+          <option value="impressions_desc">Impressions ↓</option>
+          <option value="impressions_asc">Impressions ↑</option>
+          <option value="ctr_desc">CTR ↓</option>
+          <option value="ctr_asc">CTR ↑</option>
+          <option value="spend_desc">Spend ↓</option>
+          <option value="spend_asc">Spend ↑</option>
+          <option value="clicks_desc">Clicks ↓</option>
+          <option value="cpc_asc">CPC ↑</option>
+          <option value="name_asc">Name A→Z</option>
+          <option value="name_desc">Name Z→A</option>
+        </select>
+      </div>
+      <div class="cg-tb-group">
+        <span class="cg-tb-lbl">Platform</span>
+        <select class="cg-tb-sel" id="cg-platform"><option value="">All</option></select>
+      </div>
+      <div class="cg-tb-group">
+        <span class="cg-tb-lbl">Type</span>
+        <select class="cg-tb-sel" id="cg-type"><option value="">All Types</option></select>
+      </div>
+      <div class="cg-tb-group" id="cg-group-wrap" style="display:none">
+        <span class="cg-tb-lbl" id="cg-group-lbl">Group</span>
+        <select class="cg-tb-sel" id="cg-group">
+          <option value="none">None</option>
+          <option value="media">By Media Type</option>
+        </select>
+      </div>
+      <input class="cg-tb-input" id="cg-search" type="text" placeholder="Filter by name…" />
+    </div>
+  </div>
+  <div class="cg-content" id="cg-content"></div>
+  <!-- Tooltip lives inside .cg-root so the componentCode is single-rooted (BIE may unwrap fragments).
+       position: fixed lets it escape ancestor overflow:hidden in modern browsers. -->
+  <div class="cg-tip" id="cg-tip"></div>
+</div>
+
+<script>
+(function(){
+  // === Data injection (closure-local; no global pollution) ===
+  var D = __CREATIVES_DATA_JSON__;
+  var PLATFORMS_PRESENT = __PLATFORMS_PRESENT_JSON__;
+  var TYPES_PRESENT = __TYPES_PRESENT_JSON__;
+  var DEFAULT_VM = "__DEFAULT_VIEW_MODE__";
+  var DEFAULT_SORT = "__DEFAULT_SORT_KEY__";
+
+  // === State ===
+  var state = {
+    vm: DEFAULT_VM || 'table',
+    sort: DEFAULT_SORT || 'impressions_desc',
+    platform: '',
+    type: '',
+    group: 'none',
+    q: '',
+    cols: 3
+  };
+
+  // === Helper functions (11) ===
+  function fmt(n){ if (n == null) return '—'; n = Number(n); if (!isFinite(n)) return '—'; if (Math.abs(n) >= 1e6) return (n/1e6).toFixed(1).replace(/\.0$/, '')+'M'; if (Math.abs(n) >= 1e3) return (n/1e3).toFixed(1).replace(/\.0$/, '')+'K'; return String(Math.round(n)); }
+  function fmtM(n){ if (n == null) return '—'; n = Number(n); if (!isFinite(n)) return '—'; var s = '$'; if (n < 0) { s = '-$'; n = -n; } if (n >= 1e6) return s + (n/1e6).toFixed(1).replace(/\.0$/, '') + 'M'; if (n >= 1e3) return s + (n/1e3).toFixed(1).replace(/\.0$/, '') + 'K'; return s + n.toFixed(0); }
+  function esc(s){ var d = document.createElement('div'); d.textContent = (s == null ? '' : String(s)); return d.innerHTML; }
+  function escAttr(s){ return esc(s).replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+  function cc(v){ if (v == null) return ''; if (v >= 2) return 'ch'; if (v >= 1) return 'cm2'; return 'cl'; }
+  function sc(s){ var m = { 'EXCELLENT':'#15803d', 'GOOD':'#65a30d', 'AVERAGE':'#b45309', 'POOR':'#b91c1c' }; return m[s] || '#78716c'; }
+  function fatigueColor(ctr){ if (ctr == null) return '#a8a29e'; if (ctr > 2.5) return '#15803d'; if (ctr >= 1.5) return '#a3a3a3'; if (ctr >= 0.5) return '#b45309'; return '#b91c1c'; }
+  function arClass(r){
+    // Uniform 4:3 frame for every grid card. Native media ratio is preserved
+    // inside the frame via object-fit:contain + blurred backdrop fill, so card
+    // heights stay consistent without cropping vertical or square content.
+    return 'ar-uniform';
+  }
+  function platName(p){ var m = { 'facebook':'Facebook', 'google_ads':'Google Ads', 'linkedin':'LinkedIn', 'tiktok':'TikTok', 'pinterest':'Pinterest', 'instagram':'Instagram', 'youtube':'YouTube' }; return m[p] || p; }
+  function platIcon(p){
+    // Inline brand silhouettes (Simple Icons paths). fill=currentColor so the
+    // platform's brand color can be applied by the parent .cg-platicon span.
+    // Instagram + YouTube paths are ready for future PLATFORMS.md expansion;
+    // they're harmless when not present in the data.
+    var icons = {
+      'facebook':   '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>',
+      'google_ads': '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M0 19.319l4.686-8.121 4.685 8.121A2.629 2.629 0 014.686 22.4 2.625 2.625 0 010 19.319zm12.91-9.92L9.43 3.367a2.625 2.625 0 014.547-2.625l8.97 15.535a2.629 2.629 0 01-4.547 2.625l-5.49-9.504z"/></svg>',
+      'tiktok':     '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>',
+      'linkedin':   '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>',
+      'pinterest':  '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.748-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146 1.124.347 2.317.535 3.566.535 6.624 0 11.988-5.367 11.988-11.987C24.005 5.367 18.641.001 12.017.001z"/></svg>',
+      'instagram':  '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>',
+      'youtube':    '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>'
+    };
+    return icons[p] || '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>';
+  }
+
+  // Resolve the video source URL (prefer explicit video_url, else fall back to thumbnail_url)
+  function videoSrc(r){ return r.video_url || r.thumbnail_url || ''; }
+
+  // YouTube / iframe-target video URLs cannot play in a <video> element. They
+  // render as a poster <img> (mirrored to S3) + a play overlay that deep-links
+  // to the video, never <video src="youtube.com/embed/...">.
+  function isIframeVideo(u){ return typeof u === 'string' && /youtube\.com|youtu\.be/i.test(u); }
+
+  // === Toolbar dropdown population ===
+  var pSel = document.getElementById('cg-platform');
+  PLATFORMS_PRESENT.forEach(function(p){ var o = document.createElement('option'); o.value = p; o.textContent = platName(p); pSel.appendChild(o); });
+  var tSel = document.getElementById('cg-type');
+  TYPES_PRESENT.forEach(function(t){ var o = document.createElement('option'); o.value = t; o.textContent = t; tSel.appendChild(o); });
+  document.getElementById('cg-sort').value = state.sort;
+
+  // === Filter / sort logic (purely client-side over the closure-local D array) ===
+  function getFiltered(){
+    var rows = D.slice();
+    if (state.platform) rows = rows.filter(function(r){ return r.platform === state.platform; });
+    if (state.type) rows = rows.filter(function(r){ return r.creative_type === state.type; });
+    if (state.q) { var q = state.q.toLowerCase(); rows = rows.filter(function(r){ return (r.name || '').toLowerCase().indexOf(q) !== -1 || (r.full_name || '').toLowerCase().indexOf(q) !== -1; }); }
+    var k = state.sort;
+    rows.sort(function(a, b){
+      // Name sort is a string compare (default ASC = A→Z; _desc flips to Z→A)
+      if (k.indexOf('name') === 0) {
+        var na = (a.name || '').toLowerCase();
+        var nb = (b.name || '').toLowerCase();
+        var sd = na < nb ? -1 : (na > nb ? 1 : 0);
+        if (k.indexOf('_desc') !== -1) sd = -sd;
+        return sd;
+      }
+      // Numeric sorts (default DESC = highest first; _asc flips)
+      function v(r){
+        if (k.indexOf('impressions') === 0) return r.impressions || 0;
+        if (k.indexOf('ctr') === 0) return r.ctr || 0;
+        if (k.indexOf('spend') === 0) return r.spend || 0;
+        if (k.indexOf('clicks') === 0) return r.clicks || 0;
+        if (k.indexOf('cpc') === 0) { return (r.clicks > 0 && r.spend != null) ? r.spend / r.clicks : 1e12; }
+        return 0;
+      }
+      var d = v(b) - v(a);
+      if (k.indexOf('_asc') !== -1) d = -d;
+      return d;
+    });
+    return rows;
+  }
+
+  // === Renderers ===
+  var content = document.getElementById('cg-content');
+
+  function renderSkeleton(){
+    if (state.vm === 'grid') {
+      var s = '<div class="cg-grid cols-' + state.cols + '">';
+      for (var i = 0; i < 6; i++) {
+        s += '<div style="background:var(--cg-surface);border:1px solid var(--cg-border);border-radius:14px;overflow:hidden">'
+          + '<div class="cg-skel" style="aspect-ratio:4/3;border-radius:0"></div>'
+          + '<div style="padding:12px 14px 8px"><div class="cg-skel" style="height:13px;width:70%;margin-bottom:6px"></div><div class="cg-skel" style="height:10px;width:45%"></div></div>'
+          + '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px 12px;border-top:1px solid var(--cg-border)">'
+          +   '<div class="cg-skel" style="height:14px"></div><div class="cg-skel" style="height:14px"></div><div class="cg-skel" style="height:14px"></div><div class="cg-skel" style="height:14px"></div>'
+          + '</div></div>';
+      }
+      s += '</div>';
+      content.innerHTML = s;
+    } else {
+      var s = '<div class="cg-table-wrap"><table class="cg-table"><thead><tr><th></th><th></th><th>Creative</th><th>Platform</th><th>Type</th><th class="num">Impr</th><th class="num">Clicks</th><th class="num">CTR</th><th class="num">CPC</th><th class="num">Spend</th><th>Health</th></tr></thead><tbody>';
+      for (var i = 0; i < 8; i++) s += '<tr><td><div class="cg-skel" style="height:10px;width:18px"></div></td><td><div class="cg-skel" style="height:42px;width:56px;border-radius:7px"></div></td><td><div class="cg-skel" style="height:13px;width:80%"></div></td><td><div class="cg-skel" style="height:10px;width:60%"></div></td><td><div class="cg-skel" style="height:10px;width:40%"></div></td><td><div class="cg-skel" style="height:10px;width:30%;margin-left:auto"></div></td><td><div class="cg-skel" style="height:10px;width:30%;margin-left:auto"></div></td><td><div class="cg-skel" style="height:10px;width:30%;margin-left:auto"></div></td><td><div class="cg-skel" style="height:10px;width:30%;margin-left:auto"></div></td><td><div class="cg-skel" style="height:10px;width:40%;margin-left:auto"></div></td><td><div class="cg-skel" style="height:10px;width:50%"></div></td></tr>';
+      s += '</tbody></table></div>';
+      content.innerHTML = s;
+    }
+  }
+
+  function previewCellHTML(r){
+    if (r.thumbnail_type === 'video' && isIframeVideo(r.video_url)) {
+      // YouTube/iframe video: mirrored poster image + a small play badge.
+      // Never <video src=youtube> (a <video> can't decode an embed URL).
+      var vbadge = '<div class="cg-tbl-vbadge"><svg width="7" height="7" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>';
+      if (r.thumbnail_url) {
+        return '<div class="cg-tbl-thumb"><img src="' + escAttr(r.thumbnail_url) + '" alt="" onerror="return false" />' + vbadge + '</div>';
+      }
+      return '<div class="cg-tbl-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>';
+    }
+    if (r.thumbnail_type === 'video' && (r.video_url || r.thumbnail_url)) {
+      // Lightweight muted poster-frame video for table thumb (preload metadata only)
+      var src = videoSrc(r);
+      var poster = (r.thumbnail_type === 'video' && r.video_url && r.thumbnail_url && r.thumbnail_url !== r.video_url) ? r.thumbnail_url : '';
+      return '<div class="cg-tbl-thumb">'
+        + '<video src="' + escAttr(src) + '"' + (poster ? ' poster="' + escAttr(poster) + '"' : '') + ' muted playsinline preload="metadata" onerror="return false"></video>'
+        + '<div class="cg-tbl-vbadge"><svg width="7" height="7" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>'
+      + '</div>';
+    }
+    if (r.thumbnail_type === 'image' && r.thumbnail_url) {
+      return '<div class="cg-tbl-thumb"><img src="' + escAttr(r.thumbnail_url) + '" alt="" onerror="return false" /></div>';
+    }
+    if (r.creative_type === 'VIDEO') {
+      return '<div class="cg-tbl-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>';
+    }
+    if ((r.creative_type === 'RSA' || r.creative_type === 'TEXT') && r.text_preview) {
+      return '<div class="cg-tbl-thumb"><div class="cg-tbl-thumb-text">' + esc(r.text_preview) + '</div></div>';
+    }
+    return '<div class="cg-tbl-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>';
+  }
+
+  function tableRowHTML(r, rank){
+    var cpc = (r.clicks > 0 && r.spend != null) ? r.spend / r.clicks : null;
+    var ctrVal = r.ctr;
+    var pColor = r.platform_color || '#78716c';
+    var pBg = (typeof pColor === 'string' && pColor.charAt(0) === '#' && (pColor.length === 7 || pColor.length === 4))
+      ? pColor + '22' : 'var(--cg-surface-2)';
+    return '<tr>' +
+      '<td class="rank">' + rank + '</td>' +
+      '<td>' + previewCellHTML(r) + '</td>' +
+      '<td class="cg-name-cell">' +
+        '<div class="cg-name-line" title="' + escAttr(r.full_name || r.name || '') + '">' + esc(r.name || '') + '</div>' +
+        '<div class="cg-perf-bar" style="background:' + (r.segment_color || fatigueColor(r.ctr)) + '"></div>' +
+      '</td>' +
+      '<td><div class="cg-plat-cell"><span class="cg-plat-icon" style="color:' + pColor + ';background:' + pBg + '">' + platIcon(r.platform) + '</span>' + esc(r.platform_full || platName(r.platform)) + '</div></td>' +
+      '<td>' + esc(r.creative_type || r.ad_format || '—') + '</td>' +
+      '<td class="num">' + fmt(r.impressions) + '</td>' +
+      '<td class="num">' + fmt(r.clicks) + '</td>' +
+      '<td class="num cg-ctr ' + cc(ctrVal) + '">' + (ctrVal == null ? '—' : ctrVal.toFixed(2) + '%') + '</td>' +
+      '<td class="num">' + (cpc == null ? '—' : fmtM(cpc)) + '</td>' +
+      '<td class="num">' + fmtM(r.spend) + '</td>' +
+      '<td>' + (r.ad_strength ? '<span class="cg-strength" style="background:' + sc(r.ad_strength) + '">' + esc(r.ad_strength) + '</span>' : '<span class="cg-strength-empty">—</span>') + '</td>' +
+    '</tr>';
+  }
+
+  function renderTable(rows){
+    var dirClass = function(k){
+      if (state.sort.indexOf(k) !== 0) return '';
+      return state.sort.indexOf('_desc') !== -1 ? ' active desc' : ' active asc';
+    };
+    var head = '<thead><tr>' +
+      '<th></th>' +
+      '<th></th>' +
+      '<th class="sortable' + dirClass('name') + '" data-sort="name">Creative</th>' +
+      '<th>Platform</th>' +
+      '<th>Type</th>' +
+      '<th class="num sortable' + dirClass('impressions') + '" data-sort="impressions">Impr</th>' +
+      '<th class="num sortable' + dirClass('clicks') + '" data-sort="clicks">Clicks</th>' +
+      '<th class="num sortable' + dirClass('ctr') + '" data-sort="ctr">CTR</th>' +
+      '<th class="num sortable' + dirClass('cpc') + '" data-sort="cpc">CPC</th>' +
+      '<th class="num sortable' + dirClass('spend') + '" data-sort="spend">Spend</th>' +
+      '<th>Health</th>' +
+    '</tr></thead>';
+    if (rows.length === 0) {
+      content.innerHTML = '<div class="cg-table-wrap"><table class="cg-table">' + head + '<tbody></tbody></table></div>' + emptyHTML();
+    } else {
+      var body = '<tbody>' + rows.map(function(r, i){ return tableRowHTML(r, i + 1); }).join('') + '</tbody>';
+      content.innerHTML = '<div class="cg-table-wrap"><table class="cg-table">' + head + body + '</table></div>';
+    }
+    content.querySelectorAll('th.sortable').forEach(function(th){
+      th.addEventListener('click', function(){
+        var k = th.getAttribute('data-sort');
+        var cur = state.sort;
+        var firstClickSuffix = (k === 'name') ? '_asc' : '_desc';
+        if (cur.indexOf(k) === 0) {
+          state.sort = cur.indexOf('_desc') !== -1 ? k + '_asc' : k + '_desc';
+        } else {
+          state.sort = k + firstClickSuffix;
+        }
+        document.getElementById('cg-sort').value = state.sort;
+        rerender();
+      });
+    });
+  }
+
+  function emptyHTML(){
+    return '<div class="cg-empty">'
+      + '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>'
+      + '<div class="cg-empty-ttl">No creatives match the current filters.</div>'
+      + '<div>Try clearing the search or selecting a different platform.</div>'
+    + '</div>';
+  }
+
+  function gridCardHTML(r, rank){
+    var media;
+    var arc = arClass(r);
+    var bgURL = r.thumbnail_url || '';
+    var bgStyle = bgURL ? ' style="background-image:url(' + escAttr(bgURL) + ')"' : '';
+
+    if (r.thumbnail_type === 'video' && isIframeVideo(r.video_url)) {
+      // YouTube/iframe video: poster <img> (mirrored to S3) + a play overlay that
+      // opens the video in a new tab. NEVER <video src=youtube> — it can't decode
+      // an embed URL and would paint an empty box.
+      var vface = r.thumbnail_url
+        ? '<div class="cg-media-bg"' + bgStyle + '></div><img class="lazy cg-media-art" data-src="' + escAttr(r.thumbnail_url) + '" alt="" onerror="return false" />'
+        : '<div class="cg-img-fb"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg><div>Video Ad</div></div>';
+      media = '<div class="cg-media ' + arc + '">'
+        + vface
+        + '<a class="cg-play" href="' + escAttr(r.video_url) + '" target="_blank" rel="noopener noreferrer" aria-label="Play video"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></a>'
+        + (r.video_duration ? '<span class="cg-vduration">' + esc(r.video_duration) + '</span>' : '')
+      + '</div>';
+    } else if (r.thumbnail_type === 'video' && (r.video_url || r.thumbnail_url)) {
+      var vsrc = videoSrc(r);
+      var vposter = (r.video_url && r.thumbnail_url && r.thumbnail_url !== r.video_url) ? r.thumbnail_url : '';
+      media = '<div class="cg-media ' + arc + '">'
+        + '<div class="cg-media-bg"' + bgStyle + '></div>'
+        + '<video class="lazy cg-media-art" data-src="' + escAttr(vsrc) + '"' + (vposter ? ' poster="' + escAttr(vposter) + '"' : '') + ' muted loop playsinline preload="none" onerror="return false"></video>'
+        + '<div class="cg-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>'
+        + (r.video_duration ? '<span class="cg-vduration">' + esc(r.video_duration) + '</span>' : '')
+      + '</div>';
+    } else if (r.thumbnail_type === 'image' && r.thumbnail_url) {
+      media = '<div class="cg-media ' + arc + '">'
+        + '<div class="cg-media-bg"' + bgStyle + '></div>'
+        + '<img class="lazy cg-media-art" data-src="' + escAttr(r.thumbnail_url) + '" alt="" onerror="return false" />'
+      + '</div>';
+    } else if (r.creative_type === 'VIDEO') {
+      media = '<div class="cg-media ' + arc + '"><div class="cg-img-fb"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg><div>Video Ad</div></div><div class="cg-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>';
+    } else if ((r.creative_type === 'RSA' || r.creative_type === 'TEXT') && r.text_preview) {
+      var parts = String(r.text_preview).split(' | ');
+      media = '<div class="cg-media ' + arc + '"><div class="cg-media-rsa"><h4>' + esc(parts[0] || '') + '</h4>' + (parts[1] ? '<p>' + esc(parts[1]) + '</p>' : '') + (parts[2] ? '<em>' + esc(parts[2]) + '</em>' : '') + '</div></div>';
+    } else {
+      media = '<div class="cg-media ' + arc + '"><div class="cg-img-fb"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><div>' + esc(r.platform_letter || '') + ' · ' + esc(r.creative_type || '') + '</div></div></div>';
+    }
+
+    var cpc = (r.clicks > 0 && r.spend != null) ? r.spend / r.clicks : null;
+    var rankHTML = (rank <= 3) ? '<span class="cg-rank">#' + rank + '</span>' : '';
+    var iconColor = r.platform_color || '#78716c';
+    // 8-digit hex appends ~13% alpha for a subtle tinted background. Falls back
+    // to a neutral surface when the platform color is missing or non-hex.
+    var iconBg = (typeof iconColor === 'string' && iconColor.charAt(0) === '#' && (iconColor.length === 7 || iconColor.length === 4))
+      ? iconColor + '22' : 'var(--cg-surface-2)';
+    var strHTML = r.ad_strength ? ' · <span class="cg-strength" style="color:' + sc(r.ad_strength) + '">' + esc(r.ad_strength) + '</span>' : '';
+
+    // Resolve a per-creative deep-link URL the user can click when media fails.
+    // Priority: media.permalink_url (Facebook hosted-player permalink, TikTok
+    // landing page, etc.) > top-level permalink_url > landing_page_url > final_url.
+    // Used by the document-level media-error fallback to render an "Open on
+    // {platform}" link for a failed direct-file <video> instead of a broken tile.
+    var permalink = (r.media && r.media.permalink_url) || r.permalink_url || r.landing_page_url || r.final_url || '';
+
+    return '<div class="cg-card" data-id="' + escAttr(r.id || '') + '" data-thumb="' + escAttr(r.thumbnail_url || '') + '" data-vsrc="' + escAttr((r.thumbnail_type === 'video' && !isIframeVideo(r.video_url)) ? videoSrc(r) : '') + '" data-platform="' + escAttr(r.platform || '') + '" data-permalink="' + escAttr(permalink) + '">' +
+      media +
+      '<div class="cg-info">' +
+        '<span class="cg-platicon" style="color:' + iconColor + ';background:' + iconBg + '" title="' + escAttr(r.platform_full || platName(r.platform)) + '">' + platIcon(r.platform) + '</span>' +
+        '<div class="cg-info-text">' +
+          '<div class="cg-info-row">' +
+            '<div class="cg-info-name" title="' + escAttr(r.full_name || r.name || '') + '">' + esc(r.name || '') + '</div>' +
+            rankHTML +
+          '</div>' +
+          '<div class="cg-info-sub">' + esc(r.creative_type || '') + ' · ' + esc(r.platform_full || platName(r.platform)) + strHTML + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="cg-metrics">' +
+        '<div class="cg-m-cell"><div class="cg-m-val">' + fmt(r.impressions) + '</div><div class="cg-m-lbl">Impr</div></div>' +
+        '<div class="cg-m-cell"><div class="cg-m-val">' + fmt(r.clicks) + '</div><div class="cg-m-lbl">Clicks</div></div>' +
+        '<div class="cg-m-cell"><div class="cg-m-val cg-ctr ' + cc(r.ctr) + '">' + (r.ctr == null ? '—' : r.ctr.toFixed(2) + '%') + '</div><div class="cg-m-lbl">CTR</div></div>' +
+        '<div class="cg-m-cell"><div class="cg-m-val">' + (cpc == null ? '—' : fmtM(cpc)) + '</div><div class="cg-m-lbl">CPC</div></div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function partition(rows){
+    var display = [], video = [], textish = [];
+    rows.forEach(function(r){
+      if (r.creative_type === 'VIDEO' || r.thumbnail_type === 'video') video.push(r);
+      else if (r.thumbnail_type === 'image') display.push(r);
+      else textish.push(r);
+    });
+    return { display: display, video: video, textish: textish };
+  }
+
+  function renderGrid(rows){
+    if (rows.length === 0) {
+      content.innerHTML = emptyHTML();
+      return;
+    }
+    if (state.group === 'media') {
+      var p = partition(rows);
+      var html = '';
+      var section = function(title, items){
+        if (!items.length) return '';
+        var rank = 0;
+        return '<div class="cg-section"><div class="cg-section-head">' + esc(title) + ' <span style="font-family:Geist Mono,ui-monospace,monospace;font-size:10px;color:var(--cg-text-4);font-weight:500;letter-spacing:0">' + items.length + '</span></div><div class="cg-grid cols-' + state.cols + '">' + items.map(function(r){ rank++; return gridCardHTML(r, rank); }).join('') + '</div></div>';
+      };
+      html += section('Display Ads', p.display);
+      html += section('Video Ads', p.video);
+      html += section('Search · RSA · Text', p.textish);
+      content.innerHTML = html || emptyHTML();
+    } else {
+      content.innerHTML = '<div class="cg-grid cols-' + state.cols + '">' + rows.map(function(r, i){ return gridCardHTML(r, i + 1); }).join('') + '</div>';
+    }
+
+    // Lazy-load grid media (img + video)
+    var lazyEls = content.querySelectorAll('img.lazy, video.lazy');
+    if ('IntersectionObserver' in window && lazyEls.length) {
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting) {
+            var el = e.target;
+            el.src = el.getAttribute('data-src');
+            el.classList.remove('lazy');
+            if (el.tagName === 'VIDEO') {
+              el.preload = 'metadata';
+              el.addEventListener('loadeddata', function(){ el.classList.add('loaded'); }, { once: true });
+            } else {
+              el.addEventListener('load', function(){ el.classList.add('loaded'); }, { once: true });
+            }
+            io.unobserve(el);
+          }
+        });
+      }, { rootMargin: '200px' });
+      lazyEls.forEach(function(el){ io.observe(el); });
+    } else {
+      lazyEls.forEach(function(el){ el.src = el.getAttribute('data-src'); el.classList.remove('lazy'); el.classList.add('loaded'); });
+    }
+
+    // Hover-to-play for grid videos
+    content.querySelectorAll('.cg-card').forEach(function(card){
+      var v = card.querySelector('video');
+      if (!v) return;
+      card.addEventListener('mouseenter', function(){
+        try { v.currentTime = 0; var p = v.play(); if (p && p.catch) p.catch(function(){}); card.classList.add('playing'); } catch(e){}
+      });
+      card.addEventListener('mouseleave', function(){
+        try { v.pause(); v.currentTime = 0; card.classList.remove('playing'); } catch(e){}
+      });
+    });
+  }
+
+  var pendingRender = null;
+  function rerender(){
+    var rows = getFiltered();
+    var gWrap = document.getElementById('cg-group-wrap'), gSel = document.getElementById('cg-group');
+    var cWrap = document.getElementById('cg-cols-wrap');
+    if (state.vm === 'grid') {
+      gWrap.style.display = '';
+      gSel.value = state.group;
+      cWrap.style.display = '';
+    } else {
+      gWrap.style.display = 'none';
+      cWrap.style.display = 'none';
+    }
+    if (pendingRender !== null) clearTimeout(pendingRender);
+    renderSkeleton();
+    pendingRender = setTimeout(function(){
+      pendingRender = null;
+      if (state.vm === 'grid') renderGrid(rows); else renderTable(rows);
+    }, 180);
+  }
+
+  // === Toolbar wiring ===
+  document.getElementById('cg-sort').addEventListener('change', function(){ state.sort = this.value; rerender(); });
+  document.getElementById('cg-platform').addEventListener('change', function(){ state.platform = this.value; rerender(); });
+  document.getElementById('cg-type').addEventListener('change', function(){ state.type = this.value; rerender(); });
+  document.getElementById('cg-group').addEventListener('change', function(){ state.group = this.value; rerender(); });
+  var searchInput = document.getElementById('cg-search');
+  var qDeb;
+  searchInput.addEventListener('input', function(){ var v = this.value; clearTimeout(qDeb); qDeb = setTimeout(function(){ state.q = v; rerender(); }, 200); });
+  document.getElementById('cg-vm-grid').addEventListener('click', function(){ state.vm = 'grid'; document.getElementById('cg-vm-grid').classList.add('active'); document.getElementById('cg-vm-table').classList.remove('active'); rerender(); });
+  document.getElementById('cg-vm-table').addEventListener('click', function(){ state.vm = 'table'; document.getElementById('cg-vm-table').classList.add('active'); document.getElementById('cg-vm-grid').classList.remove('active'); rerender(); });
+
+  // Column count toggle (2/3/4) — only relevant in grid mode
+  document.getElementById('cg-cols-wrap').addEventListener('click', function(e){
+    var btn = e.target.closest && e.target.closest('button[data-cols]');
+    if (!btn) return;
+    var n = parseInt(btn.getAttribute('data-cols'), 10);
+    if (!n || n === state.cols) return;
+    state.cols = n;
+    this.querySelectorAll('button').forEach(function(b){ b.classList.toggle('active', b === btn); });
+    rerender();
+  });
+
+  if (state.vm === 'grid') { document.getElementById('cg-vm-grid').classList.add('active'); document.getElementById('cg-vm-table').classList.remove('active'); }
+
+  // === Hover preview tooltip (TABLE ONLY) ===
+  // Grid cards already display the preview at full size in the rounded media
+  // area, so a floating hover tooltip would be redundant for them. The big
+  // preview tooltip is therefore restricted to table-row thumbnails, which are
+  // tiny and benefit from a peek on hover.
+  var tip = document.getElementById('cg-tip');
+  function moveTip(e){
+    if (!tip.classList.contains('show')) return;
+    var x = e.clientX + 16, y = e.clientY + 16;
+    var rect = tip.getBoundingClientRect();
+    if (x + rect.width > window.innerWidth - 12) x = e.clientX - rect.width - 16;
+    if (y + rect.height > window.innerHeight - 12) y = e.clientY - rect.height - 16;
+    tip.style.left = Math.max(8, x) + 'px';
+    tip.style.top = Math.max(8, y) + 'px';
+  }
+  document.addEventListener('mouseover', function(e){
+    var thumb = e.target.closest && e.target.closest('.cg-tbl-thumb');
+    if (!thumb) return;
+    var vsrc = thumb.getAttribute && thumb.getAttribute('data-vsrc');
+    var url = thumb.getAttribute('data-thumb');
+    if (!url) {
+      var imgEl = thumb.querySelector && thumb.querySelector('img');
+      if (imgEl) url = imgEl.getAttribute('data-src') || imgEl.src;
+    }
+    if (vsrc) {
+      tip.innerHTML = '<video src="' + escAttr(vsrc) + '" autoplay muted loop playsinline onerror="return false"></video>';
+      tip.classList.add('show');
+      moveTip(e);
+      return;
+    }
+    if (!url) return;
+    tip.innerHTML = '<img src="' + escAttr(url) + '" alt="" onerror="return false" />';
+    tip.classList.add('show');
+    moveTip(e);
+  });
+  document.addEventListener('mouseout', function(e){
+    var fromThumb = e.target.closest && e.target.closest('.cg-tbl-thumb');
+    if (!fromThumb) return;
+    var related = e.relatedTarget;
+    if (related && related.closest && related.closest('.cg-tbl-thumb')) return;
+    tip.classList.remove('show');
+    tip.innerHTML = '';
+  });
+  document.addEventListener('mousemove', moveTip);
+
+  // === Image / video error handling (capture phase, document-level) ===
+  document.addEventListener('error', function(e){
+    var el = e.target;
+    if (!el || !el.closest) return;
+    var tag = el.tagName;
+    if (tag !== 'IMG' && tag !== 'VIDEO') return;
+    var card = el.closest('.cg-card');
+    var tbl = el.closest('.cg-tbl-thumb');
+    if (card) {
+      // Hide the broken media element and prepend a fallback inside .cg-media.
+      // No badges live here anymore — the play button and duration chip are
+      // the only overlay siblings, and we remove them below since they no
+      // longer make sense on a broken thumbnail.
+      var media = el.parentNode;
+      if (el.dataset.cgErrored) return; // guard against repeated firings
+      el.dataset.cgErrored = '1';
+      el.style.display = 'none';
+      // Remove any prior inline play overlay or duration chip — they no longer make sense
+      var playEl = media.querySelector(':scope > .cg-play');
+      if (playEl) playEl.remove();
+      var durEl = media.querySelector(':scope > .cg-vduration');
+      if (durEl) durEl.remove();
+      var fb = document.createElement('div');
+      fb.className = 'cg-img-fb';
+      // Video fallback path: if the failing element is a <video> AND
+      // we have a per-creative permalink, render an "Open on {platform}" link
+      // instead of the generic "Media expired" message. Posters are mirrored
+      // to S3 (~12h TTL), but video files exceed the mirror's 50 MB cap and
+      // are NOT mirrored, so the playback URL expires at the source platform's
+      // own TTL (4–8h on Facebook, ~24h on TikTok). This gives the user a
+      // one-click path to the original on the source platform.
+      var platform = card.getAttribute('data-platform') || '';
+      var permalink = card.getAttribute('data-permalink') || '';
+      var platLabel = ({
+        'facebook':'Facebook','google_ads':'Google Ads','linkedin':'LinkedIn',
+        'tiktok':'TikTok','pinterest':'Pinterest','instagram':'Instagram','youtube':'YouTube'
+      })[platform] || platform || 'platform';
+      if (tag === 'VIDEO' && permalink) {
+        // Open-on-platform link. target="_blank" + rel="noopener noreferrer"
+        // because the dashboard renders inside an iframe and we want the
+        // playback to open in a new top-level tab, not inside the iframe.
+        var safeHref = permalink.replace(/"/g, '&quot;');
+        fb.innerHTML =
+          '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+            '<polygon points="5 3 19 12 5 21 5 3"/>' +
+          '</svg>' +
+          '<a class="cg-fb-link" href="' + safeHref + '" target="_blank" rel="noopener noreferrer">Open on ' + platLabel + '</a>';
+      } else {
+        fb.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div>Media expired — refresh dashboard</div>';
+      }
+      // Insert the fallback as the FIRST child so badges (positioned absolute) sit on top.
+      media.insertBefore(fb, media.firstChild);
+    } else if (tbl) {
+      el.style.display = 'none';
+      tbl.classList.add('cg-tbl-thumb-fb');
+      tbl.textContent = '—';
+    }
+  }, true);
+
+  // === Initial render ===
+  rerender();
+})();
+</script>

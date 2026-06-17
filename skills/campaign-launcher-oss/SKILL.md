@@ -1,6 +1,6 @@
 ---
 name: campaign-launcher-oss
-description: >
+description: |
   Open-source multi-channel campaign launcher. Orchestrates marketing experiments
   from ICP/positioning input through planning, creative production, and parallel
   channel launch (Google Ads, Meta Ads, email outreach). No proprietary

@@ -1,6 +1,6 @@
 ---
 name: multi-agent-orchestrator
-description: Orchestrate parallel CLI agents (Claude Code, Codex, Gemini) for competitive evaluation. Use when user says "run multi-agent", "compare agents", "launch competitive evaluation", "use parallel agents", or complex tasks (>7/10) where multiple approaches exist and best solution matters.
+description: Orchestrate parallel CLI agents (Claude Code, Codex, Gemini) for competitive evaluation. Use when user says "run multi-agent", "compare agents", "launch competitive evaluation", "use parallel agents", or complex tasks rated above 7/10 where multiple approaches exist and best solution matters.
 version: "2.0.0"
 ---
 ## 📋 Multi-Agent Orchestrator = Competitive Parallel Execution
