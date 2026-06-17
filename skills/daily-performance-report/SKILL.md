@@ -1,7 +1,6 @@
 ---
 name: daily-performance-report
 description: Generate a Daily Performance Console — multi-channel operational dashboard for performance marketers. Blended KPI strip (Spend / Impressions / Clicks / CTR / Conversions / CPA / CR / ROAS), per-channel split with health flags, universal trend chart with date / metric / channel filters, and three tabs (Warnings / Recommendations / Monthly Pacing). Discovery API only, all data live. Built via /business-intelligence-editor as ONE custom-component widget that contains the entire console.
-version: "2.0.1"
 ---
 
 # Daily Performance Console

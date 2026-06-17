@@ -1,7 +1,6 @@
 ---
 name: skill-creator
 description: Create/improve self-healing Claude Code skills with Knowledge Framework and version tracking. Use when user says "create skill", "improve skill", "update skill", "fix skill error", "создай скил", "улучши скил", or works with SKILL.md and SKILL_RELEASE_LOG.md files.
-version: "2.2.0"
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 ---
 ## 📋 Skill Creator = Knowledge Framework Application

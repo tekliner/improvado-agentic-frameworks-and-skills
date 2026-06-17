@@ -5,7 +5,6 @@ description: |
   performance metrics, fatigue segments, and Discovery API data. Use for weekly
   creative performance reports, creative galleries, and creative fatigue analysis
   across Google Ads, Facebook, LinkedIn, TikTok, and Pinterest.
-version: "8.9.0"
 ---
 
 # weekly-creative-performance

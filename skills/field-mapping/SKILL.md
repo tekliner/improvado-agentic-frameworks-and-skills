@@ -1,7 +1,6 @@
 ---
 name: field-mapping
 description: Field mapping and data extraction setup - find report types and validate fields
-version: "1.0.0"
 ---
 
 ## Data Dictionary and Field Mapping

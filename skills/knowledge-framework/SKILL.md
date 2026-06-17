@@ -1,7 +1,6 @@
 ---
 name: knowledge-framework
 description: Auto-applies MECE/BFO framework (thesis, Mermaid TD/LR, numbered sections, Ground Truth) to ANY .md file creation.
-version: "1.1.0"
 ---
 ## 📋 Documentation = Code (Minto + MECE + BFO + DRY)
 

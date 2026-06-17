@@ -1,7 +1,6 @@
 ---
 name: sql-import
 description: SQL import workflow - connect to MySQL/Postgres/MSSQL, pick a table or write a custom query, discover schema, preview rows, and create a scheduled extract
-version: "1.0.0"
 ---
 
 ## SQL Import Tools

@@ -7,7 +7,6 @@ description: |
   infrastructure required — works with your own API keys. Use when user says
   "launch campaign", "campaign launcher", "experiment launch", "multi-channel
   campaign", "plan and launch experiment".
-version: "1.0.0"
 allowed-tools: Read Write Edit Bash Glob Grep Agent WebSearch WebFetch
 ---
 

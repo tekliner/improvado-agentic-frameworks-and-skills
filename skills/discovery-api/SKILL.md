@@ -7,11 +7,10 @@ description: |
   pull insights directly from a platform, or any task that requires calling
   `discoveryRequestTool`, `discoveryListConnectorsTool`, or
   `discoveryListAccountsTool`. Trigger phrases include: "current campaigns",
-  "live data", "real-time metrics", "show me <platform> ads", "fetch from
-  <platform> API", "what's in my <platform>", "check <platform> insights". Use
+  "live data", "real-time metrics", "show me platform-name ads", "fetch from
+  platform-name API", "what's in my platform-name", "check platform-name insights". Use
   BEFORE any direct platform API call — the skill defines the mandatory
   URL/version protocol.
-version: "1.1.0"
 ---
 ## Discovery Integration
 
