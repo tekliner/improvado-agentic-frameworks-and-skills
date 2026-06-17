@@ -1,0 +1,53 @@
+<!-- weekly-creative-performance Insights widget (main-grid-3). Token contract lives in SKILL.md § STEP 3f (render-widgets.mjs TOKEN_MAP entry for insights) and scripts/render-widgets.mjs. All styles scoped with .ins- prefix. -->
+<style>
+  .ins-root { font-family: 'Inter', -apple-system, system-ui, sans-serif; color: #2c2620; height: 100%; display: flex; flex-direction: column; padding: 20px; box-sizing: border-box; background: #faf9f7; letter-spacing: -0.01em; }
+  .ins-title { font-size: 22px; font-weight: 800; color: #2c2620; letter-spacing: -0.03em; margin: 0 0 14px 0; line-height: 1.1; }
+  .ins-row { display: flex; gap: 12px; flex: 1; overflow-x: auto; align-items: stretch; }
+  .ins-row::-webkit-scrollbar { height: 6px; }
+  .ins-row::-webkit-scrollbar-thumb { background: #eee9e2; border-radius: 3px; }
+  .ins-card { flex: 1; min-width: 180px; padding: 14px 16px; background: #fff; border: 1px solid #eee9e2; border-radius: 12px; display: flex; flex-direction: column; gap: 8px; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  .ins-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(44,38,32,0.06); }
+  .ins-head { display: flex; align-items: center; gap: 8px; }
+  .ins-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .ins-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; color: #b8b0a5; }
+  .ins-text { font-size: 12px; line-height: 1.5; color: #2c2620; }
+  .ins-text strong { font-weight: 700; color: #2c2620; }
+</style>
+
+<div class="ins-root">
+  <h2 class="ins-title">Insights</h2>
+  <div class="ins-row" id="ins-row"></div>
+</div>
+
+<script>
+(function(){
+  function esc(s){ var d = document.createElement('div'); d.textContent = (s == null ? '' : String(s)); return d.innerHTML; }
+  // escAttr — like esc(), but ALSO encodes " and ' so the result is safe inside HTML attribute values.
+  // Currently the insights body does not interpolate user data into attributes (only the static dot
+  // style="background:..." with a hex color), but the helper is present for parity with creative-fatigue
+  // and creative-gallery and as a defensive guard against future label/text additions.
+  function escAttr(s){ return esc(s).replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+  var CARDS = __INSIGHTS_CARDS_JSON__;
+  var row = document.getElementById('ins-row');
+  if (!Array.isArray(CARDS) || CARDS.length === 0) {
+    row.innerHTML = '<div style="padding:14px 16px;color:#9ca3af;font-size:12px;font-style:italic;">No insights for this period.</div>';
+    return;
+  }
+  var html = CARDS.map(function(c){
+    var color = (c && c.color) || '#9b7ea4';
+    var label = (c && c.label) || '';
+    var text = (c && c.text) || '';
+    // label runs through esc() for parity with creative-fatigue / creative-gallery widgets;
+    // text is HTML from the agent (contains <strong> tags around already-escaped names) and is intentionally trusted —
+    // CARDS comes from a trusted server-side render at SKILL.md § STEP 3.
+    return '<div class="ins-card">' +
+             '<div class="ins-head">' +
+               '<span class="ins-dot" style="background:' + color + '"></span>' +
+               '<span class="ins-label">' + esc(label) + '</span>' +
+             '</div>' +
+             '<div class="ins-text">' + text + '</div>' +
+           '</div>';
+  }).join('');
+  row.innerHTML = html;
+})();
+</script>
