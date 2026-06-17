@@ -1,0 +1,38 @@
+{
+  "name": "improvado-agentic-frameworks-and-skills",
+  "version": "0.1.0",
+  "description": "Improvado agentic frameworks, Codex-ready skills, and customer MCP access for marketing data workflows.",
+  "author": {
+    "name": "Improvado"
+  },
+  "homepage": "https://github.com/tekliner/improvado-agentic-frameworks-and-skills",
+  "repository": "https://github.com/tekliner/improvado-agentic-frameworks-and-skills",
+  "keywords": [
+    "improvado",
+    "marketing-data",
+    "agentic-frameworks",
+    "skills",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Improvado Agentic Frameworks",
+    "shortDescription": "Improvado skills and MCP tools for marketing data work.",
+    "longDescription": "A Codex plugin packaging Improvado agentic frameworks, marketing operations skills, analytics workflows, notebook and import workflows, dashboard generators, and customer MCP access.",
+    "developerName": "Improvado",
+    "category": "Productivity",
+    "capabilities": [
+      "Skills",
+      "MCP",
+      "Data Analysis",
+      "Marketing Operations"
+    ],
+    "defaultPrompt": [
+      "Use Discovery API to inspect my live marketing data.",
+      "Create a weekly creative performance dashboard.",
+      "Diagnose an Improvado pipeline or recipe issue."
+    ],
+    "brandColor": "#F97316"
+  }
+}

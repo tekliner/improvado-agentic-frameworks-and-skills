@@ -1,0 +1,199 @@
+<!-- weekly-creative-performance Creative Fatigue widget (main-grid-4). Token contract lives in SKILL.md § STEP 3f (render-widgets.mjs TOKEN_MAP entry for fatigue) and scripts/render-widgets.mjs. All styles scoped with .cf- prefix. -->
+<style>
+  .cf-root { font-family: 'Inter', -apple-system, system-ui, sans-serif; color: #2c2620; height: 100%; display: flex; flex-direction: column; background: #faf9f7; letter-spacing: -0.01em; min-height: 0; }
+  .cf-header { display: flex; align-items: flex-start; justify-content: space-between; padding: 16px 20px 12px; border-bottom: 1px solid #eee9e2; gap: 12px; flex-shrink: 0; }
+  .cf-titleblock { display: flex; flex-direction: column; gap: 4px; }
+  .cf-title { font-size: 22px; font-weight: 800; letter-spacing: -0.03em; color: #2c2620; line-height: 1.1; margin: 0; }
+  .cf-subtitle { font-size: 13px; font-style: italic; color: #b8a898; line-height: 1.2; }
+  .cf-pills { display: flex; gap: 8px; }
+  .cf-pill { padding: 12px 22px; background: linear-gradient(135deg, #fdf9f7, #faf5f2); border: 1px solid #ede5dc; border-radius: 14px; text-align: center; min-width: 124px; }
+  .cf-pill-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: #8c7e74; font-weight: 700; }
+  .cf-pill-val { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; font-feature-settings: 'tnum'; margin-top: 4px; }
+
+  .cf-bar { display: flex; height: 38px; gap: 3px; padding: 8px 20px 0; flex-shrink: 0; }
+  .cf-bar-seg { display: flex; align-items: center; justify-content: center; border-radius: 4px; color: #fff; font-weight: 700; font-size: 15px; text-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+  .cf-bar-labels { display: flex; gap: 3px; padding: 6px 20px 8px; flex-shrink: 0; }
+  .cf-bar-label { font-size: 13px; font-weight: 600; color: #6b5c50; text-align: center; }
+
+  .cf-cols { display: grid; grid-template-columns: 1fr 64px 96px 108px 110px 28px; padding: 7px 20px 5px; background: #faf7f4; border-bottom: 2px solid #eee9e2; flex-shrink: 0; }
+  .cf-col { font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 700; color: #a89a8e; }
+  .cf-col.num { text-align: right; }
+
+  .cf-body { flex: 1; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
+  .cf-seg { display: flex; flex-direction: column; flex-shrink: 0; border-bottom: 1px solid #f0ece6; min-height: 0; }
+  .cf-seg.open { flex-shrink: 1; flex-grow: 1; }
+  .cf-seg-head { display: grid; grid-template-columns: 1fr 64px 96px 108px 110px 28px; padding: 10px 20px; cursor: pointer; transition: background 0.1s ease; align-items: center; }
+  .cf-seg-head:hover { background: #f8f5f0; }
+  .cf-seg.open .cf-seg-head { background: #f5f1eb; }
+  .cf-seg-name { display: flex; flex-direction: column; gap: 2px; }
+  .cf-seg-name-row { display: flex; align-items: center; gap: 8px; }
+  .cf-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .cf-seg-label { font-size: 15px; font-weight: 800; }
+  .cf-seg-insight { font-size: 12px; font-style: italic; color: #7a6e64; line-height: 1.3; }
+  .cf-seg-num { font-size: 15px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+  .cf-seg-spend { font-size: 14px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+  .cf-seg-ctr { font-size: 14px; text-align: right; font-variant-numeric: tabular-nums; }
+  .cf-seg-trend { font-size: 13px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+  .cf-arrow { font-size: 14px; color: #a89a8e; transition: transform 0.15s ease; text-align: center; }
+  .cf-seg.open .cf-arrow { transform: rotate(180deg); }
+
+  .cf-seg-body { display: none; flex-direction: column; flex: 1; overflow-y: auto; min-height: 0; padding-bottom: 8px; }
+  .cf-seg.open .cf-seg-body { display: flex; }
+  .cf-seg-body::-webkit-scrollbar { width: 6px; }
+  .cf-seg-body::-webkit-scrollbar-thumb { background: #eee9e2; border-radius: 3px; }
+  .cf-rowhead { display: grid; grid-template-columns: 44px 1fr 76px 90px 140px; gap: 8px; padding: 8px 20px 6px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #a89a8e; font-weight: 700; border-bottom: 1px solid #f3f0ec; position: sticky; top: 0; background: #fff; }
+  .cf-rowhead .num { text-align: right; }
+  .cf-row { display: grid; grid-template-columns: 44px 1fr 76px 90px 140px; gap: 8px; align-items: center; padding: 8px 20px; border-bottom: 1px solid #f8f5f2; }
+  .cf-thumb { width: 36px; height: 36px; border-radius: 7px; overflow: hidden; background: #f3f0ec; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .cf-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cf-thumb-text { font-size: 8px; font-weight: 700; color: #6b7280; line-height: 1.1; padding: 2px; text-align: center; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .cf-thumb-letter { font-size: 12px; font-weight: 700; color: #9ca3af; }
+  .cf-thumb-fallback { width: 36px; height: 36px; border-radius: 7px; background: #f3f0ec; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #9ca3af; }
+  .cf-name { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .cf-name-text { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cf-name-platform { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; align-self: flex-start; }
+  .cf-impr { font-size: 13px; color: #6b7280; text-align: right; font-variant-numeric: tabular-nums; }
+  .cf-spend { font-size: 14px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+  .cf-spend.dead { color: #c4877a; }
+  .cf-trend { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+  .cf-spark { flex-shrink: 0; }
+  .cf-ctr { font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; min-width: 48px; text-align: right; }
+  .cf-seg-empty { opacity: 0.5; pointer-events: none; }
+</style>
+
+<div class="cf-root" id="cf-root">
+  <div class="cf-header">
+    <div class="cf-titleblock">
+      <h2 class="cf-title">Creative Fatigue</h2>
+      <div class="cf-subtitle" id="cf-subtitle"></div>
+    </div>
+    <div class="cf-pills" id="cf-pills"></div>
+  </div>
+  <div class="cf-bar" id="cf-bar"></div>
+  <div class="cf-bar-labels" id="cf-bar-labels"></div>
+  <div class="cf-cols">
+    <div class="cf-col">SEGMENT</div>
+    <div class="cf-col num">COUNT</div>
+    <div class="cf-col num">SPEND</div>
+    <div class="cf-col num">AVG CTR</div>
+    <div class="cf-col num">TREND</div>
+    <div class="cf-col"></div>
+  </div>
+  <div class="cf-body" id="cf-body"></div>
+</div>
+
+<script>
+(function(){
+  var KPI = __KPI_DATA_JSON__;
+  var SEGS = __SEGMENTS_AGGREGATE_JSON__;
+  var CRTS = __SEGMENTS_CREATIVES_JSON__;
+  var DEFAULT_OPEN = "__DEFAULT_OPEN_SEGMENT__";
+  var SUBTITLE = "__SUBTITLE__";
+
+  function esc(s) { var d = document.createElement('div'); d.textContent = (s == null ? '' : String(s)); return d.innerHTML; }
+  // escAttr — like esc(), but ALSO encodes " and ' so the result is safe inside HTML attribute values.
+  function escAttr(s) { return esc(s).replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+
+  // Inject subtitle via JS so <, >, &, " in the value never break the surrounding HTML
+  document.getElementById('cf-subtitle').textContent = SUBTITLE;
+
+  // --- KPI pills ---
+  var pills = document.getElementById('cf-pills');
+  var pillSpec = [
+    { lbl: 'CREATIVES', val: KPI.total_count == null ? '—' : String(KPI.total_count), color: '#2c2620' },
+    { lbl: 'HEALTH SCORE', val: KPI.health_score == null ? '—' : (KPI.health_score + '/100'), color: KPI.health_score_color || '#7a9e7e' },
+    { lbl: 'SPEND AT RISK', val: KPI.spend_at_risk_str || '$0', color: '#c4877a' }
+  ];
+  pills.innerHTML = pillSpec.map(function(p){
+    return '<div class="cf-pill"><div class="cf-pill-lbl">' + esc(p.lbl) + '</div>' +
+           '<div class="cf-pill-val" style="color:' + p.color + '">' + esc(p.val) + '</div></div>';
+  }).join('');
+
+  // --- Stacked bar (count-proportional segments; omit zeros) ---
+  var bar = document.getElementById('cf-bar');
+  var barLabels = document.getElementById('cf-bar-labels');
+  var barHTML = '', labelsHTML = '';
+  SEGS.forEach(function(s){
+    if (!s.count_pct || s.count_pct <= 0) return;
+    barHTML += '<div class="cf-bar-seg" style="flex:' + s.count_pct + ';background:' + s.color + '">' + esc(s.count) + '</div>';
+    labelsHTML += '<div class="cf-bar-label" style="flex:' + s.count_pct + '">' + esc(s.label) + '</div>';
+  });
+  bar.innerHTML = barHTML;
+  barLabels.innerHTML = labelsHTML;
+
+  // --- Accordion bodies ---
+  var body = document.getElementById('cf-body');
+  body.innerHTML = SEGS.map(function(s){
+    var rows = (CRTS[s.key] || []).map(function(c){
+      var thumb = '';
+      // No inline onerror — the document-level capture-phase listener at the bottom
+      // of this script owns the fallback markup. Single source of truth.
+      // Any mirrored URL (image OR a video's S3 poster) renders as an <img>.
+      if (c.thumbnail_url) {
+        thumb = '<img src="' + escAttr(c.thumbnail_url) + '" alt="" />';
+      } else if (c.thumbnail_type === 'text_preview' && c.text_preview) {
+        thumb = '<div class="cf-thumb-text">' + esc(c.text_preview) + '</div>';
+      } else {
+        thumb = '<div class="cf-thumb-letter">' + esc(c.platform_letter || '?') + '</div>';
+      }
+      var pColor = c.platform_color || '#9b7ea4';
+      var platformBadge = '<span class="cf-name-platform" style="background:' + pColor + '20;color:' + pColor + '">' + esc(c.platform || '') + '</span>';
+      var spendCls = (s.key === 'dead') ? 'cf-spend dead' : 'cf-spend';
+      var sparkPath = c.sparkline_path || 'M0,9 L52,9';
+      return '<div class="cf-row">' +
+               '<div class="cf-thumb">' + thumb + '</div>' +
+               '<div class="cf-name">' +
+                 '<span class="cf-name-text" title="' + escAttr(c.full_name || c.name || '') + '">' + esc(c.name || '') + '</span>' +
+                 platformBadge +
+               '</div>' +
+               '<div class="cf-impr">' + esc(c.impressions_str || '—') + '</div>' +
+               '<div class="' + spendCls + '">' + esc(c.spend_str || '—') + '</div>' +
+               '<div class="cf-trend">' +
+                 '<svg class="cf-spark" width="52" height="18" viewBox="0 0 52 18"><path d="' + escAttr(sparkPath) + '" stroke="' + s.color + '" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" fill="none"/><circle cx="52" cy="9" r="2" fill="' + s.color + '"/></svg>' +
+                 '<span class="cf-ctr">' + esc(c.ctr_str || '—') + '</span>' +
+               '</div>' +
+             '</div>';
+    }).join('');
+    var openCls = (s.key === DEFAULT_OPEN && s.count > 0) ? ' open' : '';
+    var emptyCls = (!s.count || s.count <= 0) ? ' cf-seg-empty' : '';
+    return '<div class="cf-seg' + openCls + emptyCls + '" data-seg="' + escAttr(s.key) + '">' +
+             '<div class="cf-seg-head">' +
+               '<div class="cf-seg-name">' +
+                 '<div class="cf-seg-name-row"><span class="cf-dot" style="background:' + s.color + '"></span><span class="cf-seg-label">' + esc(s.label) + '</span></div>' +
+                 '<span class="cf-seg-insight">' + esc(s.insight_line) + '</span>' +
+               '</div>' +
+               '<div class="cf-seg-num">' + esc(s.count) + '</div>' +
+               '<div class="cf-seg-spend">' + esc(s.spend_str) + '</div>' +
+               '<div class="cf-seg-ctr">' + esc(s.avg_ctr_str) + '</div>' +
+               '<div class="cf-seg-trend" style="color:' + s.color + '">' + esc(s.trend_arrow) + ' ' + esc(s.trend_delta_str) + '</div>' +
+               '<div class="cf-arrow">▼</div>' +
+             '</div>' +
+             '<div class="cf-seg-body">' +
+               '<div class="cf-rowhead"><div></div><div>CREATIVE</div><div class="num">IMPR</div><div class="num">SPEND</div><div class="num">CTR · 30D TREND</div></div>' +
+               rows +
+             '</div>' +
+           '</div>';
+  }).join('');
+
+  // --- Accordion: one section open at a time ---
+  body.addEventListener('click', function(e){
+    var head = e.target.closest('.cf-seg-head');
+    if (!head) return;
+    var seg = head.parentNode;
+    var wasOpen = seg.classList.contains('open');
+    body.querySelectorAll('.cf-seg').forEach(function(s){ s.classList.remove('open'); });
+    if (!wasOpen) seg.classList.add('open');
+  });
+
+  // --- Image error handling (capture phase, document-level) ---
+  document.addEventListener('error', function(e){
+    var img = e.target;
+    if (img && img.tagName === 'IMG' && img.closest && img.closest('.cf-thumb')) {
+      var p = img.parentNode;
+      img.style.display = 'none';
+      p.classList.add('cf-thumb-fallback');
+      p.textContent = '—';
+    }
+  }, true);
+})();
+</script>

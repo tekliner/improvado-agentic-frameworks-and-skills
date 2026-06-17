@@ -1,0 +1,85 @@
+<!--
+  Example metadata.graph_ui.
+
+  It's a full HTML document that references two shared stylesheets and a
+  script from /experimental/agent/pipeline-canvas/. The script wraps any
+  body > [data-node-id] elements in the viewport / zoom / pan layers,
+  reads the JSON config block for positions + edges, hydrates data-icon
+  placeholders, and wires pan/zoom/fit controls.
+
+  RENDER SURFACES (design for the smallest):
+    Overview tab       — ~880 × 380 px
+    Configuration tab  — ~880 × 640 px (agent preview Graph tab too)
+
+  NODE VOCABULARY:
+    palette-* — blue (Data source) | purple (Business logic) | teal (Destination) | orange (Alert / Transform)
+    data-icon — database | split | send | transform | state | mapping | sync | api | alert
+
+  KEEP 2–5 nodes. Business-language only: no MCP / Platform API / HTTP /
+  internal function names in labels or kv values.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pipeline graph canvas</title>
+<link rel="stylesheet" href="/experimental/agent/pipeline-canvas/base.css">
+<link rel="stylesheet" href="/experimental/agent/pipeline-canvas/graph.css">
+</head>
+<body>
+
+<script type="application/json" id="canvas-config">
+{
+  "nodes": [
+    { "id": "source",      "x": 80,  "y": 200 },
+    { "id": "categorize",  "x": 520, "y": 200 },
+    { "id": "destination", "x": 960, "y": 200 }
+  ],
+  "edges": [
+    { "from": "source",     "to": "categorize" },
+    { "from": "categorize", "to": "destination" }
+  ]
+}
+</script>
+
+<div data-node-id="source" class="node palette-blue">
+  <div class="node-head">
+    <div class="icon-frame" data-icon="database"></div>
+    <div class="step-badge">01 / 03</div>
+  </div>
+  <div class="type-label">Data source</div>
+  <div class="node-title">Improvado Storage</div>
+  <div class="node-subtitle">Failed extract and load jobs, pulled live at runtime</div>
+  <div class="kv">
+    <div class="kv-row"><span class="k">Tables</span><span class="v mono">extract_orders, load_orders</span></div>
+    <div class="kv-row"><span class="k">Filter</span><span class="v mono">status = 'error'</span></div>
+  </div>
+</div>
+
+<div data-node-id="categorize" class="node palette-purple">
+  <div class="node-head">
+    <div class="icon-frame" data-icon="split"></div>
+    <div class="step-badge">02 / 03</div>
+  </div>
+  <div class="type-label">Business logic</div>
+  <div class="node-title">Categorize errors</div>
+  <div class="node-subtitle">Rule-based classification into 7 error categories by message</div>
+</div>
+
+<div data-node-id="destination" class="node palette-teal">
+  <div class="node-head">
+    <div class="icon-frame" data-icon="send"></div>
+    <div class="step-badge">03 / 03</div>
+  </div>
+  <div class="type-label">Destination</div>
+  <div class="node-title">Google Chat</div>
+  <div class="node-subtitle">Markdown alert posted to the ops channel</div>
+  <div class="kv">
+    <div class="kv-row"><span class="k">Channel</span><span class="v">Data Ops</span></div>
+    <div class="kv-row"><span class="k">Format</span><span class="v">Markdown card</span></div>
+  </div>
+</div>
+
+<script src="/experimental/agent/pipeline-canvas/graph.js"></script>
+</body>
+</html>

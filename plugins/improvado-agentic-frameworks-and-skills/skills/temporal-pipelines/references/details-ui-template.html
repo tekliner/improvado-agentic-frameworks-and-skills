@@ -1,0 +1,126 @@
+<!--
+  Example metadata.details_ui.
+
+  It's a full HTML document that references two shared stylesheets and a
+  script from /experimental/agent/pipeline-canvas/. The script wraps any
+  body > .step elements in a .page > .stepper container, injects icon
+  SVGs for .icon-frame[data-icon] and auto-numbers .step-index badges.
+
+  RENDER SURFACE: ~880 × 640 px. Vertical scroll is available — step count
+  is flexible. Keep card column ≤ 760 px wide.
+
+  STEP VOCABULARY:
+    palette-* — blue (Data source) | purple (Business logic) | teal (Destination) | orange (Transform/Alert)
+    data-icon — database | split | send | transform | state | mapping | sync | api | alert
+    type-pill — Data source | Destination | Business logic | Transformation | Mapping | Sync behavior | State | External call | Alert
+
+  BODY PRIMITIVES (CSS classes shipped with details.css):
+    .form / .field.full? / .field-label
+    .input .input.mono .input.muted
+    .pill-group + .pill
+    .toggle-group + .toggle.on
+    .rules + .rules-head + .rule (.rule-when / .rule-arrow / .rule-then)
+    .mapping + .mapping-col-label + .mapping-arrow-col
+    .code-block
+  Escape hatch: drop an inline <style> block at the end if you need a
+  truly custom visual.
+
+  KEEP 2–5 steps. Business-language only.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pipeline details stepper</title>
+<link rel="stylesheet" href="/experimental/agent/pipeline-canvas/base.css">
+<link rel="stylesheet" href="/experimental/agent/pipeline-canvas/details.css">
+</head>
+<body>
+
+<div class="step palette-blue">
+  <div class="rail">
+    <div class="icon-frame" data-icon="database"></div>
+  </div>
+  <div class="card">
+    <div class="card-head">
+      <div class="type-pill">Data source</div>
+      <h2 class="card-title">Improvado Storage</h2>
+      <p class="card-subtitle">Failed extract and load jobs for the current workspace</p>
+    </div>
+    <div class="form">
+      <div class="field"><div class="field-label">Connection</div><div class="input">Improvado Storage</div></div>
+      <div class="field"><div class="field-label">Row limit</div><div class="input">250 per table</div></div>
+      <div class="field full">
+        <div class="field-label">Tables</div>
+        <div class="pill-group">
+          <span class="pill">extract_orders</span>
+          <span class="pill">load_orders</span>
+        </div>
+      </div>
+      <div class="field full">
+        <div class="field-label">Filter</div>
+        <div class="input mono">status = 'error' AND is_deleted = 0</div>
+      </div>
+      <div class="field"><div class="field-label">Order by</div><div class="input">last_run_at (DESC)</div></div>
+      <div class="field">
+        <div class="field-label">Mode</div>
+        <div class="toggle-group">
+          <div class="toggle on">Live query</div>
+          <div class="toggle">Snapshot</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="step palette-purple">
+  <div class="rail">
+    <div class="icon-frame" data-icon="split"></div>
+  </div>
+  <div class="card">
+    <div class="card-head">
+      <div class="type-pill">Business logic</div>
+      <h2 class="card-title">Categorize errors</h2>
+      <p class="card-subtitle">Each failed load is bucketed into an actionable group so ops can triage quickly</p>
+    </div>
+    <div class="rules">
+      <div class="rules-head">
+        <div>When error message contains</div>
+        <div></div>
+        <div>Bucket</div>
+      </div>
+      <div class="rule"><div class="rule-when"><code>does not exist</code> or <code>unknown_table</code></div><div class="rule-arrow">→</div><div class="rule-then">Table not found</div></div>
+      <div class="rule"><div class="rule-when"><code>schema</code> or <code>incompatible</code></div><div class="rule-arrow">→</div><div class="rule-then">Schema mismatch</div></div>
+      <div class="rule"><div class="rule-when"><code>too many failed</code></div><div class="rule-arrow">→</div><div class="rule-then">Job paused</div></div>
+      <div class="rule"><div class="rule-when"><code>permission</code></div><div class="rule-arrow">→</div><div class="rule-then">Permission denied</div></div>
+      <div class="rule"><div class="rule-when"><em>anything else</em></div><div class="rule-arrow">→</div><div class="rule-then">Other (first 120 chars)</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="step palette-teal">
+  <div class="rail">
+    <div class="icon-frame" data-icon="send"></div>
+  </div>
+  <div class="card">
+    <div class="card-head">
+      <div class="type-pill">Destination</div>
+      <h2 class="card-title">Google Chat Webhook</h2>
+      <p class="card-subtitle">Markdown alert posted into the ops channel whenever errors are found</p>
+    </div>
+    <div class="form">
+      <div class="field"><div class="field-label">Channel</div><div class="input">Data Ops</div></div>
+      <div class="field"><div class="field-label">Format</div><div class="input">Markdown card</div></div>
+      <div class="field full"><div class="field-label">Webhook URL</div><div class="input mono muted">chat.googleapis.com/v1/spaces/•••/messages?key=•••</div></div>
+      <div class="field">
+        <div class="field-label">Retry on 5xx</div>
+        <div class="toggle-group"><div class="toggle on">Yes</div><div class="toggle">No</div></div>
+      </div>
+      <div class="field"><div class="field-label">Expected</div><div class="input">HTTP 200</div></div>
+    </div>
+  </div>
+</div>
+
+<script src="/experimental/agent/pipeline-canvas/details.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "improvado",
+  "interface": {
+    "displayName": "Improvado"
+  },
+  "plugins": [
+    {
+      "name": "improvado-agentic-frameworks-and-skills",
+      "source": {
+        "source": "local",
+        "path": "./plugins/improvado-agentic-frameworks-and-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

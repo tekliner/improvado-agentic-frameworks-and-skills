@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "improvado-customer": {
+      "title": "Improvado Customer MCP",
+      "description": "Customer-facing Improvado MCP endpoint served by ai-agent-improvado.",
+      "type": "http",
+      "url": "https://report.improvado.io/experimental/agent/api/mcp-customer/v1/invoke"
+    }
+  }
+}

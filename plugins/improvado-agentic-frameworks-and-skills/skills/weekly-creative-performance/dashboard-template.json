@@ -1,0 +1,116 @@
+{
+  "_template_doc": "BIE config template for weekly-creative-performance. Renders via CrossChannelEditableDashboard.tsx — 3 custom-component widgets stacked full-width. scripts/render-widgets.mjs substitutes __TOKEN__ markers in widgets/*.html; scripts/assemble-config.mjs slots each rendered HTML into the matching {{WIDGET_*_HTML}} placeholder below. appearance MUST live at config.appearance (TOP LEVEL — nesting under editState triggers EditStateSchema.strip() and silently drops the whole block). Chrome-hide fields are nested under appearance.layout.hideTitle/hideFilters/hideFooter (NOT top-level aliases — those are stripped by AppearanceSchema). Per-widget chrome is hidden via props.chromeless:true. Save via /business-intelligence-editor — never direct curl.",
+  "_componentCode_size_cap": "Some layer downstream silently truncates componentCode at ~100,000 chars (loses IIFE tail → empty widget + SyntaxError). Lint L20 fails the save at 99,500 chars (500-char headroom). When L20 fires: (a) step the gallery down 50→35→25→15, (b) strip unused CreativeItem fields per SKILL.md § Minimum embed field set. The v7.5.0 serve-URL embed drops URL length from ~1,852 to ~150 chars so L20 rarely fires.",
+  "_slots_overview": "Top-level slots: PLATFORMS_LIST = pipe-separated platform display names (e.g. 'Google Ads | Facebook'). TODAY_ISO = YYYY-MM-DD. DASHBOARD_NOTE_OR_EMPTY = '' (empty) or ' — ' + a per-platform partial-coverage string from SKILL.md § STEP 3d (e.g. ' — facebook: 18/22 thumbnails mirrored'). Per-widget slots: WIDGET_FATIGUE_HTML, WIDGET_INSIGHTS_HTML, WIDGET_GALLERY_HTML carry the JSON-encoded HTML for each widget's componentCode.",
+  "_lint_before_save": [
+    "Zero {{...}} slot tokens remain inside `config` and the top-level `dashboardTitle` / `dashboardUrl` / `isMenuItem` fields (the meta fields `_template_doc`, `_slots_overview`, `_lint_before_save` are documentation and may keep their literal {{...}} examples; BIE save passes them through DashboardConfigSchema.passthrough() unchanged)",
+    "config.editState.widgets has exactly 3 entries with IDs main-grid-4, main-grid-3, main-grid-1 in that order",
+    "config.editState.layout.items has matching IDs and y-coordinates 0, 18, 26",
+    "For each widget i: widgets[i].props.gridWidth == layout.items[i].w (both must equal 12) — schema rejects mismatches",
+    "config.appearance (TOP LEVEL of config, NOT inside editState) carries colorMode='light' AND layout.background='#faf9f7' AND layout.hideTitle=true AND layout.hideFilters=true AND layout.hideFooter=true. The host schema declares `appearance` at the top level of DashboardConfigSchema; placing it inside editState causes EditStateSchema's default .strip() to silently drop the whole block on save. The hide* fields are nested inside `layout` (per BIE APPEARANCE.md), NOT at the top level of `appearance` — top-level aliases like `hideTitle`/`hideHeader` ARE stripped by the schema and are NOT the consuming names; only the `appearance.layout.hide*` form works.",
+    "config.appearance.layout.background == '#faf9f7' (the warm editorial page bg). AppearanceSchema declares `layout.background: z.string().optional()` so this field is consumed by the host TSX (dashboardConfig?.appearance?.layout reference in CrossChannelEditableDashboard.tsx)",
+    "config.editState.schemaVersion is the integer 2 (not the string '2')",
+    "Every widget has props.componentCode set to a non-empty string containing the per-widget HTML from widgets/*.html with all __TOKEN__ markers substituted",
+    "No literal `</script>` substring inside any componentCode (let JSON.stringify handle escaping; never hand-roll backslashes — pass the raw HTML string to your JSON serializer)",
+    "No `<!-- ... -->` HTML comment survives inside any componentCode. render-widgets.mjs strips comments before token substitution; any surviving comment means the strip was skipped. Reason: data tokens often contain `--` substrings (e.g. Google Ads URL fragments like `Fct--3bsnkQpt`) which per HTML5 §13.1.6 terminate an enclosing comment early, corrupting the next <script> parse with `SyntaxError: Invalid or unexpected token` on load.",
+    "Every `<img>` tag inside any componentCode either (a) has an inline `onerror=...` attribute OR (b) is inside a widget that wires a document-level capture-phase `error` listener. Both forms produce the same visual fallback. Current widgets: creative-fatigue uses (b) only; creative-gallery uses both; insights renders no `<img>` tags directly.",
+    "config.dashboardSubtitle starts with the platforms list and ends with either '' or a ' — ' partial-coverage note (e.g. ' — facebook: 18/22 thumbnails mirrored') — never includes raw {{ }} braces",
+    "Top-level dashboardUrl is the literal string 'clients/template/dashboards/CrossChannelEditableDashboard.tsx' (the canonical host-TSX path the Miras viewer fetches via /experimental/agent/api/repo/file?repo_id=dashboard&path={dashboardUrl}). The legacy slug 'creative-performance' only worked when BIE skill-cli's HARDCODED_DASHBOARD_URL rewrote it client-side; direct API saves wrote the slug verbatim and the viewer 404'd. There is no CreativePerformanceDashboard.tsx; CrossChannelEditableDashboard.tsx renders this skill's dashboard via settings_id.",
+    "Top-level isMenuItem is the boolean true (not the string 'true')",
+    "config.defaultTimePeriod is present and is a non-empty string (REQUIRED, not optional — the template ships 'all'; never strip). BIE save validation rejects configs that omit this field; agents that 'fix' the omission at runtime have skipped reading the template.",
+    "Top-level dashboardTitle, dashboardUrl, isMenuItem are mirrored alongside config (BIE-CLI shape — the template ships them; do NOT collapse to config-only). Both shapes coexist intentionally: config.* drives the editable preview, top-level fields drive the menu/list registration",
+    "Top-level dashboardTree is REQUIRED by BIE skill-cli.ts DashboardSettingsPayloadSchema (z.string(), not optional). Format: 'dashboards/<Title>.tsx' (virtual path, the .tsx file does not need to exist — it determines where the dashboard appears in the dashboard tree/navigation). Template ships 'dashboards/Creative Performance Dashboard.tsx'. Omitting this field causes 'Validation failed (payload): dashboardTree — Invalid input: expected string, received undefined' and the save is rejected.",
+    "Each custom-component widget MUST ship the BIE-doc-conformant prop set (per .claude/skills/business-intelligence-editor/docs/CUSTOM_COMPONENT_WIDGET.md): title (string), showTitle:false (we hide widget chrome — widgets own their headers), renderMode:'html', chromeless:true, cardStyle:'default', inheritFiltersFromDashboard:false (static baked-in data — no SQL query), customSqlEnabled:false + customSqlQuery:'' (explicit), preloadLibraries:[] (widgets are self-contained). Missing or wrong-valued props are auto-flagged by scripts/lint-config.mjs L18.",
+    "L19 — attribute-level mirror enforcement. No raw platform CDN host AND no serve URL appears inside any `src=` / `poster=` / `data-src=` / `data-vsrc=` attribute value within any componentCode. FORBIDDEN CDN hosts (CSP-blocked in the BIE iframe): fbcdn.net, akamaihd.net, cdninstagram.com, tiktokcdn.com, tiktokcdn-us.com, pinimg.com, licdn.com, media.licdn.com, googleusercontent.com, ggpht.com, gstatic.com. FORBIDDEN URL pattern: `/experimental/agent/api/files/serve?path=…` — these require session-cookie auth, the BIE custom-component widget renders in a sandboxed srcdoc iframe with no cookies, so every <img> request silently 401s. ALLOWED: amazonaws.com / supabase.co presigned URLs (the canonical mirror destination — img-src allowlist in BIE CSP), YouTube embed URLs (iframe targets), other relative paths, data:/blob:/#fragment URIs. Enforcement is attribute-anchored so hostnames inside JS comments / code-fence examples do NOT trigger the rule. Fix: STEP 3d runs `discoveryFileDownloadTool` → use `response.download_url` verbatim. Do NOT post-process URLs into serve form (the v7.5.0 scripts/rewrite-mirror-urls.mjs helper was removed in v8.1.0 for exactly this reason).",
+    "L20 — componentCode size guard. Every componentCode string has length ≤ 99,500 chars. Some layer downstream silently truncates at ~100,000 chars (loses IIFE tail → empty widget + SyntaxError); the 500-char headroom is the safety buffer. Trim levers when L20 fires: (a) step gallery down 35→25→15, (b) strip unused CreativeItem fields per SKILL.md § Minimum embed field set. Each S3 presigned URL runs ~1,920 chars (STS temp creds + X-Amz-Security-Token), so the default 35 cap is already tight; a future IAM-user pre-sign would drop per-URL length to ~300 chars and allow raising the gallery back to 50.",
+    "L21 — componentCode structural completeness. Every componentCode ends with the IIFE closure pattern `})();</script>` (whitespace-tolerant regex `/\\)\\s*\\(\\s*\\)\\s*;\\s*<\\/script>\\s*$/` matched against the last ~256 chars). Defense-in-depth for L20: if a truncation slips past L20, the structural check catches it because a chopped IIFE body fails this regex. L9 is also tightened to require exactly one `</script>` close tag (zero = truncation; >1 = accidental concatenation). L21 failure ⇒ widget body was chopped mid-statement; re-render and re-lint.",
+    "L22 — data-level mirror enforcement. Inspects the gallery widget's (main-grid-1) embedded `var D = [...]` CreativeItem array. For every item: if thumbnail_type is 'image', thumbnail_url MUST contain an amazonaws.com or supabase.co host (the presigned S3 URL from discoveryFileDownloadTool.response.download_url); if thumbnail_type is 'video', thumbnail_url may also be a YouTube embed URL or null (no poster). Catches two failure modes: (1) STEP 3d mirror was skipped — gallery would render broken cards; (2) the agent ran STEP 3d correctly but then 'improved' the URLs by rewriting them into serve URLs (silently 401 in the iframe). L19 catches the same bugs after render at the attribute layer; L22 catches them at the data layer so the error message references CreativeItem IDs directly. Fix: re-run SKILL.md § STEP 3d and use response.download_url verbatim — do NOT post-process. If a mirror legitimately failed, stamp thumbnail_type='placeholder' before re-linting."
+  ],
+  "config": {
+    "dashboardTitle": "Creative Performance Dashboard",
+    "dashboardSubtitle": "{{PLATFORMS_LIST}} | Last 30 Days | Generated {{TODAY_ISO}}{{DASHBOARD_NOTE_OR_EMPTY}}",
+    "defaultTimePeriod": "all",
+    "appearance": {
+      "colorMode": "light",
+      "layout": {
+        "background": "#faf9f7",
+        "hideTitle": true,
+        "hideFilters": true,
+        "hideFooter": true
+      }
+    },
+    "editState": {
+      "schemaVersion": 2,
+      "widgets": [
+        {
+          "id": "main-grid-4",
+          "type": "custom-component",
+          "props": {
+            "type": "custom-component",
+            "title": "Creative Fatigue",
+            "showTitle": false,
+            "gridWidth": 12,
+            "gridHeight": "xxlarge",
+            "renderMode": "html",
+            "chromeless": true,
+            "cardStyle": "default",
+            "inheritFiltersFromDashboard": false,
+            "preloadLibraries": [],
+            "customSqlEnabled": false,
+            "customSqlQuery": "",
+            "componentCode": "{{WIDGET_FATIGUE_HTML}}"
+          }
+        },
+        {
+          "id": "main-grid-3",
+          "type": "custom-component",
+          "props": {
+            "type": "custom-component",
+            "title": "Insights",
+            "showTitle": false,
+            "gridWidth": 12,
+            "gridHeight": "small",
+            "renderMode": "html",
+            "chromeless": true,
+            "cardStyle": "default",
+            "inheritFiltersFromDashboard": false,
+            "preloadLibraries": [],
+            "customSqlEnabled": false,
+            "customSqlQuery": "",
+            "componentCode": "{{WIDGET_INSIGHTS_HTML}}"
+          }
+        },
+        {
+          "id": "main-grid-1",
+          "type": "custom-component",
+          "props": {
+            "type": "custom-component",
+            "title": "Creative Gallery",
+            "showTitle": false,
+            "gridWidth": 12,
+            "gridHeight": "max",
+            "renderMode": "html",
+            "chromeless": true,
+            "cardStyle": "default",
+            "inheritFiltersFromDashboard": false,
+            "preloadLibraries": [],
+            "customSqlEnabled": false,
+            "customSqlQuery": "",
+            "componentCode": "{{WIDGET_GALLERY_HTML}}"
+          }
+        }
+      ],
+      "layout": {
+        "items": [
+          { "id": "main-grid-4", "x": 0, "y": 0, "w": 12, "h": 18, "static": false },
+          { "id": "main-grid-3", "x": 0, "y": 18, "w": 12, "h": 8, "static": false },
+          { "id": "main-grid-1", "x": 0, "y": 26, "w": 12, "h": 20, "static": false }
+        ]
+      }
+    }
+  },
+  "dashboardTitle": "Creative Performance Dashboard",
+  "dashboardUrl": "clients/template/dashboards/CrossChannelEditableDashboard.tsx",
+  "dashboardTree": "dashboards/Creative Performance Dashboard.tsx",
+  "isMenuItem": true
+}
