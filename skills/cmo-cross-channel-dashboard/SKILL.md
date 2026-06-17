@@ -1,7 +1,6 @@
 ---
 name: cmo-cross-channel-dashboard
 description: Generate a CMO Cross-Channel Performance Dashboard — funnel-stage executive view of marketing spend, pull-through, and per-channel efficiency across Meta, Google, LinkedIn, TikTok, Reddit, TTD, and the Discovery API long tail. Single-screen, three-tab layout (Overview / Channels / Customer Journey) with reactive filter bar (period × channel × conversion event × attribution model). Warehouse-first (ClickHouse `_all_data` views) with Discovery API fallback for channels not in the warehouse; all data from real sources. Built via /business-intelligence-editor as ONE custom-component widget that contains the entire dashboard.
-version: "1.0.1"
 ---
 
 # CMO Cross-Channel Dashboard

@@ -1,8 +1,6 @@
 ---
 name: notebook-editor
 description: Edit and run notebook/recipe cells with SQL, union, join operations
-version: "3.0.0"
-model: claude-opus-4-6
 ---
 
 # Notebook Editor Skill

@@ -1,7 +1,6 @@
 ---
 name: google-meet-manager
 description: "Manage Google Meet recordings, transcripts, and Gemini Notes from Google Drive. Use when user says 'list recordings', 'find recording', 'meeting transcript', 'meeting summary', 'Gemini notes', 'show recording', 'recording from [date]', 'what meetings were recorded', 'записи встреч', 'транскрипт встречи', 'саммари встречи'."
-version: "1.0.0"
 ---
 
 ## Google Meet Manager = Discovery API + Google Drive + Google Docs

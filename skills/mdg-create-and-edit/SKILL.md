@@ -1,8 +1,6 @@
 ---
 name: mdg-create-and-edit
 description: Create, edit, and manage rules -- data governance rules, compliance rules, monitoring rules, alerts, MDG rules. Use when user asks to create a rule, set up alerts, or monitor metrics.
-version: "1.0.0"
-model: claude-opus-4-6
 ---
 
 # Marketing Data Governance (MDG)

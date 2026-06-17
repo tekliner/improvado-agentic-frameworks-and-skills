@@ -1,7 +1,6 @@
 ---
 name: full-marketing-audit
 description: Triggers on the "Full Marketing Audit" onboarding card OR phrases like "audit my account / agency / Google / Meta / what's wasting spend". Three phases — A connection check + heal (Discovery API only), B parallel per-channel audits (each loads only its own playbook), C synthesis via a single-custom-component-widget pattern. Idempotent — same `(workspace_id, audit_window_start_utc, '4.0.0')` triple → identical findings.
-version: "4.0.0"
 ---
 
 # Full Marketing Audit — UC-AU-1

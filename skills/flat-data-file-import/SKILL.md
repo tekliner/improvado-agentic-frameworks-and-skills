@@ -1,7 +1,6 @@
 ---
 name: flat-data-file-import
 description: File import workflow - upload CSV/Excel/TSV files, set up email-based, managed SFTP, or managed S3 file import into Improvado
-version: "1.1.0"
 ---
 
 ## File Import Tools (Flat Data)
