@@ -90,8 +90,8 @@ Copy the `campaign-launcher-oss` folder into your Claude Code skills directory:
 cp -r campaign-launcher-oss /path/to/your/project/.claude/skills/
 
 # Or clone and symlink
-git clone https://github.com/YOUR_USERNAME/campaign-launcher.git
-ln -s $(pwd)/campaign-launcher/.claude/skills/campaign-launcher-oss /path/to/your/project/.claude/skills/campaign-launcher-oss
+git clone https://github.com/tekliner/improvado-agentic-frameworks-and-skills.git
+ln -s $(pwd)/improvado-agentic-frameworks-and-skills/skills/campaign-launcher-oss /path/to/your/project/.claude/skills/campaign-launcher-oss
 ```
 
 ### 2. Launch — the skill creates your config
