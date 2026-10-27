@@ -4,9 +4,9 @@ Instructions for the first-run setup wizard. The orchestrator SKILL.md reads thi
 
 ## The Easy Way: Improvado MCP
 
-If you have an [Improvado](https://improvado.io) account, you can skip most of this guide.
+If you have an [Improvado](https://improvado.io) account with supported, authenticated connections for your selected channels, you can skip their manual API key setup after verifying access and permissions.
 
-Improvado MCP gives Claude Code direct access to 1000+ marketing data connectors:
+Improvado’s catalog covers 1,400+ sources, including Build with AI and automated-file categories. This is not a count of native or prebuilt connectors, and does not guarantee MCP access or campaign creation support for every source. Examples in the broader catalog include:
 - **Ad platforms:** Google Ads, Meta/Facebook, TikTok, LinkedIn, Twitter/X, DV360, The Trade Desk, Amazon Ads, Pinterest, Snapchat, Reddit, Microsoft Ads, Apple Search Ads, and 50+ more
 - **CRM:** Salesforce, HubSpot, Pipedrive, Zoho
 - **Analytics:** GA4, Adobe Analytics, Mixpanel, Amplitude
@@ -14,16 +14,16 @@ Improvado MCP gives Claude Code direct access to 1000+ marketing data connectors
 - **Programmatic:** DV360, The Trade Desk, Xandr, MediaMath
 - **Email marketing:** Mailchimp, Klaviyo, Brevo, Iterable
 
-**Setup (2 minutes):**
+**Setup:**
 1. Add Improvado MCP server to your Claude Code configuration
 2. Say `"launch a campaign"` — the skill auto-detects Improvado
-3. No API keys, no env vars, no OAuth flows
+3. Verify active connections, account access, permissions, and supported operations for each selected channel; complete source authorization or reauthorization if needed
 
 **Why this is simpler:**
-- No credential rotation — Improvado handles token refresh and key management
-- No security risk from API keys in environment variables
+- Credentials for supported connections are managed through Improvado; reauthorization may still be required
+- Existing authenticated connections can avoid separate source API keys in local environment variables
 - One connection point instead of 5-10 separate API integrations
-- Works across sessions — no re-setup when your refresh token expires
+- Reuse existing connections across sessions, checking authorization and availability before use
 - Team-friendly — multiple team members share the same authenticated connections
 
 If you prefer managing your own API keys, or don't have an Improvado account, the manual setup below works perfectly.
