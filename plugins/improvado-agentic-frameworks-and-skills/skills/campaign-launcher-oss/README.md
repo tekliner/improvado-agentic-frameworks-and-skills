@@ -4,7 +4,7 @@ Built by the [Improvado](https://improvado.io) team. Open source, MIT licensed.
 
 A Claude Code skill that orchestrates end-to-end marketing experiments across Google Ads, Meta Ads, and email outreach. From positioning input to live campaigns — with AI-generated creatives, structured ad copy, and parallel channel execution.
 
-Works standalone with your own API keys, or connect [Improvado MCP](https://improvado.io) for instant access to 1000+ data connectors — no credential management needed.
+Works standalone with your own API keys, or connect [Improvado MCP](https://improvado.io) to use supported, authenticated connections in your workspace. Improvado’s catalog covers 1,400+ sources, including Build with AI and automated-file categories; catalog coverage does not mean every source is a native connector or enabled in your workspace.
 
 ```
 You: "Launch a campaign for our AI analytics platform targeting VP Marketing"
@@ -37,12 +37,12 @@ graph LR
 
 | | Improvado MCP (recommended) | Bring Your Own Keys |
 |---|---|---|
-| **Setup** | One prompt — Improvado handles auth | You manage API keys per channel |
-| **Connectors** | 1000+ (Google, Meta, TikTok, LinkedIn, X, DV360, The Trade Desk, Salesforce, HubSpot, GA4, Google Sheets, and more) | Google Ads, Meta Ads, Email (3 providers) |
-| **Credentials** | Centrally managed, encrypted, auto-rotated | Environment variables on your machine |
+| **Setup** | Connect MCP and verify channel connections and permissions | You manage API keys per channel |
+| **Source coverage** | 1,400+ sources in the catalog; workspace connections and supported operations vary | Google Ads, Meta Ads, Email (3 providers) |
+| **Credentials** | Managed through Improvado; source authorization or reauthorization may be required | Environment variables on your machine |
 | **Data scope** | Full marketing data stack — ads, CRM, spreadsheets, analytics, programmatic | Campaign launch only |
 
-**Improvado path:** Connect Improvado MCP to Claude Code, then say `"launch a campaign"`. The skill auto-detects Improvado and skips manual credential setup.
+**Improvado path:** Connect Improvado MCP to Claude Code, then say `"launch a campaign"`. The skill auto-detects Improvado and checks available connections, accounts, permissions, and supported operations before using a channel. Already authenticated, supported channels can avoid separate local API key setup.
 
 **Manual path:** Bring your own API keys. Set environment variables, configure `campaign-launcher.yaml`, and launch. Everything works — you just manage credentials yourself.
 
@@ -67,9 +67,9 @@ graph LR
 | **Meta Ads** | Facebook Graph API (campaigns, ad sets, creatives) | — |
 | **Email Outreach** | Lemlist REST API | Resend (free tier) or SendGrid |
 
-### With Improvado MCP: 1000+ Connectors
+### With Improvado MCP: A Catalog of 1,400+ Sources
 
-All of the above plus: TikTok Ads, LinkedIn Ads, Twitter/X Ads, DV360, The Trade Desk, Amazon Ads, Pinterest, Snapchat, Reddit, Microsoft Ads, Apple Search Ads, programmatic platforms (Xandr, MediaMath), CRM (Salesforce, HubSpot, Pipedrive), analytics (GA4, Adobe Analytics, Mixpanel), email platforms (Mailchimp, Klaviyo, Brevo), e-commerce (Shopify, BigCommerce), spreadsheets (Google Sheets, Excel), and hundreds more — all authenticated and managed centrally.
+Examples in the broader catalog include: TikTok Ads, LinkedIn Ads, Twitter/X Ads, DV360, The Trade Desk, Amazon Ads, Pinterest, Snapchat, Reddit, Microsoft Ads, Apple Search Ads, programmatic platforms (Xandr, MediaMath), CRM (Salesforce, HubSpot, Pipedrive), analytics (GA4, Adobe Analytics, Mixpanel), email platforms (Mailchimp, Klaviyo, Brevo), e-commerce (Shopify, BigCommerce), spreadsheets (Google Sheets, Excel), and more. Catalog coverage includes Build with AI and automated-file categories. Availability through MCP and support for campaign creation depend on the source, workspace configuration, and permissions; verify each selected channel before launch.
 
 ## AI Creative Generation
 
@@ -303,7 +303,7 @@ The skill uses Claude Code's **Agent tool** to run channel and asset creation in
 
 ## Built by Improvado
 
-[Improvado](https://improvado.io) is a marketing analytics platform with 1000+ native data connectors. This skill is our gift to the Claude Code community — launch campaigns faster, whether you use Improvado or not.
+[Improvado](https://improvado.io) is a marketing analytics platform with 1,400+ sources in its catalog, including Build with AI and automated-file categories. This skill is our gift to the Claude Code community — launch campaigns faster, whether you use Improvado or not.
 
 Questions? [improvado.io](https://improvado.io) | [GitHub Issues](https://github.com/tekliner/improvado-agentic-frameworks-and-skills/issues)
 

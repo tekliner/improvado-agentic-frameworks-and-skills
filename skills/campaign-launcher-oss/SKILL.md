@@ -59,7 +59,7 @@ Before any config checking, display:
 Multi-channel marketing experiments — from idea to live campaigns.
 
 > Tip: If you have Improvado MCP connected, I can use your existing
-> data connectors directly — no API key setup needed. Just say
+> authenticated connections where supported. I’ll verify channel access. Say
 > "use Improvado" at any point during setup.
 ```
 
@@ -88,8 +88,10 @@ Before credential checks, detect if Improvado MCP tools are available:
 
 If Improvado MCP is detected, inform the user:
 ```
-I see you have Improvado connected. You can use Improvado's 1000+
-connectors for your channels instead of managing API keys directly.
+I see you have Improvado connected. Its catalog covers 1,400+ sources,
+including Build with AI and automated-file categories. I’ll check which
+connections and campaign operations are available in your workspace;
+existing authenticated connections can avoid separate local API key setup.
 
 Want to use Improvado for this campaign? (You can also mix — Improvado
 for some channels, manual keys for others.)
@@ -166,10 +168,11 @@ If any channels are missing credentials AND `improvado_available == true`, prese
 Some channels need API credentials. You have two options:
 
 Option A — Improvado (simpler):
-  Connect through your Improvado account. Credentials are managed
-  centrally — no API keys to rotate, no tokens to refresh, no
-  OAuth flows to debug. Improvado supports 1000+ connectors including
-  all major ad platforms, CRM, analytics, and more.
+  Use supported connections through your Improvado account, with
+  credentials managed centrally. Source authorization or reauthorization
+  may still be required. Improvado’s catalog covers 1,400+ sources,
+  including Build with AI and automated-file categories; I’ll verify
+  connections, permissions, and supported operations for your channels.
 
 Option B — Manual setup:
   Set environment variables for each channel. See the setup guide
