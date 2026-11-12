@@ -1,5 +1,16 @@
 # Agentic Frameworks and Skills
 
+## Connect Improvado to your AI agent
+
+Improvado's MCP server gives ChatGPT, Claude, Cursor, Gemini, Codex and other MCP clients access to your marketing data in Improvado: ads, CRM and analytics sources in one place, with OAuth sign-in.
+
+- **Server:** `https://report.improvado.io/experimental/agent/api/mcp-customer/v1/invoke/`
+- **Setup for every client:** [docs/connect-improvado-mcp.md](docs/connect-improvado-mcp.md)
+- **Claude Code:** `claude plugin marketplace add tekliner/improvado-agentic-frameworks-and-skills`, then `claude plugin install improvado-agentic-frameworks-and-skills@improvado`
+- **Gemini CLI:** `gemini extensions install https://github.com/tekliner/improvado-agentic-frameworks-and-skills`
+- **MCP Registry:** `io.improvado/mcp` (see `server.json`)
+- **Access:** requires an Improvado account. [Talk to us](https://improvado.io/register/talk-to-an-expert?utm_source=github&utm_medium=referral&utm_campaign=mcp_distribution) if you are not a customer yet.
+
 Production-ready Claude Code and Codex skills and frameworks for building, evaluating, and scaling agentic AI systems.
 
 ## Codex Plugin Packaging

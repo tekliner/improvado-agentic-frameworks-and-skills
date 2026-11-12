@@ -1,0 +1,14 @@
+{
+  "name": "improvado",
+  "version": "0.1.0",
+  "description": "Improvado MCP server: query ads, CRM and analytics data from your Improvado workspace.",
+  "mcpServers": {
+    "improvado": {
+      "url": "https://report.improvado.io/experimental/agent/api/mcp-customer/v1/invoke/",
+      "type": "http",
+      "oauth": {
+        "scopes": ["mcp:customer"]
+      }
+    }
+  }
+}

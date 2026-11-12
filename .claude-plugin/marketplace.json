@@ -1,0 +1,19 @@
+{
+  "name": "improvado",
+  "owner": {
+    "name": "Improvado",
+    "email": "support@improvado.io"
+  },
+  "metadata": {
+    "description": "Improvado plugins for Claude Code: marketing data skills and the Improvado MCP server."
+  },
+  "plugins": [
+    {
+      "name": "improvado-agentic-frameworks-and-skills",
+      "source": "./plugins/improvado-agentic-frameworks-and-skills",
+      "description": "Marketing data skills and the Improvado MCP server for Claude Code.",
+      "category": "productivity",
+      "homepage": "https://improvado.io/docs-section-topic/improvado-mcp"
+    }
+  ]
+}
