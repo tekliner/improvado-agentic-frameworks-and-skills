@@ -65,7 +65,7 @@ Current plugin skill inventory:
 | 18 | **[SQL Import](skills/sql-import/)** | SQL source import workflow for MySQL, Postgres, and MSSQL. | Connecting SQL databases and scheduling extracts |
 | 19 | **[Temporal Pipelines](skills/temporal-pipelines/)** | Create, edit, run, and debug Python Temporal workflow pipelines. | Working with Improvado Temporal pipeline workflows |
 | 20 | **[Weekly Creative Performance](skills/weekly-creative-performance/)** | Creative performance dashboard with thumbnails, fatigue segments, and Discovery API data. | Weekly creative analysis across paid platforms |
-| 21 | **[Marketing Analytics Cookbook](skills/marketing-analytics-cookbook/SKILL.md)** | Source-backed recipes for common paid marketing and GA4 analysis. | ROAS, weekly reporting, spend anomalies, platform reviews, metric definitions |
+| 21 | **[Marketing Analytics Cookbook](skills/marketing-analytics-cookbook/)** | Source-backed recipes for common paid marketing and GA4 analysis. | ROAS, weekly reporting, spend anomalies, platform reviews, metric definitions |
 
 ## 🎯 Quick Selection Guide
 
