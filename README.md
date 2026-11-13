@@ -1,10 +1,10 @@
 # Agentic Frameworks and Skills
 
-## Connect to Improvado MCP
+## Improvado MCP: remote marketing analytics for AI agents
 
-Improvado MCP lets a compatible AI client work with marketing data that your Improvado account can access. The server is hosted by Improvado; this repository does not contain its implementation.
+Improvado MCP connects compatible AI agents to marketing data available in your Improvado workspace. Ask about connected sources, cross-channel spend, or performance when your account has access to the data. Improvado hosts the server; its implementation is not in this repository.
 
-[Connect your MCP client](docs/connect-improvado-mcp.md) with your Improvado account. The guide includes direct setup steps and links to the [official Improvado documentation](https://improvado.io/docs-section-topic/improvado-mcp).
+[Connect your MCP client](docs/connect-improvado-mcp.md) using the direct setup guide. The dedicated [Improvado MCP repository](https://github.com/tekliner/improvado-mcp) also explains how to get started. See the [official Improvado documentation](https://improvado.io/docs-section-topic/improvado-mcp) for other supported clients.
 
 Production-ready Claude Code and Codex skills and frameworks for building, evaluating, and scaling agentic AI systems.
 

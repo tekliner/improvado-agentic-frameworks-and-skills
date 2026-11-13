@@ -1,6 +1,20 @@
-# Connect to Improvado MCP
+# Improvado MCP: connect AI agents to marketing analytics data
 
-Improvado MCP is a remotely hosted service for compatible AI clients. It lets you ask about marketing data available to your Improvado account. The tools and data you can use depend on your access. The server implementation is not published in this repository.
+Improvado MCP is a hosted, remote Model Context Protocol server for marketing analytics. It connects a compatible AI client to data available in your signed-in Improvado workspace. Your account permissions and connected sources determine what the client can access. The server implementation is not published in these repositories.
+
+## What you can do
+
+- Ask which marketing data sources are available to your account.
+- Ask about cross-channel spend and performance in data already connected to Improvado.
+- Request a summary or comparison through a compatible AI client, when the required data and tools are available.
+
+Example questions to try after connecting:
+
+- "Which marketing data sources can I access in my Improvado workspace?"
+- "Compare spend by channel for the last 30 days using data I can access."
+- "Summarize last week's Google Ads and Meta Ads performance, if both sources are connected."
+
+These are example questions, not sample results or a promise that every account has those sources.
 
 ## Before you start
 
@@ -28,6 +42,6 @@ Use your custom Improvado domain in the URL if your account requires one. Open C
 
 ## Check the connection
 
-Ask your connected client: "What marketing data can I access in my Improvado workspace?" The answer depends on your account and connected data. If sign-in fails, confirm your domain and account access, then follow the [official setup guide](https://improvado.io/docs-section-topic/improvado-mcp).
+Ask your connected client which marketing data sources your account can access. If sign-in fails, confirm your domain and account access, then follow the [official setup guide](https://improvado.io/docs-section-topic/improvado-mcp).
 
-For setup in other clients, use the [official Improvado MCP guide](https://improvado.io/docs-section-topic/improvado-mcp). This guide contains connection instructions only. It contains no server code, customer data, example campaign results, or credentials.
+For setup in other clients, use the [official Improvado MCP guide](https://improvado.io/docs-section-topic/improvado-mcp). This guide contains connection instructions and broad use cases only. It contains no server code, customer data, example campaign results, or credentials.
