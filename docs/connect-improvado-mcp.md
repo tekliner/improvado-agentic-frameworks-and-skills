@@ -22,7 +22,7 @@ These are example questions, not sample results or a promise that every account 
 - An MCP client that supports remote HTTP servers and OAuth sign-in.
 - The server URL for your account. Standard accounts use `https://report.improvado.io/experimental/agent/api/mcp-customer/v1/invoke/`. If your company uses a custom Improvado domain, replace `report.improvado.io` with that domain.
 
-This URL is already published in the [official Improvado MCP guide](https://improvado.io/docs-section-topic/improvado-mcp). Sign in through your MCP client's OAuth flow. Do not put passwords, tokens, or client secrets into this repository or a shared configuration file.
+This URL is already published in the [official Improvado MCP guide](https://improvado.io/docs-section-topic/improvado-mcp-text). Sign in through your MCP client's OAuth flow. Do not put passwords, tokens, or client secrets into this repository or a shared configuration file.
 
 ## Claude Desktop
 
@@ -42,6 +42,6 @@ Use your custom Improvado domain in the URL if your account requires one. Open C
 
 ## Check the connection
 
-Ask your connected client which marketing data sources your account can access. If sign-in fails, confirm your domain and account access, then follow the [official setup guide](https://improvado.io/docs-section-topic/improvado-mcp).
+Ask your connected client which marketing data sources your account can access. If sign-in fails, confirm your domain and account access, then follow the [official setup guide](https://improvado.io/docs-section-topic/improvado-mcp-text).
 
-For setup in other clients, use the [official Improvado MCP guide](https://improvado.io/docs-section-topic/improvado-mcp). This guide contains connection instructions and broad use cases only. It contains no server code, customer data, example campaign results, or credentials.
+For setup in other clients, use the [official Improvado MCP guide](https://improvado.io/docs-section-topic/improvado-mcp-text). This guide contains connection instructions and broad use cases only. It contains no server code, customer data, example campaign results, or credentials.
