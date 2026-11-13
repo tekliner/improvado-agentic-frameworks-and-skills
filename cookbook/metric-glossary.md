@@ -13,7 +13,7 @@ This glossary gives calculation rules, not a promise that every source uses iden
 | CPA or cost per result | Spend / selected conversions or results | Report undefined for zero results. |
 | Conversion value | Sum of the selected attributed values | Confirm whether values represent orders, leads, or another assigned value. |
 | ROAS | Conversion value / spend | Report undefined for zero spend; value sources may overlap. |
-| Key event rate | Selected GA4 key events / the stated eligible denominator | Name the GA4 report, denominator, and event. |
+| Session key event rate | Sessions in which the selected key event occurred / sessions | Use GA4's event-specific rate metric; raw event count / sessions is not this rate. |
 
 ## Aggregation rule
 

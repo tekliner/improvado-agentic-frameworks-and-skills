@@ -10,7 +10,7 @@
 
 ## Prompt
 
-> Prepare a weekly paid-marketing performance report for the last completed Monday through Sunday in my stated timezone. Compare it with the previous complete week using the same account and metric scope. Show spend, impressions, clicks, conversions, and conversion value where available. Derive CTR, CPC, CPA, and ROAS from summed numerators and denominators. Identify the three largest material changes with their contributing channels or campaigns. Separate observations from possible explanations, and name the next read needed to test each explanation. Cite each source, its refresh time, and missing coverage. Do not invent targets or claim a change was caused by a campaign edit without change history.
+> Prepare a weekly paid-marketing performance report for the last completed Monday through Sunday in my stated timezone. Compare it with the previous complete week using the same account and metric scope. Show spend, impressions, clicks, conversions, and conversion value where available. Derive CTR, CPC, CPA, and ROAS from summed numerators and denominators. Identify the three largest changes with their contributing channels or campaigns. Call a change material only when I provide a threshold. Separate observations from possible explanations, and name the next read needed to test each explanation. Cite each source, its refresh time, and missing coverage. Do not invent targets or claim a change was caused by a campaign edit without change history.
 
 ## Agent steps
 

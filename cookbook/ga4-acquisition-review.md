@@ -10,13 +10,13 @@
 
 ## Prompt
 
-> Compare acquisition for the specified GA4 property across two complete periods. State whether this is session acquisition or user acquisition, and name the exact dimension and key event. Show sessions or users, the chosen key event count, and the derived rate by channel where the metric combination is valid. Use the same property, filters, identity settings, and date boundaries in both periods. Cite the report or query, refresh time, and coverage. Explain any mismatch with ad-platform conversions using attribution and event definitions. Do not describe a GA4 key event count as paid-platform revenue or causally credit a channel without supporting analysis.
+> Compare acquisition for the specified GA4 property across two complete periods. State whether this is session acquisition or user acquisition, and name the exact dimension and key event. Show sessions or users, the chosen key event count, and the official event-specific session or user key event rate where available. Use the same property, filters, identity settings, and date boundaries in both periods. Cite the report or query, refresh time, and coverage. Explain any mismatch with ad-platform conversions using attribution and event definitions. Do not describe a GA4 key event count as paid-platform revenue or causally credit a channel without supporting analysis.
 
 ## Agent steps
 
 1. Select a dimension and compatible metrics using the current GA4 Data API schema or an approved export. Do not substitute one dimension for another.
 2. Verify property timezone and complete dates. Keep totals and channel-level results from the same report configuration.
-3. Calculate rate as selected key events divided by the relevant sessions or users, only when that denominator matches the question.
+3. Discover the registered event-specific rate metric in GA4 Metadata. Use `sessionKeyEventRate:event_name` or `userKeyEventRate:event_name` as appropriate. Do not divide the raw event count by sessions or users and label it a key event rate; one person or session may trigger the event more than once.
 4. Compare channel changes and inspect landing page or campaign breakdowns for specific shifts.
 5. Describe attribution settings and reporting lag when comparing GA4 with ad-platform data.
 
