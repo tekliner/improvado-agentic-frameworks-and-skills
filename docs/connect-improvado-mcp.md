@@ -30,4 +30,4 @@ Use your custom Improvado domain in the URL if your account requires one. Open C
 
 Ask your connected client: "What marketing data can I access in my Improvado workspace?" The answer depends on your account and connected data. If sign-in fails, confirm your domain and account access, then follow the [official setup guide](https://improvado.io/docs-section-topic/improvado-mcp).
 
-For setup in other clients, use the [official Improvado MCP guide](https://improvado.io/docs-section-topic/improvado-mcp). This repository contains connection instructions only. It contains no server code, customer data, example campaign results, or credentials.
+For setup in other clients, use the [official Improvado MCP guide](https://improvado.io/docs-section-topic/improvado-mcp). This guide contains connection instructions only. It contains no server code, customer data, example campaign results, or credentials.
