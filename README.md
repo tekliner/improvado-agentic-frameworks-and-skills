@@ -35,6 +35,10 @@ codex plugin marketplace upgrade improvado
 codex plugin add improvado-agentic-frameworks-and-skills@improvado
 ```
 
+## Marketing analytics cookbook
+
+Start with the [marketing analytics cookbook](cookbook/README.md) for source-backed agent recipes covering cross-channel ROAS, weekly reporting, spend anomalies, Google Ads, Meta Ads, GA4, and metric definitions. The [Marketing Analytics Cookbook skill](skills/marketing-analytics-cookbook/SKILL.md) routes an agent to the matching recipe and its checks.
+
 ## 📋 Skills Registry
 
 Current plugin skill inventory:
@@ -61,6 +65,7 @@ Current plugin skill inventory:
 | 18 | **[SQL Import](skills/sql-import/)** | SQL source import workflow for MySQL, Postgres, and MSSQL. | Connecting SQL databases and scheduling extracts |
 | 19 | **[Temporal Pipelines](skills/temporal-pipelines/)** | Create, edit, run, and debug Python Temporal workflow pipelines. | Working with Improvado Temporal pipeline workflows |
 | 20 | **[Weekly Creative Performance](skills/weekly-creative-performance/)** | Creative performance dashboard with thumbnails, fatigue segments, and Discovery API data. | Weekly creative analysis across paid platforms |
+| 21 | **[Marketing Analytics Cookbook](skills/marketing-analytics-cookbook/SKILL.md)** | Source-backed recipes for common paid marketing and GA4 analysis. | ROAS, weekly reporting, spend anomalies, platform reviews, metric definitions |
 
 ## 🎯 Quick Selection Guide
 
