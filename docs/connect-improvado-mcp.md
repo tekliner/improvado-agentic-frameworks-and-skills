@@ -1,127 +1,33 @@
-# Connect the Improvado MCP server
+# Connect to Improvado MCP
 
-The Improvado MCP server lets an AI agent work with your Improvado workspace: ask questions about ads, CRM and analytics data, inspect connections and extracts, and build reports, in plain language.
+Improvado MCP is a remotely hosted service for compatible AI clients. It lets you ask about marketing data available to your Improvado account. The tools and data you can use depend on your access. The server implementation is not published in this repository.
 
-- **Server address:** `https://report.improvado.io/experimental/agent/api/mcp-customer/v1/invoke/`
-- **Transport:** Streamable HTTP
-- **Sign-in:** OAuth 2.1 with your Improvado login. No API keys to manage.
-- **Access:** requires an Improvado account. Existing customers sign in with their Improvado login. Not a customer yet? [Talk to us](https://improvado.io/register/talk-to-an-expert?utm_source=github&utm_medium=referral&utm_campaign=mcp_distribution).
-- **Official guide:** [improvado.io/docs-section-topic/improvado-mcp](https://improvado.io/docs-section-topic/improvado-mcp)
-- **MCP Registry name:** `io.improvado/mcp`
+## Before you start
 
-If your company uses a white-label Improvado domain, replace `report.improvado.io` with your domain.
+- An Improvado account with access to the workspace you want to use.
+- An MCP client that supports remote HTTP servers and OAuth sign-in.
+- The server URL for your account. Standard accounts use `https://report.improvado.io/experimental/agent/api/mcp-customer/v1/invoke/`. If your company uses a custom Improvado domain, replace `report.improvado.io` with that domain.
 
-## ChatGPT
+This URL is already published in the [official Improvado MCP guide](https://improvado.io/docs-section-topic/improvado-mcp). Sign in through your MCP client's OAuth flow. Do not put passwords, tokens, or client secrets into this repository or a shared configuration file.
 
-1. Click **Apps** in the left sidebar and search for **Improvado**.
-2. Select **Improvado AI Agent**, then **Connect**.
-3. Sign in with your Improvado account.
+## Claude Desktop
 
-## Claude (web and desktop)
-
-1. Open **Customize → Connectors** and click **Add custom connector**.
-2. Paste the server address above.
-3. Click **Connect** and sign in with your Improvado account.
+1. Open **Customize > Connectors** and choose **Add custom connector**.
+2. Paste your server URL and select **Connect**.
+3. Complete the Improvado sign-in prompt.
 
 ## Claude Code
 
-Add the server:
+Run this command for a standard Improvado account:
 
 ```bash
 claude mcp add --transport http improvado https://report.improvado.io/experimental/agent/api/mcp-customer/v1/invoke/
 ```
 
-Or install the plugin, which adds the server plus Improvado marketing skills:
+Use your custom Improvado domain in the URL if your account requires one. Open Claude Code and complete the Improvado OAuth prompt when you connect.
 
-```bash
-claude plugin marketplace add tekliner/improvado-agentic-frameworks-and-skills
-claude plugin install improvado-agentic-frameworks-and-skills@improvado
-```
+## Check the connection
 
-You sign in through OAuth the first time a tool runs.
+Ask your connected client: "What marketing data can I access in my Improvado workspace?" The answer depends on your account and connected data. If sign-in fails, confirm your domain and account access, then follow the [official setup guide](https://improvado.io/docs-section-topic/improvado-mcp).
 
-## Codex
-
-```bash
-codex plugin marketplace add tekliner/improvado-agentic-frameworks-and-skills --ref master
-codex plugin add improvado-agentic-frameworks-and-skills@improvado
-```
-
-## Cursor
-
-Add to `~/.cursor/mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "improvado": {
-      "url": "https://report.improvado.io/experimental/agent/api/mcp-customer/v1/invoke/"
-    }
-  }
-}
-```
-
-## VS Code with GitHub Copilot
-
-Add to `.vscode/mcp.json`:
-
-```json
-{
-  "servers": {
-    "improvado": {
-      "type": "http",
-      "url": "https://report.improvado.io/experimental/agent/api/mcp-customer/v1/invoke/"
-    }
-  }
-}
-```
-
-## Gemini CLI
-
-Install the extension from this repository:
-
-```bash
-gemini extensions install https://github.com/tekliner/improvado-agentic-frameworks-and-skills
-```
-
-Or add to `~/.gemini/settings.json`:
-
-```json
-{
-  "mcpServers": {
-    "improvado": {
-      "url": "https://report.improvado.io/experimental/agent/api/mcp-customer/v1/invoke/",
-      "type": "http",
-      "oauth": {
-        "scopes": ["mcp:customer"]
-      }
-    }
-  }
-}
-```
-
-Then run `/mcp auth improvado` in a chat session.
-
-## Google Antigravity
-
-Open **Settings → MCP servers → Manage MCP servers**, add the same JSON block as for Gemini CLI, save and reload. Authorize in the browser.
-
-## Perplexity
-
-On plans that support custom connectors, add a custom connector in **Settings** with the server address above and sign in with your Improvado account.
-
-## Microsoft Copilot Studio and Microsoft 365 Copilot
-
-These need an OAuth client ID and secret from your Improvado customer success manager. Follow the step-by-step setup in the [official guide](https://improvado.io/docs-section-topic/improvado-mcp).
-
-## What to ask first
-
-- "Which Improvado workspace am I in, and which data sources are connected?"
-- "Show ad spend by channel for the last 30 days."
-- "Compare ROAS across Google Ads, Meta and LinkedIn this month."
-
-## Privacy, terms and support
-
-- [Privacy policy](https://improvado.io/company-legal/privacy-policy)
-- [Terms of use](https://improvado.io/legal/terms-of-use)
-- Support: [support@improvado.io](mailto:support@improvado.io)
+For setup in other clients, use the [official Improvado MCP guide](https://improvado.io/docs-section-topic/improvado-mcp). This repository contains connection instructions only. It contains no server code, customer data, example campaign results, or credentials.
