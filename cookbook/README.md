@@ -19,6 +19,6 @@ These recipes show an agent how to answer common marketing questions with tracea
 3. Paste the recipe's prompt into your agent. Supply an export or authorize its existing connector.
 4. Check the output's source, retrieval time, coverage, formulas, and unknowns before acting.
 
-A connected agent should inspect available tools and schemas before calling them. It must not guess endpoint names, API versions, account IDs, or field mappings. The [Discovery API skill](../skills/discovery-api/SKILL.md) documents one supported route for one-time live platform reads; scheduled reporting needs an approved recurring data pipeline.
+A connected agent should inspect available tools and schemas before calling them. It must not guess endpoint names, API versions, account IDs, or field mappings. Use only the tools the connected Improvado MCP lists for one-time live reads; scheduled reporting needs an approved recurring data pipeline.
 
 These are analysis recipes. They do not authorize campaign changes, data writes, or messages to other people. Platform figures can disagree because conversion definitions, attribution windows, timezones, currencies, and reporting freshness differ. Preserve those differences in the output.

@@ -14,7 +14,7 @@
 
 ## Agent steps
 
-1. Use an authorized export or a connected tool. For live Discovery reads, follow the [Discovery API skill](../skills/discovery-api/SKILL.md): discover the current API version and supported fields before requesting data.
+1. Use an authorized export or a connected tool. For live reads through a connected tool, check the current API version and supported fields before requesting data.
 2. Normalize Google Ads cost in micros to account currency units where relevant. Avoid treating a conversion value field as cash revenue without checking its definition.
 3. Sum campaign rows to the account total. If they differ, resolve filters, deleted campaigns, and reporting lag.
 4. Compute rates from summed base metrics and identify the campaigns driving changes.

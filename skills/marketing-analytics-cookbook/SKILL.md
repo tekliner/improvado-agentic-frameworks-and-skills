@@ -26,4 +26,4 @@ Use this skill when a user asks an agent to explain or perform a marketing analy
 | GA4 traffic and key events | [GA4 acquisition review](https://github.com/tekliner/improvado-agentic-frameworks-and-skills/blob/master/cookbook/ga4-acquisition-review.md) |
 | Metric definitions | [Metric glossary](https://github.com/tekliner/improvado-agentic-frameworks-and-skills/blob/master/cookbook/metric-glossary.md) |
 
-If live platform data is requested through Improvado Discovery, read the [Discovery API skill](https://github.com/tekliner/improvado-agentic-frameworks-and-skills/blob/master/skills/discovery-api/SKILL.md). If the connector or data is unavailable, give the user the precise missing input and stop the unsupported calculation. Analysis is read-only unless the user explicitly authorizes an external action.
+If live platform data is requested, use only the tools the connected Improvado MCP lists. If the connector or data is unavailable, give the user the precise missing input and stop the unsupported calculation. Analysis is read-only unless the user explicitly authorizes an external action.
