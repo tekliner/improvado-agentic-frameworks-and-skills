@@ -416,7 +416,7 @@ discoveryFileDownloadTool({
 Collect results as `[{ id, download_url }]` on success or `[{ id, error }]` on failure. **Pass `response.download_url` VERBATIM** — full query string included. Example (your run will produce different signature values; the structure is the same):
 
 ```
-https://im-ai-agent-bucket.s3.amazonaws.com/creative_facebook_abc123.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIA…%2F20260528%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260528T000000Z&X-Amz-Expires=43200&X-Amz-Security-Token=IQoJ…&X-Amz-SignedHeaders=host&X-Amz-Signature=4f3e2a…
+https://example-bucket.s3.amazonaws.com/creative_facebook_abc123.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIA…%2F20260528%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260528T000000Z&X-Amz-Expires=43200&X-Amz-Security-Token=IQoJ…&X-Amz-SignedHeaders=host&X-Amz-Signature=4f3e2a…
 ```
 
 Do NOT trim, URL-decode, split on `?`, or "clean up" the query string. The bucket is private — bare URLs (host + key, no query) return 403 inside the iframe. The `--apply-mirrors` pass hard-fails with `download_url is missing X-Amz-Signature query param` on any non-presigned URL; lint L19 + L22 also reject bare amazonaws.com URLs.

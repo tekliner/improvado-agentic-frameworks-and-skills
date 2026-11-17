@@ -118,7 +118,7 @@ For this use case, you must:
 **How to get database_schema:**
 - From user's context (they usually know their client/agency)
 - From NEXT_PUBLIC_DATABASE_SCHEMA environment variable
-- From client folder name (e.g., `im_10836_2de` from `clients/im_10836_2de___ClientName/`)
+- From client folder name (e.g., `im_00000_xxx` from `clients/im_00000_xxx___ClientName/`)
 - **ASK USER if unclear!**
 
 ### 0.1 MANDATORY: Open recipe preview at the start
@@ -345,13 +345,13 @@ For detailed documentation on each cell type, see:
 
 ### Update SQL query in cell
 
-**Example with database_schema = 'im_10836_2de':**
+**Example with database_schema = 'im_00000_xxx':**
 
 1. List cells:
 ```bash
 python3 notebook_client.py list \
   --notebook-id abc-123 \
-  --database-schema im_10836_2de
+  --database-schema im_00000_xxx
 ```
 
 2. Get cell:
@@ -359,7 +359,7 @@ python3 notebook_client.py list \
 python3 notebook_client.py get-cell \
   --notebook-id abc-123 \
   --cell-id cell-789 \
-  --database-schema im_10836_2de \
+  --database-schema im_00000_xxx \
   --save-to-file cell.json
 ```
 
@@ -371,7 +371,7 @@ python3 notebook_client.py run-from-file \
   --file cell.json \
   --notebook-id abc-123 \
   --cell-id cell-789 \
-  --database-schema im_10836_2de
+  --database-schema im_00000_xxx
 ```
 
 ## Important Notes

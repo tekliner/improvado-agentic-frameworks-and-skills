@@ -31,7 +31,7 @@ def get_temp_dir(database_schema: str) -> str:
     Get temporary directory path based on database schema.
 
     Args:
-        database_schema: Agency database schema (e.g., 'im_10836_2de')
+        database_schema: Agency database schema (e.g., 'im_00000_xxx')
 
     Returns:
         Path to temp directory in client folder
@@ -669,30 +669,30 @@ Examples:
   # List all cells
   python3 notebook_client.py list \\
     --notebook-id abc-123 \\
-    --database-schema im_10836_2de
+    --database-schema im_00000_xxx
 
-  # Get specific cell (saves to /workspace/clients/im_10836_2de/temp/)
+  # Get specific cell (saves to /workspace/clients/im_00000_xxx/temp/)
   python3 notebook_client.py get-cell \\
     --notebook-id abc-123 \\
     --cell-id cell-789 \\
-    --database-schema im_10836_2de \\
+    --database-schema im_00000_xxx \\
     --save-to-file cell.json
 
   # Create new cell from file
   python3 notebook_client.py create-cell \\
     --file new-cell.json \\
     --notebook-id abc-123 \\
-    --database-schema im_10836_2de
+    --database-schema im_00000_xxx
 
   # Run cell from file (after editing)
   python3 notebook_client.py run-from-file \\
     --file cell.json \\
     --notebook-id abc-123 \\
     --cell-id cell-789 \\
-    --database-schema im_10836_2de
+    --database-schema im_00000_xxx
 
 Required Parameters:
-  --database-schema  - Agency database schema (e.g., im_10836_2de)
+  --database-schema  - Agency database schema (e.g., im_00000_xxx)
                        Used to determine client folder for temp files
                        Files are saved to /workspace/clients/{schema}/temp/
 
@@ -713,13 +713,13 @@ Temporary Files:
     # LIST command
     list_parser = subparsers.add_parser('list', help='List all cells in notebook')
     list_parser.add_argument('--notebook-id', required=True, help='Notebook ID')
-    list_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_10836_2de)')
+    list_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_00000_xxx)')
 
     # GET-CELL command
     get_cell_parser = subparsers.add_parser('get-cell', help='Get specific cell from notebook')
     get_cell_parser.add_argument('--notebook-id', required=True, help='Notebook ID')
     get_cell_parser.add_argument('--cell-id', required=True, help='Cell ID')
-    get_cell_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_10836_2de)')
+    get_cell_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_00000_xxx)')
     get_cell_parser.add_argument('--save-to-file', help='File path to save cell (relative or absolute)')
 
     # RUN-FROM-FILE command
@@ -727,54 +727,54 @@ Temporary Files:
     run_file_parser.add_argument('--file', required=True, help='Cell file path (relative or absolute)')
     run_file_parser.add_argument('--notebook-id', required=True, help='Notebook ID')
     run_file_parser.add_argument('--cell-id', required=True, help='Cell ID to run')
-    run_file_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_10836_2de)')
+    run_file_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_00000_xxx)')
 
     # DATASOURCES command
     ds_parser = subparsers.add_parser('datasources', help='List available datasources (tables) for a cell')
     ds_parser.add_argument('--notebook-id', required=True, help='Notebook ID')
     ds_parser.add_argument('--cell-id', default=None, help='Cell ID (shows cell output tables available to this cell)')
-    ds_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_10836_2de)')
+    ds_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_00000_xxx)')
 
     # COLUMNS command
     col_parser = subparsers.add_parser('columns', help='List columns for a specific table')
     col_parser.add_argument('--table-name', required=True, help='Table name to get columns for')
     col_parser.add_argument('--notebook-id', required=True, help='Notebook ID')
-    col_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_10836_2de)')
+    col_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_00000_xxx)')
 
     # INSERT-CELL command
     insert_parser = subparsers.add_parser('insert-cell', help='Insert cell between existing cells with reference updates')
     insert_parser.add_argument('--file', required=True, help='Insert payload file (JSON with new_cell, previous_cell_id, cells_to_update)')
     insert_parser.add_argument('--notebook-id', required=True, help='Notebook ID')
     insert_parser.add_argument('--previous-cell-id', default=None, help='Cell ID to insert after (overrides file value)')
-    insert_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_10836_2de)')
+    insert_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_00000_xxx)')
 
     # DELETE-CELL command
     delete_parser = subparsers.add_parser('delete-cell', help='Delete a cell from notebook')
     delete_parser.add_argument('--notebook-id', required=True, help='Notebook ID')
     delete_parser.add_argument('--cell-id', required=True, help='Cell ID to delete')
-    delete_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_10836_2de)')
+    delete_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_00000_xxx)')
 
     # CREATE-CELL command
     create_cell_parser = subparsers.add_parser('create-cell', help='Create new cell from file')
     create_cell_parser.add_argument('--file', required=True, help='Cell file path (relative or absolute)')
     create_cell_parser.add_argument('--notebook-id', required=True, help='Notebook ID')
-    create_cell_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_10836_2de)')
+    create_cell_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_00000_xxx)')
 
     # INTEGRATED-BUILD-STATUS command
     status_parser = subparsers.add_parser('integrated-build-status', help='Get integrated build status for a transformation (notebook)')
     status_parser.add_argument('--transformation-id', required=True, help='Transformation ID (notebook ID)')
-    status_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_10836_2de)')
+    status_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_00000_xxx)')
 
     # GET-INTEGRATED-SETUP command
     get_setup_parser = subparsers.add_parser('get-integrated-setup', help='Get integrated setup configuration for a transformation')
     get_setup_parser.add_argument('--notebook-id', required=True, help='Notebook ID (transformation ID)')
-    get_setup_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_10836_2de)')
+    get_setup_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_00000_xxx)')
 
     # BUILD-INTEGRATED-TRANSFORMATION command
     build_parser = subparsers.add_parser('build-integrated-transformation', help='Build integrated transformation with data sources and connections')
     build_parser.add_argument('--file', required=True, help='Build configuration file (JSON with data_sources and connections)')
     build_parser.add_argument('--transformation-id', required=True, help='Transformation ID (notebook ID)')
-    build_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_10836_2de)')
+    build_parser.add_argument('--database-schema', required=True, help='Agency database schema (e.g., im_00000_xxx)')
 
     # OPEN-RECIPE command (frontend iframe)
     open_recipe_parser = subparsers.add_parser('open-recipe', help='Open recipe in embedded iframe view')

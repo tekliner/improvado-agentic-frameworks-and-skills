@@ -66,7 +66,7 @@
 //   {
 //     "normalized":     <PASS 1 output verbatim>,
 //     "mirror_results": [
-//       { "id": "g_123", "download_url": "https://im-ai-agent-bucket.s3.amazonaws.com/...?X-Amz-Signature=..." },
+//       { "id": "g_123", "download_url": "https://example-bucket.s3.amazonaws.com/...?X-Amz-Signature=..." },
 //       { "id": "fb_456", "error": "404 from CDN" }
 //     ]
 //   }
