@@ -1,10 +1,10 @@
 # Agentic Frameworks and Skills
 
-## Improvado MCP: marketing analytics for AI agents
+## Connecting these skills to Improvado MCP
 
-Use compatible AI clients to ask questions about marketing data available in your Improvado workspace. Improvado MCP brings connected sources into one agent connection, so you can compare channels and request analysis in plain language. Sign in with Improvado OAuth; your workspace permissions determine which data you can access.
+> **Looking for the Improvado MCP server?** Setup guide, one-click install buttons (Cursor, VS Code), the Claude Code plugin, the Gemini CLI extension and the MCP Registry entry live in the official repository: **[github.com/tekliner/improvado-mcp](https://github.com/tekliner/improvado-mcp)**. Official documentation: [Improvado MCP](https://improvado.io/docs-section-topic/improvado-mcp).
 
-[Connect Claude Desktop or Claude Code](docs/connect-improvado-mcp.md). For more use cases and client options, read the [official Improvado MCP documentation](https://improvado.io/docs-section-topic/improvado-mcp-text). The dedicated [Improvado MCP repository](https://github.com/tekliner/improvado-mcp) has the same setup guide. Improvado hosts the MCP server; its implementation is not in this repository.
+Use compatible AI clients to ask questions about marketing data available in your Improvado workspace. Improvado MCP brings connected sources into one agent connection, so you can compare channels and request analysis in plain language. Sign in with Improvado OAuth; your workspace permissions determine which data you can access. Improvado hosts the MCP server; its implementation is not in this repository.
 
 Production-ready Claude Code and Codex skills and frameworks for building, evaluating, and scaling agentic AI systems.
 
@@ -16,6 +16,7 @@ This repository is prepared as a Codex plugin:
 - Skills bundle: `./skills/`
 - MCP bundle: `./.mcp.json`
 - MCP endpoint: `https://report.improvado.io/experimental/agent/api/mcp-customer/v1/invoke`
+- Server setup for other clients (Claude, ChatGPT, Cursor, VS Code, Gemini CLI): [tekliner/improvado-mcp](https://github.com/tekliner/improvado-mcp)
 
 The Improvado customer MCP config contains no checked-in secrets. Authentication and workspace context are expected to be supplied by the runtime/client connection flow.
 
