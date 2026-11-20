@@ -1,5 +1,7 @@
 # Improvado MCP: connect AI agents to marketing analytics data
 
+> The maintained version of this guide is in [tekliner/improvado-mcp](https://github.com/tekliner/improvado-mcp): the README has the install buttons and per-client config, and docs/connect-improvado-mcp.md has the step list.
+
 Improvado MCP is a hosted, remote Model Context Protocol server for marketing analytics. It connects a compatible AI client to data available in your signed-in Improvado workspace. Your account permissions and connected sources determine what the client can access. The server implementation is not published in these repositories.
 
 ## What you can do
